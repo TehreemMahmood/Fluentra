@@ -1,0 +1,5 @@
+Model,Accuracy,BalancedAccuracy,MacroPrecision,MacroRecall,MacroF1
+Neural Network,70.94,51.9,57.46,51.9,52.04
+Ensemble,74.97,48.02,51.82,48.02,48.75
+Random Forest,73.81,41.48,48.12,41.48,41.67
+SVM,68.29,35.95,38.43,35.95,35.61

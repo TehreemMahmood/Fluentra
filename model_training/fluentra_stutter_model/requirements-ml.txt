@@ -1,0 +1,11 @@
+# Heavy ML dependencies for the local stutter classifier.
+# Kept separate from the Django app's requirements.txt on purpose:
+# the live app stays API-only and lightweight; install these only where you
+# actually want to run the trained model.
+numpy
+librosa
+soundfile
+scikit-learn
+tensorflow
+tensorflow-hub
+keras

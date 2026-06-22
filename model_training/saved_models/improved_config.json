@@ -1,0 +1,46 @@
+{
+  "feature_dim": 186,
+  "feature_set": "classical_v2_mfcc40_delta_contrast",
+  "feature_mode": "classical",
+  "uses_yamnet": false,
+  "sample_rate": 16000,
+  "clip_duration_sec": 3.0,
+  "vote_threshold": 2,
+  "binary": {
+    "best_model": "random_forest",
+    "positive_label": "disfluent",
+    "candidates": {
+      "random_forest": {
+        "accuracy": 66.64,
+        "balanced_accuracy": 66.64,
+        "f1_disfluent": 67.06,
+        "roc_auc": 73.42
+      },
+      "logreg": {
+        "accuracy": 66.4,
+        "balanced_accuracy": 66.4,
+        "f1_disfluent": 66.33,
+        "roc_auc": 73.04
+      },
+      "grad_boost": {
+        "accuracy": 66.31,
+        "balanced_accuracy": 66.31,
+        "f1_disfluent": 66.14,
+        "roc_auc": 72.33
+      }
+    }
+  },
+  "type": {
+    "classes": [
+      "Block",
+      "Interjection",
+      "Prolongation",
+      "SoundRep",
+      "WordRep"
+    ],
+    "accuracy": 39.78,
+    "balanced_accuracy": 29.52,
+    "macro_f1": 27.99
+  },
+  "n_samples": 10760
+}
