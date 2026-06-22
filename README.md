@@ -32,10 +32,8 @@ the Django app. See [model_training/README.md](model_training/README.md).
 
 ```bash
 pip install -r requirements.txt
-cp .env.example .env          # then fill in your keys
+cp .env.example .env          
 python manage.py migrate
 python manage.py runserver
 ```
 
-Configuration (API keys, secret key, OAuth, email) is read from environment
-variables — see `.env.example` for the full list.
