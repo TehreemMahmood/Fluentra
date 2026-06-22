@@ -1,32 +1,32 @@
 {
-  "feature_dim": 186,
-  "feature_set": "classical_v2_mfcc40_delta_contrast",
-  "feature_mode": "classical",
+  "feature_dim": 954,
+  "feature_set": "classical_v2_plus_wav2vec2",
+  "feature_mode": "wav2vec2",
   "uses_yamnet": false,
   "sample_rate": 16000,
   "clip_duration_sec": 3.0,
   "vote_threshold": 2,
   "binary": {
-    "best_model": "random_forest",
+    "best_model": "logreg",
     "positive_label": "disfluent",
     "candidates": {
       "random_forest": {
-        "accuracy": 66.64,
-        "balanced_accuracy": 66.64,
-        "f1_disfluent": 67.06,
-        "roc_auc": 73.42
+        "accuracy": 73.23,
+        "balanced_accuracy": 73.23,
+        "f1_disfluent": 73.55,
+        "roc_auc": 81.36
       },
       "logreg": {
-        "accuracy": 66.4,
-        "balanced_accuracy": 66.4,
-        "f1_disfluent": 66.33,
-        "roc_auc": 73.04
+        "accuracy": 77.93,
+        "balanced_accuracy": 77.93,
+        "f1_disfluent": 77.86,
+        "roc_auc": 85.58
       },
       "grad_boost": {
-        "accuracy": 66.31,
-        "balanced_accuracy": 66.31,
-        "f1_disfluent": 66.14,
-        "roc_auc": 72.33
+        "accuracy": 75.46,
+        "balanced_accuracy": 75.46,
+        "f1_disfluent": 75.3,
+        "roc_auc": 83.91
       }
     }
   },
@@ -38,9 +38,9 @@
       "SoundRep",
       "WordRep"
     ],
-    "accuracy": 39.78,
-    "balanced_accuracy": 29.52,
-    "macro_f1": 27.99
+    "accuracy": 42.84,
+    "balanced_accuracy": 35.65,
+    "macro_f1": 34.85
   },
   "n_samples": 10760
 }

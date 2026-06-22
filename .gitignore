@@ -17,7 +17,6 @@ logs/
 node_modules/
 
 # ML training: large/regenerable artifacts and datasets (keep repo lean)
-model_training/saved_models/type_classifier.pkl
 model_training/saved_models/stutter_rf_model.pkl
 model_training/saved_models/fluentrra_stutter_classifier.pkl
 *.npz

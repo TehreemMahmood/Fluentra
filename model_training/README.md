@@ -62,16 +62,23 @@ recommended model.
 | Feature set | Balanced accuracy | ROC-AUC | Cross-dataset disfluent recall |
 |---|---|---|---|
 | 86 classical (MFCC + spectral) | 65.1% | 71.7 | — |
-| **186 classical (+ delta + contrast/flatness/RMS)** | **66.7%** | **73.4** | **71.3%** |
+| 186 classical (+ delta + contrast/flatness/RMS) | 66.7% | 73.4 | 71.3% |
 | 186 classical + YAMNet (1210-d) | 68.4% | 75.3 | 59.3% (overfit to source) |
+| **186 classical + wav2vec 2.0 (954-d) — DEFAULT** | **77.9%** | **85.6** | **66.7%** |
 
 Key findings:
-- The 186-feature classical model is the deployed default — best **generalisation**.
-- YAMNet (general-audio embeddings) improved in-distribution accuracy slightly
-  but **hurt** cross-dataset transfer.
-- **wav2vec2** (speech self-supervised) is the identified next step for higher,
-  more robust accuracy; the pipeline supports it (`features.py` mode `wav2vec2`,
-  `deep_wav2vec_pipeline.py`).
+- **wav2vec 2.0 (speech self-supervised) is the deployed default** — a large,
+  reliable jump to **77.9% balanced accuracy / 0.856 ROC-AUC**, approaching the
+  ~85% inter-annotator ceiling, while keeping solid cross-dataset recall (66.7%).
+  Best binary classifier on these features was Logistic Regression.
+- **YAMNet** (general-audio embeddings) improved in-distribution accuracy a little
+  but **hurt** cross-dataset transfer (59.3%) — it over-fit the source dataset.
+  wav2vec2, being speech-specific, did not.
+- The 186-feature **classical** model is a lightweight fallback (no PyTorch needed).
+- **Type classification** (which of the 5 stutter types) also improved with
+  wav2vec2 — accuracy ~42.8%, macro-F1 ~34.9% (up from ~28%) — but remains the
+  harder task and is reported as an *indicative* secondary output, not a
+  definitive diagnosis.
 
 A SEP-28k binary detector is inherently bounded by inter-annotator disagreement
 (~85% ceiling), so metrics are reported with balanced accuracy + ROC-AUC +
@@ -93,10 +100,12 @@ python -c "from fluentra_stutter_model import analyze_audio_v2, json; \
 import json; print(json.dumps(analyze_audio_v2('clip.wav')['analysis'], indent=2))"
 ```
 
-> Large weight files (`type_classifier.pkl` ~49 MB, `stutter_rf_model.pkl` ~17 MB)
-> are not committed — rerun `train_improved.py` / the notebook to regenerate them.
-> The small binary detector + scalers needed for the recommended v2 engine **are**
-> included, so inference works out of the box.
+> The wav2vec2 binary detector + scalers + the (compressed) type classifier are
+> committed, so inference works out of the box. Only the legacy 6-class
+> ensemble's large `stutter_rf_model.pkl` (~17 MB) and duplicate `.pkl` weights
+> are excluded — rerun `train_improved.py` / the notebook to regenerate them.
+> Running the default wav2vec2 model downloads the ~360 MB `wav2vec2-base` model
+> on first use and needs PyTorch (see `requirements-ml.txt`).
 
 ## Integration with the Django app
 

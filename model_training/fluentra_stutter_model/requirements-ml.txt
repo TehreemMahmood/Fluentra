@@ -6,6 +6,11 @@ numpy
 librosa
 soundfile
 scikit-learn
+joblib
+# wav2vec2 (default v2 model) needs torch + transformers
+torch
+transformers
+# only needed for the YAMNet feature mode / the legacy 6-class model
 tensorflow
 tensorflow-hub
 keras
