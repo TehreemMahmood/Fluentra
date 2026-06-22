@@ -1,0 +1,116 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Exercises{% endblock %}
+
+{% block content %}
+<div class="section-header" style="margin-bottom: var(--spacing-xl);">
+    <h2>Stutter Type Exercises</h2>
+    <p class="text-secondary">Choose a stutter type to practice targeted tongue twisters.</p>
+</div>
+
+<!-- Stutter Type Cards - Wide Layout -->
+<div class="stutter-cards-container" style="display: flex; flex-direction: column; gap: 24px; max-width: 1000px;">
+    
+    <!-- Repetition Card -->
+    <a href="{% url 'exercise_repetition' %}" class="stutter-step-card" style="text-decoration: none; display: flex; align-items: stretch; background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.08) 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(99, 102, 241, 0.12); transition: all 0.3s ease; border: 1px solid rgba(99, 102, 241, 0.1); min-height: 140px;">
+        <div style="width: 130px; min-width: 130px; background: linear-gradient(135deg, #6366F1, #8B5CF6); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px;">
+            <span style="font-size: 2.2rem; font-weight: 800; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">01</span>
+            <i data-lucide="repeat" style="width: 32px; height: 32px; color: rgba(255,255,255,0.9);"></i>
+        </div>
+        <div style="flex: 1; padding: 28px 32px; display: flex; flex-direction: column; justify-content: center;">
+            <h3 style="margin: 0 0 10px 0; font-size: 1.4rem; color: var(--text-dark); font-weight: 700;">Repetition</h3>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 1rem; line-height: 1.6;">Practice smooth transitions between sounds to reduce repetitions like "b-b-ball" or "I-I-I want". Focus on gentle onset and continuous airflow.</p>
+        </div>
+        <div style="display: flex; align-items: center; padding-right: 28px;">
+            <div style="width: 44px; height: 44px; background: rgba(99, 102, 241, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="chevron-right" style="width: 22px; height: 22px; color: #6366F1;"></i>
+            </div>
+        </div>
+    </a>
+
+    <!-- Prolongation Card -->
+    <a href="{% url 'exercise_prolongation' %}" class="stutter-step-card" style="text-decoration: none; display: flex; align-items: stretch; background: linear-gradient(135deg, rgba(245, 158, 11, 0.03) 0%, rgba(251, 191, 36, 0.08) 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.12); transition: all 0.3s ease; border: 1px solid rgba(245, 158, 11, 0.1); min-height: 140px;">
+        <div style="width: 130px; min-width: 130px; background: linear-gradient(135deg, #F59E0B, #FBBF24); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px;">
+            <span style="font-size: 2.2rem; font-weight: 800; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">02</span>
+            <i data-lucide="move-horizontal" style="width: 32px; height: 32px; color: rgba(255,255,255,0.9);"></i>
+        </div>
+        <div style="flex: 1; padding: 28px 32px; display: flex; flex-direction: column; justify-content: center;">
+            <h3 style="margin: 0 0 10px 0; font-size: 1.4rem; color: var(--text-dark); font-weight: 700;">Prolongation</h3>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 1rem; line-height: 1.6;">Work on controlled sound duration to manage prolongations like "ssssnake" or "fffffish". Master smooth, flowing speech patterns.</p>
+        </div>
+        <div style="display: flex; align-items: center; padding-right: 28px;">
+            <div style="width: 44px; height: 44px; background: rgba(245, 158, 11, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="chevron-right" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+            </div>
+        </div>
+    </a>
+
+    <!-- Blocking Card -->
+    <a href="{% url 'exercise_blocking' %}" class="stutter-step-card" style="text-decoration: none; display: flex; align-items: stretch; background: linear-gradient(135deg, rgba(239, 68, 68, 0.03) 0%, rgba(248, 113, 113, 0.08) 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.12); transition: all 0.3s ease; border: 1px solid rgba(239, 68, 68, 0.1); min-height: 140px;">
+        <div style="width: 130px; min-width: 130px; background: linear-gradient(135deg, #EF4444, #F87171); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px;">
+            <span style="font-size: 2.2rem; font-weight: 800; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">03</span>
+            <i data-lucide="octagon" style="width: 32px; height: 32px; color: rgba(255,255,255,0.9);"></i>
+        </div>
+        <div style="flex: 1; padding: 28px 32px; display: flex; flex-direction: column; justify-content: center;">
+            <h3 style="margin: 0 0 10px 0; font-size: 1.4rem; color: var(--text-dark); font-weight: 700;">Blocking</h3>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 1rem; line-height: 1.6;">Practice smooth airflow and gentle onset to overcome blocks on sounds like "k", "g", "t", "d". Release tension naturally.</p>
+        </div>
+        <div style="display: flex; align-items: center; padding-right: 28px;">
+            <div style="width: 44px; height: 44px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="chevron-right" style="width: 22px; height: 22px; color: #EF4444;"></i>
+            </div>
+        </div>
+    </a>
+
+    <!-- Interjection Card -->
+    <a href="{% url 'exercise_interjection' %}" class="stutter-step-card" style="text-decoration: none; display: flex; align-items: stretch; background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, rgba(52, 211, 153, 0.08) 100%); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.12); transition: all 0.3s ease; border: 1px solid rgba(16, 185, 129, 0.1); min-height: 140px;">
+        <div style="width: 130px; min-width: 130px; background: linear-gradient(135deg, #10B981, #34D399); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px;">
+            <span style="font-size: 2.2rem; font-weight: 800; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">04</span>
+            <i data-lucide="message-circle" style="width: 32px; height: 32px; color: rgba(255,255,255,0.9);"></i>
+        </div>
+        <div style="flex: 1; padding: 28px 32px; display: flex; flex-direction: column; justify-content: center;">
+            <h3 style="margin: 0 0 10px 0; font-size: 1.4rem; color: var(--text-dark); font-weight: 700;">Interjection</h3>
+            <p style="margin: 0; color: var(--text-secondary); font-size: 1rem; line-height: 1.6;">Practice fluent phrasing to reduce filler words like "um", "uh", "like", "you know". Build confident, clear speech.</p>
+        </div>
+        <div style="display: flex; align-items: center; padding-right: 28px;">
+            <div style="width: 44px; height: 44px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="chevron-right" style="width: 22px; height: 22px; color: #10B981;"></i>
+            </div>
+        </div>
+    </a>
+
+</div>
+
+<style>
+.stutter-step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.stutter-step-card:nth-child(1):hover {
+    box-shadow: 0 12px 35px rgba(99, 102, 241, 0.25);
+}
+
+.stutter-step-card:nth-child(2):hover {
+    box-shadow: 0 12px 35px rgba(245, 158, 11, 0.25);
+}
+
+.stutter-step-card:nth-child(3):hover {
+    box-shadow: 0 12px 35px rgba(239, 68, 68, 0.25);
+}
+
+.stutter-step-card:nth-child(4):hover {
+    box-shadow: 0 12px 35px rgba(16, 185, 129, 0.25);
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Reinitialize icons
+if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+}
+</script>
+{% endblock %}

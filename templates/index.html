@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FluEntra{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="container hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Empowering Every Voice Through <span
+                style="color: var(--secondary-color);">AI</span></h1>
+        <p class="hero-subtitle">FluEntra provides real-time speech analysis and personalized therapy exercises
+            to help you gain confidence in every conversation.</p>
+        <div class="hero-actions">
+            <a href="{% url 'auth' %}?mode=signup" class="btn btn-primary btn-lg">Start Your Free Trial</a>
+            <a href="#features" class="btn btn-lg" style="color: var(--primary-color);">Learn More</a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <img src="{% static 'images/Speech.png' %}" alt="Speech Analysis" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features">
+    <div class="container">
+        <div class="section-header">
+            <h2>Advanced Therapy Features</h2>
+            <p>Designed by speech-language pathologists and AI experts to provide the most effective digital
+                therapy available.</p>
+        </div>
+        <div class="feature-grid">
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="mic"></i></div>
+                <h3>Real-time Analysis</h3>
+                <p>Instant feedback on fluency, rate of speech, and dysfluency types using our proprietary AI
+                    engine.</p>
+            </div>
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="bar-chart-2"></i></div>
+                <h3>Progress Tracking</h3>
+                <p>Comprehensive dashboard showing your improvement over time with detailed metrics and session
+                    history.</p>
+            </div>
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="gamepad-2"></i></div>
+                <h3>Gamified Exercises</h3>
+                <p>Enjoyable tongue-twister challenges and daily goals to make practice feel like a game, not a
+                    chore.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonial Section -->
+<section id="testimonials" class="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <h2>What Our Users Say</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="card testimonial-card">
+                <p>"FluEntra has completely changed how I approach my daily practice. The real-time feedback is
+                    like having a therapist in my pocket."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"></div>
+                    <div>
+                        <strong>Owais R.</strong>
+                        <span class="text-light" style="display: block; font-size: 0.8rem;">Beta User</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card testimonial-card">
+                <p>"As a therapist, I recommend FluEntra to all my clients for in-between session practice. The
+                    data it provides is invaluable."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar"></div>
+                    <div>
+                        <strong>Sara A.</strong>
+                        <span class="text-light" style="display: block; font-size: 0.8rem;">Speech
+                            Therapist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section id="pricing" class="container" style="padding: var(--spacing-2xl) 0; text-align: center;">
+    <div class="card" style="background-color: var(--primary-color); color: white;">
+        <h2 style="color: white; font-size: 2.5rem;">Ready to find your flow?</h2>
+        <p style="margin-bottom: var(--spacing-xl); font-size: 1.1rem; opacity: 0.9;">Join thousands of others
+            achieving speech fluency with FluEntra.</p>
+        <a href="{% url 'auth' %}?mode=signup" class="btn btn-secondary btn-lg">Get Started Now</a>
+    </div>
+</section>
+{% endblock %}

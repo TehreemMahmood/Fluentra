@@ -1,0 +1,264 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Easy Onset{% endblock %}
+
+{% block content %}
+<!-- Header with Back Button -->
+<div style="margin-bottom: var(--spacing-xl);">
+    <a href="{% url 'techniques' %}" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        Back to Techniques
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.15) 100%); border-radius: var(--radius-lg); padding: 40px; margin-bottom: var(--spacing-xl);">
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(217, 119, 6, 0.3);">
+            <i data-lucide="play-circle" style="width: 50px; height: 50px; color: white;"></i>
+        </div>
+        <div style="flex: 1;">
+            <span class="badge" style="background: #FEF3C7; color: #92400E; margin-bottom: 12px;">Fluency Shaping</span>
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark);">Easy Onset</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">Start words gently with soft, relaxed voice initiation to prevent blocks and achieve smoother speech flow.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <!-- How to Practice -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
+            How to Practice
+        </h3>
+        <ol style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Take a Breath:</strong> Inhale naturally before speaking</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Begin Exhaling:</strong> Start releasing air before making sound</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Soft Voice Start:</strong> Let your voice begin gently, like a sigh or hum</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Blend Into the Word:</strong> Smoothly transition from the easy onset into your word</li>
+            <li><strong style="color: var(--text-dark);">Maintain Softness:</strong> Keep the gentle quality through the first syllable</li>
+        </ol>
+    </div>
+    
+    <!-- Benefits for Fluency -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+            Benefits for Fluency
+        </h3>
+        <ul style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Prevents Hard Blocks:</strong> Eliminates the sudden, tense voice starts that cause blocks</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduces Vocal Tension:</strong> Keeps your larynx relaxed and open</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Coordinates Breath & Voice:</strong> Synchronizes airflow with phonation</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Easier on Vowels:</strong> Especially helpful for words starting with vowels</li>
+            <li><strong style="color: var(--text-dark);">Natural Sound:</strong> When mastered, sounds completely natural to listeners</li>
+        </ul>
+    </div>
+</div>
+
+<!-- How It Reduces Stuttering Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); background: linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(217, 119, 6, 0.05) 100%);">
+    <h3 style="margin-bottom: var(--spacing-xl); color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="brain" style="width: 24px; height: 24px; color: white;"></i>
+        </div>
+        How Easy Onset Reduces Stuttering
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #D97706; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(217, 119, 6, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="unlock" style="width: 24px; height: 24px; color: #D97706;"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: #D97706;">Prevents Vocal Cord Locking</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Hard starts cause the vocal cords to slam together and lock. Easy onset keeps them gently vibrating from the start, preventing blocks.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--secondary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="wind" style="width: 24px; height: 24px; color: var(--secondary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--secondary-color);">Establishes Airflow First</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">By starting airflow before voice, you ensure there's air to support speech. Many blocks occur because people try to speak without adequate breath.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="zap" style="width: 24px; height: 24px; color: var(--primary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--primary-color);">Reduces Starting Anxiety</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Having a reliable technique for starting words reduces the fear of beginning to speak, which itself can trigger stuttering.</p>
+        </div>
+    </div>
+    
+    <!-- Clinical Evidence -->
+    <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: linear-gradient(135deg, rgba(217, 119, 6, 0.08) 0%, rgba(217, 119, 6, 0.03) 100%); border-radius: var(--radius-md); border: 1px solid rgba(217, 119, 6, 0.1);">
+        <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+            <div style="width: 40px; height: 40px; background: #D97706; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i data-lucide="file-text" style="width: 20px; height: 20px; color: white;"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-dark);">Clinical Evidence</h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+                    Easy onset is a fundamental component of most fluency shaping programs. Research shows it's particularly effective for reducing blocks at the beginning of utterances. Studies demonstrate that easy onset combined with continuous phonation can reduce stuttering frequency by 60-80% in structured settings.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Practice Words Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="list" style="width: 22px; height: 22px; color: #D97706;"></i>
+        Practice Words (Vowel-Initial)
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Easy onset is especially important for words beginning with vowels. Practice these with a gentle, breathy start.</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md);">
+        <div style="text-align: center;">
+            <h5 style="color: #D97706; margin-bottom: 10px; font-size: 0.9rem;">A Words</h5>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Apple</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Always</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Amazing</span>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <h5 style="color: #D97706; margin-bottom: 10px; font-size: 0.9rem;">E Words</h5>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Easy</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Every</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Evening</span>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <h5 style="color: #D97706; margin-bottom: 10px; font-size: 0.9rem;">I Words</h5>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">I</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Inside</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Imagine</span>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <h5 style="color: #D97706; margin-bottom: 10px; font-size: 0.9rem;">O/U Words</h5>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Open</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Under</span>
+                <span style="background: #FFFBEB; padding: 8px; border-radius: var(--radius-sm); color: var(--text-dark);">Usually</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visualization Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="eye" style="width: 22px; height: 22px; color: #D97706;"></i>
+        Visualize the Technique
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="text-align: center; padding: var(--spacing-lg); background: #FFFBEB; border-radius: var(--radius-md);">
+            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                <i data-lucide="wind" style="width: 28px; height: 28px; color: white;"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 8px;">Step 1: Air Flow</h5>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Begin exhaling gently, like you're about to sigh</p>
+        </div>
+        <div style="text-align: center; padding: var(--spacing-lg); background: #FFFBEB; border-radius: var(--radius-md);">
+            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                <i data-lucide="volume-2" style="width: 28px; height: 28px; color: white;"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 8px;">Step 2: Soft Voice</h5>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Let your voice "ride" on the airflow, starting quietly</p>
+        </div>
+        <div style="text-align: center; padding: var(--spacing-lg); background: #FFFBEB; border-radius: var(--radius-md);">
+            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto var(--spacing-md);">
+                <i data-lucide="arrow-right" style="width: 28px; height: 28px; color: white;"></i>
+            </div>
+            <h5 style="color: var(--text-dark); margin-bottom: 8px;">Step 3: Blend In</h5>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0;">Smoothly transition into the word at normal volume</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tips Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="lightbulb" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Tips for Effective Practice
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg);">
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(217, 119, 6, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #D97706;">1</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Think "Sigh" or "Yawn"</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">The feeling of an easy onset is similar to starting a sigh or the end of a yawn.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(217, 119, 6, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #D97706;">2</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Practice with "H" Words First</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Words starting with "H" naturally require airflow first, making them easier to learn on.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(217, 119, 6, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #D97706;">3</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Use It at Phrase Beginnings</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Focus on using easy onset at the start of sentences and phrases, not every word.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(217, 119, 6, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #D97706;">4</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Combine with Light Contacts</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Easy onset pairs well with light articulatory contacts for complete fluency control.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Tutorial Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="play-circle" style="width: 22px; height: 22px; color: #D97706;"></i>
+        Video Tutorial
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Watch this video to master the easy onset technique for smoother speech starts.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000;">
+        <iframe 
+            src="https://www.youtube.com/embed/_Qt_o_9b9KM?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}" 
+            title="Easy Onset Tutorial"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--radius-md);">
+        </iframe>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+        Video not loading? <a href="https://youtu.be/_Qt_o_9b9KM" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Watch on YouTube →</a>
+    </p>
+</div>
+
+<!-- Practice Button -->
+<div style="display: flex; justify-content: center; padding: var(--spacing-xl) 0;">
+    <a href="{% url 'practice' %}" class="btn btn-primary" style="padding: 16px 48px; font-size: 1.1rem;">
+        <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+        Start Practice Session
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+.env
+.env.*
+.venv/
+.venv-1/
+__pycache__/
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+media/recordings/
+recordings/
+logs/
+.runserver_pid
+.DS_Store
+.pytest_cache/
+.mypy_cache/
+node_modules/

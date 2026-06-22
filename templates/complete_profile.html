@@ -1,0 +1,1033 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}Complete Your Profile{% endblock %}
+
+{% block extra_css %}
+<style>
+    .onboarding-container {
+        min-height: 100vh;
+        display: flex;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+    }
+
+    .onboarding-left {
+        flex: 1;
+        display: none;
+        padding: var(--spacing-2xl);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @media (min-width: 992px) {
+        .onboarding-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    .onboarding-left::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+    .onboarding-left h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--spacing-lg);
+        color: white;
+    }
+
+    .onboarding-left p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 400px;
+    }
+
+    .feature-list {
+        margin-top: var(--spacing-2xl);
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.9;
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feature-icon i {
+        width: 24px;
+        height: 24px;
+    }
+
+    .onboarding-right {
+        flex: 1;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl);
+    }
+
+    .onboarding-card {
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .onboarding-header {
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .onboarding-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .onboarding-logo img {
+        height: 36px;
+    }
+
+    .step-progress {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .step-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--border-color);
+        transition: all 0.3s;
+    }
+
+    .step-dot.active {
+        background: var(--primary-color);
+        width: 32px;
+        border-radius: 6px;
+    }
+
+    .step-dot.completed {
+        background: var(--success-color);
+    }
+
+    .user-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        background: linear-gradient(135deg, #e6fffa 0%, #ebf8ff 100%);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .user-badge i {
+        width: 16px;
+    }
+
+    .form-step {
+        display: none;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .form-step.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .option-cards {
+        display: grid;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .option-card {
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-lg);
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .option-card:hover {
+        border-color: var(--primary-light);
+        background: #f8fafc;
+    }
+
+    .option-card.selected {
+        border-color: var(--primary-color);
+        background: linear-gradient(135deg, #e6fffa 0%, #ebf8ff 100%);
+    }
+
+    .option-card input[type="radio"],
+    .option-card input[type="checkbox"] {
+        display: none;
+    }
+
+    .option-icon {
+        width: 44px;
+        height: 44px;
+        background: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .option-card.selected .option-icon {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .option-icon i {
+        width: 22px;
+        height: 22px;
+        color: var(--primary-color);
+    }
+
+    .option-card.selected .option-icon i {
+        color: white;
+    }
+
+    .option-content h4 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+
+    .option-content p {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+
+    .step-nav {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-xl);
+    }
+
+    .btn-back {
+        flex: 0 0 auto;
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: var(--text-secondary);
+    }
+
+    .btn-back:hover {
+        border-color: var(--text-secondary);
+        background: var(--bg-secondary);
+    }
+
+    .btn-next {
+        flex: 1;
+    }
+
+    .styled-input {
+        position: relative;
+    }
+
+    .styled-input i {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        color: var(--text-light);
+    }
+
+    .styled-input input {
+        padding-left: 48px;
+    }
+
+    .age-display {
+        text-align: center;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .age-display .age-value {
+        font-size: 3rem;
+        font-weight: 800;
+        color: var(--primary-color);
+    }
+
+    .age-display .age-label {
+        color: var(--text-secondary);
+    }
+
+    input[type="range"] {
+        width: 100%;
+        height: 8px;
+        border-radius: 4px;
+        background: var(--border-color);
+        outline: none;
+        -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .success-animation {
+        text-align: center;
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .success-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto var(--spacing-lg);
+        animation: scaleIn 0.5s ease;
+    }
+
+    .success-icon i {
+        width: 40px;
+        height: 40px;
+        color: white;
+    }
+
+    @keyframes scaleIn {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+
+    /* Loading Animation Styles */
+    .loading-animation {
+        text-align: center;
+        padding: var(--spacing-xl) 0;
+    }
+
+    .loading-icon {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        margin: 0 auto var(--spacing-xl);
+    }
+
+    .loading-spinner {
+        width: 100%;
+        height: 100%;
+        border: 4px solid #e2e8f0;
+        border-top-color: #4299E1;
+        border-right-color: #4FD1C5;
+        border-radius: 50%;
+        animation: spin 1.5s linear infinite;
+    }
+
+    .sparkle-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40px;
+        height: 40px;
+        color: #4299E1;
+        animation: pulse-sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse-sparkle {
+        0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .loading-progress {
+        margin-top: var(--spacing-xl);
+    }
+
+    .loading-bar {
+        height: 8px;
+        background: #e2e8f0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .loading-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #2C5282, #4299E1, #4FD1C5);
+        border-radius: 4px;
+        transition: width 0.5s ease;
+    }
+
+    .loading-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        text-align: left;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .loading-step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #a0aec0;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .loading-step i {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+    }
+
+    .loading-step.active {
+        color: #4299E1;
+    }
+
+    .loading-step.active svg.spin {
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .loading-step.completed {
+        color: #48bb78;
+    }
+
+    .loading-step.completed i,
+    .loading-step.completed svg {
+        color: #48bb78;
+    }
+
+    .loading-step svg {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+
+    .confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="onboarding-container">
+    <div class="onboarding-left">
+
+        
+        <h1>Welcome to Your Speech Journey</h1>
+        <p>Let's personalize your experience to help you achieve your goals faster.</p>
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="brain"></i>
+                </div>
+                <div>
+                    <strong>AI-Powered Analysis</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Real-time feedback on your speech patterns</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="target"></i>
+                </div>
+                <div>
+                    <strong>Personalized Exercises</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Custom therapy plans for your needs</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="trophy"></i>
+                </div>
+                <div>
+                    <strong>Track Your Progress</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Gamified learning with rewards</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="onboarding-right">
+        <div class="onboarding-card">
+            <div class="onboarding-header">
+
+                
+                {% if user.email %}
+                <div class="user-badge">
+                    <i data-lucide="mail-check"></i>
+                    {{ user.email }}
+                </div>
+                {% endif %}
+
+                <h2 id="step-title">What should we call you?</h2>
+                <p class="text-secondary" id="step-subtitle">This will be shown on your profile</p>
+            </div>
+
+            <div class="step-progress">
+                <div class="step-dot active" data-step="1"></div>
+                <div class="step-dot" data-step="2"></div>
+                <div class="step-dot" data-step="3"></div>
+                <div class="step-dot" data-step="4"></div>
+                <div class="step-dot" data-step="5"></div>
+            </div>
+
+            <form id="onboarding-form">
+                {% csrf_token %}
+                
+                <div id="error-message" 
+                    style="color: #e53e3e; margin-bottom: 16px; font-size: 0.9rem; padding: 12px 16px; background: #fff5f5; border-radius: 8px; display: none; border: 1px solid #feb2b2;">
+                </div>
+
+                <!-- Step 1: Name -->
+                <div class="form-step active" data-step="1">
+                    <div class="form-group styled-input">
+                        <i data-lucide="user"></i>
+                        <input type="text" id="full_name" name="full_name" placeholder="Enter your full name" required
+                            value="{{ user.full_name|default:'' }}" style="font-size: 1.1rem; padding: 16px 16px 16px 48px;">
+                    </div>
+                    
+                    <div class="step-nav">
+                        <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
+                            Continue
+                            <i data-lucide="arrow-right" style="width: 18px; margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Age -->
+                <div class="form-step" data-step="2">
+                    <div class="age-display">
+                        <div class="age-value" id="age-value">25</div>
+                        <div class="age-label">years old</div>
+                    </div>
+                    <input type="range" id="age" name="age" min="5" max="80" value="25" oninput="updateAge(this.value)">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-light); margin-top: 8px;">
+                        <span>5</span>
+                        <span>80</span>
+                    </div>
+                    
+                    <div class="step-nav">
+                        <button type="button" class="btn btn-back" onclick="prevStep()">
+                            <i data-lucide="arrow-left" style="width: 18px;"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
+                            Continue
+                            <i data-lucide="arrow-right" style="width: 18px; margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: How did you hear about us -->
+                <div class="form-step" data-step="3">
+                    <div class="option-cards">
+                        <label class="option-card">
+                            <input type="radio" name="referral" value="search">
+                            <div class="option-icon"><i data-lucide="search"></i></div>
+                            <div class="option-content">
+                                <h4>Search Engine</h4>
+                                <p>Google, Bing, etc.</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="referral" value="social">
+                            <div class="option-icon"><i data-lucide="share-2"></i></div>
+                            <div class="option-content">
+                                <h4>Social Media</h4>
+                                <p>Facebook, Instagram, Twitter</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="referral" value="friend">
+                            <div class="option-icon"><i data-lucide="users"></i></div>
+                            <div class="option-content">
+                                <h4>Friend or Family</h4>
+                                <p>Someone recommended it</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="referral" value="therapist">
+                            <div class="option-icon"><i data-lucide="stethoscope"></i></div>
+                            <div class="option-content">
+                                <h4>Speech Therapist</h4>
+                                <p>Healthcare professional</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="referral" value="other">
+                            <div class="option-icon"><i data-lucide="more-horizontal"></i></div>
+                            <div class="option-content">
+                                <h4>Other</h4>
+                                <p>Some other way</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="step-nav">
+                        <button type="button" class="btn btn-back" onclick="prevStep()">
+                            <i data-lucide="arrow-left" style="width: 18px;"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
+                            Continue
+                            <i data-lucide="arrow-right" style="width: 18px; margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Goals -->
+                <div class="form-step" data-step="4">
+                    <div class="option-cards">
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="reduce_stuttering">
+                            <div class="option-icon"><i data-lucide="message-circle"></i></div>
+                            <div class="option-content">
+                                <h4>Reduce Stuttering</h4>
+                                <p>Improve fluency and reduce blocks</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="build_confidence">
+                            <div class="option-icon"><i data-lucide="sparkles"></i></div>
+                            <div class="option-content">
+                                <h4>Build Confidence</h4>
+                                <p>Speak more confidently in any situation</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="professional">
+                            <div class="option-icon"><i data-lucide="briefcase"></i></div>
+                            <div class="option-content">
+                                <h4>Professional Speaking</h4>
+                                <p>Excel in presentations & meetings</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="goal" value="therapy_support">
+                            <div class="option-icon"><i data-lucide="heart-handshake"></i></div>
+                            <div class="option-content">
+                                <h4>Support Therapy</h4>
+                                <p>Complement ongoing speech therapy</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="step-nav">
+                        <button type="button" class="btn btn-back" onclick="prevStep()">
+                            <i data-lucide="arrow-left" style="width: 18px;"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary btn-next" onclick="nextStep()">
+                            Continue
+                            <i data-lucide="arrow-right" style="width: 18px; margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Experience Level -->
+                <div class="form-step" data-step="5">
+                    <div class="option-cards">
+                        <label class="option-card">
+                            <input type="radio" name="experience" value="new">
+                            <div class="option-icon"><i data-lucide="sunrise"></i></div>
+                            <div class="option-content">
+                                <h4>Just Starting</h4>
+                                <p>New to speech therapy exercises</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="experience" value="some">
+                            <div class="option-icon"><i data-lucide="sun"></i></div>
+                            <div class="option-content">
+                                <h4>Some Experience</h4>
+                                <p>Tried some techniques before</p>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="experience" value="experienced">
+                            <div class="option-icon"><i data-lucide="award"></i></div>
+                            <div class="option-content">
+                                <h4>Experienced</h4>
+                                <p>Regular practice with therapy</p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="step-nav">
+                        <button type="button" class="btn btn-back" onclick="prevStep()">
+                            <i data-lucide="arrow-left" style="width: 18px;"></i>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-next" id="submit-btn">
+                            Complete Setup
+                            <i data-lucide="check" style="width: 18px; margin-left: 8px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Success Step -->
+                <div class="form-step" data-step="success">
+                    <div class="success-animation">
+                        <div class="success-icon">
+                            <i data-lucide="check"></i>
+                        </div>
+                        <h2 style="color: var(--success-color);">You're All Set!</h2>
+                        <p class="text-secondary">Your personalized experience is ready.</p>
+                    </div>
+                </div>
+
+                <!-- Loading/Creating Plan Step -->
+                <div class="form-step" data-step="loading">
+                    <div class="loading-animation">
+                        <div class="loading-icon">
+                            <div class="loading-spinner"></div>
+                            <i data-lucide="sparkles" class="sparkle-icon"></i>
+                        </div>
+                        <h2 id="loading-title">Creating Your Personal Plan</h2>
+                        <p class="text-secondary" id="loading-subtitle">Analyzing your preferences...</p>
+                        
+                        <div class="loading-progress">
+                            <div class="loading-bar">
+                                <div class="loading-fill" id="loading-fill"></div>
+                            </div>
+                            <div class="loading-steps">
+                                <div class="loading-step active" id="lstep1">
+                                    <i data-lucide="check-circle"></i>
+                                    <span>Setting up profile</span>
+                                </div>
+                                <div class="loading-step" id="lstep2">
+                                    <i data-lucide="circle"></i>
+                                    <span>Analyzing goals</span>
+                                </div>
+                                <div class="loading-step" id="lstep3">
+                                    <i data-lucide="circle"></i>
+                                    <span>Creating exercises</span>
+                                </div>
+                                <div class="loading-step" id="lstep4">
+                                    <i data-lucide="circle"></i>
+                                    <span>Personalizing dashboard</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <p style="text-align: center; margin-top: var(--spacing-xl); font-size: 0.8rem; color: var(--text-light);">
+                By continuing, you agree to our 
+                <a href="#" style="color: var(--primary-color);">Terms</a> & 
+                <a href="#" style="color: var(--primary-color);">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<canvas id="confetti" class="confetti"></canvas>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    lucide.createIcons();
+
+    let currentStep = 1;
+    const totalSteps = 5;
+    
+    const stepTitles = {
+        1: { title: "What should we call you?", subtitle: "This will be shown on your profile" },
+        2: { title: "How old are you?", subtitle: "This helps us personalize your experience" },
+        3: { title: "How did you hear about us?", subtitle: "We'd love to know how you found FluEntra" },
+        4: { title: "What's your main goal?", subtitle: "We'll customize your therapy plan" },
+        5: { title: "What's your experience level?", subtitle: "This helps us set the right pace for you" }
+    };
+
+    function updateStepUI() {
+        document.querySelectorAll('.step-dot').forEach((dot, index) => {
+            const step = index + 1;
+            dot.classList.remove('active', 'completed');
+            if (step === currentStep) {
+                dot.classList.add('active');
+            } else if (step < currentStep) {
+                dot.classList.add('completed');
+            }
+        });
+
+        if (stepTitles[currentStep]) {
+            document.getElementById('step-title').textContent = stepTitles[currentStep].title;
+            document.getElementById('step-subtitle').textContent = stepTitles[currentStep].subtitle;
+        }
+
+        document.querySelectorAll('.form-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        document.querySelector(`.form-step[data-step="${currentStep}"]`)?.classList.add('active');
+        
+        lucide.createIcons();
+    }
+
+    function nextStep() {
+        if (currentStep === 1) {
+            const name = document.getElementById('full_name').value.trim();
+            if (!name) {
+                showError('Please enter your name');
+                return;
+            }
+        }
+
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateStepUI();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            updateStepUI();
+        }
+    }
+
+    function showError(message) {
+        const errorEl = document.getElementById('error-message');
+        errorEl.textContent = message;
+        errorEl.style.display = 'block';
+        setTimeout(() => {
+            errorEl.style.display = 'none';
+        }, 3000);
+    }
+
+    function updateAge(value) {
+        document.getElementById('age-value').textContent = value;
+    }
+
+    document.querySelectorAll('.option-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const name = this.querySelector('input').name;
+            document.querySelectorAll(`.option-card input[name="${name}"]`).forEach(input => {
+                input.closest('.option-card').classList.remove('selected');
+            });
+            this.classList.add('selected');
+            this.querySelector('input').checked = true;
+        });
+    });
+
+    document.getElementById('onboarding-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Saving...</span>';
+
+        const formData = {
+            full_name: document.getElementById('full_name').value.trim(),
+            age: document.getElementById('age').value,
+            referral: document.querySelector('input[name="referral"]:checked')?.value || '',
+            goal: document.querySelector('input[name="goal"]:checked')?.value || '',
+            experience: document.querySelector('input[name="experience"]:checked')?.value || ''
+        };
+
+        try {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch('/api/complete-profile/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show loading animation first
+                document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+                document.querySelector('.form-step[data-step="loading"]').classList.add('active');
+                document.querySelector('.step-progress').style.display = 'none';
+                document.getElementById('step-title').textContent = '';
+                document.getElementById('step-subtitle').textContent = '';
+                
+                lucide.createIcons();
+                
+                // Animate the loading steps
+                animateLoadingSteps().then(() => {
+                    // Show success after loading
+                    document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+                    document.querySelector('.form-step[data-step="success"]').classList.add('active');
+                    lucide.createIcons();
+                    launchConfetti();
+                    
+                    // Redirect after showing success
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/app/';
+                    }, 1500);
+                });
+            } else {
+                showError(data.error || 'Something went wrong');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Complete Setup <i data-lucide="check" style="width: 18px; margin-left: 8px;"></i>';
+                lucide.createIcons();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showError('Network error. Please try again.');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Complete Setup <i data-lucide="check" style="width: 18px; margin-left: 8px;"></i>';
+            lucide.createIcons();
+        }
+    });
+
+    async function animateLoadingSteps() {
+        const loadingFill = document.getElementById('loading-fill');
+        const loadingTitle = document.getElementById('loading-title');
+        const loadingSubtitle = document.getElementById('loading-subtitle');
+        
+        const steps = [
+            { id: 'lstep1', title: 'Setting up profile', subtitle: 'Saving your preferences...', progress: 25 },
+            { id: 'lstep2', title: 'Analyzing goals', subtitle: 'Understanding your objectives...', progress: 50 },
+            { id: 'lstep3', title: 'Creating exercises', subtitle: 'Building your custom exercises...', progress: 75 },
+            { id: 'lstep4', title: 'Personalizing dashboard', subtitle: 'Almost ready...', progress: 100 }
+        ];
+
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+            
+            // Update title and subtitle
+            loadingTitle.textContent = step.title;
+            loadingSubtitle.textContent = step.subtitle;
+            
+            // Update progress bar
+            loadingFill.style.width = step.progress + '%';
+            
+            // Update step indicators
+            steps.forEach((s, index) => {
+                const el = document.getElementById(s.id);
+                if (index < i) {
+                    el.classList.remove('active');
+                    el.classList.add('completed');
+                    el.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>' + s.title + '</span>';
+                } else if (index === i) {
+                    el.classList.add('active');
+                    el.classList.remove('completed');
+                    el.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg><span>' + s.title + '</span>';
+                }
+            });
+            
+            // Wait before next step
+            await new Promise(resolve => setTimeout(resolve, 1200));
+        }
+        
+        // Mark last step as completed
+        const lastStep = document.getElementById('lstep4');
+        lastStep.classList.remove('active');
+        lastStep.classList.add('completed');
+        lastStep.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Personalizing dashboard</span>';
+        
+        // Small delay before showing success
+        await new Promise(resolve => setTimeout(resolve, 300));
+    }
+
+    function launchConfetti() {
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#2C5282', '#4299E1', '#4FD1C5', '#48bb78', '#f6ad55', '#63b3ed'];
+
+        for (let i = 0; i < 150; i++) {
+            particles.push({
+                x: canvas.width / 2,
+                y: canvas.height / 2,
+                vx: (Math.random() - 0.5) * 20,
+                vy: (Math.random() - 0.5) * 20 - 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                size: Math.random() * 8 + 4,
+                rotation: Math.random() * 360
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            let activeParticles = 0;
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.5;
+                p.rotation += 5;
+
+                if (p.y < canvas.height + 50) {
+                    activeParticles++;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size / 2);
+                    ctx.restore();
+                }
+            });
+
+            if (activeParticles > 0) {
+                requestAnimationFrame(animate);
+            }
+        }
+
+        animate();
+    }
+</script>
+{% endblock %}

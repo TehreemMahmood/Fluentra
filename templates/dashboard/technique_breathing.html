@@ -1,0 +1,272 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Diaphragmatic Breathing{% endblock %}
+
+{% block content %}
+<!-- Header with Back Button -->
+<div style="margin-bottom: var(--spacing-xl);">
+    <a href="{% url 'techniques' %}" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        Back to Techniques
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.15) 100%); border-radius: var(--radius-lg); padding: 40px; margin-bottom: var(--spacing-xl);">
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);">
+            <i data-lucide="wind" style="width: 50px; height: 50px; color: white;"></i>
+        </div>
+        <div style="flex: 1;">
+            <span class="badge" style="background: #FEEBC8; color: #744210; margin-bottom: 12px;">Breathing Technique</span>
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark);">Diaphragmatic Breathing</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">Master the foundational breathing technique that supports fluent speech and reduces vocal tension.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <!-- How to Practice -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
+            How to Practice
+        </h3>
+        <ol style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Find Your Position:</strong> Sit or lie down comfortably with relaxed shoulders</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Hand Placement:</strong> Place one hand on your chest and one on your belly</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Inhale Deeply:</strong> Breathe in slowly through your nose - your belly should rise while chest stays still</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Controlled Exhale:</strong> Exhale slowly through your mouth for 4-6 seconds</li>
+            <li><strong style="color: var(--text-dark);">Check Your Form:</strong> The hand on your chest should stay relatively still throughout</li>
+        </ol>
+    </div>
+    
+    <!-- Benefits for Fluency -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+            Benefits for Fluency
+        </h3>
+        <ul style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduces Vocal Tension:</strong> Relaxes throat and vocal cords for smoother speech</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Better Breath Support:</strong> Provides consistent airflow for sustained speaking</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Anxiety Management:</strong> Helps manage nervousness during speaking situations</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Calm State:</strong> Creates a physiological state conducive to fluent speech</li>
+            <li><strong style="color: var(--text-dark);">Muscle Relaxation:</strong> Prevents tightening of speech-related muscles</li>
+        </ul>
+    </div>
+</div>
+
+<!-- How It Reduces Stuttering Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(79, 209, 197, 0.05) 100%);">
+    <h3 style="margin-bottom: var(--spacing-xl); color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="brain" style="width: 24px; height: 24px; color: white;"></i>
+        </div>
+        How Diaphragmatic Breathing Reduces Stuttering
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="activity" style="width: 24px; height: 24px; color: var(--primary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--primary-color);">Nervous System Regulation</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Activates the parasympathetic nervous system, shifting your body from "fight-or-flight" to "rest-and-speak" mode, reducing the physical tension that triggers stuttering.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--secondary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="wind" style="width: 24px; height: 24px; color: var(--secondary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--secondary-color);">Airflow Control</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Provides steady, controlled airflow essential for continuous speech. Blocks and repetitions often occur when airflow is interrupted or insufficient.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #F59E0B; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="circle-dot" style="width: 24px; height: 24px; color: #F59E0B;"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: #F59E0B;">Laryngeal Relaxation</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Reduces tension in the larynx and vocal folds. Tight vocal cords are a primary physical cause of blocking and prolongation stuttering.</p>
+        </div>
+    </div>
+    
+    <!-- Clinical Evidence -->
+    <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(99, 102, 241, 0.03) 100%); border-radius: var(--radius-md); border: 1px solid rgba(99, 102, 241, 0.1);">
+        <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+            <div style="width: 40px; height: 40px; background: var(--primary-color); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i data-lucide="file-text" style="width: 20px; height: 20px; color: white;"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-dark);">Clinical Evidence</h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+                    Research shows that people who stutter often have irregular breathing patterns during speech. Diaphragmatic breathing retrains the respiratory system to support fluent speech by ensuring adequate breath supply and reducing muscle tension throughout the speech mechanism. Studies have demonstrated that regular practice of diaphragmatic breathing can reduce stuttering frequency by up to 40% in some individuals.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Tips Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="lightbulb" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Tips for Effective Practice
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg);">
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: var(--primary-color);">1</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Practice Daily</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Start with 5 minutes each morning and evening to build the habit.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: var(--primary-color);">2</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Use Before Speaking</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Take 2-3 diaphragmatic breaths before important conversations.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: var(--primary-color);">3</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Stay Relaxed</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Keep shoulders dropped and jaw relaxed during practice.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(99, 102, 241, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: var(--primary-color);">4</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Combine with Speaking</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Practice speaking short phrases while using the technique.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Augmented Reality Experience Section -->
+<div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 30%, #3a7cb8 60%, #4FC3F7 100%); border-radius: 24px; padding: 50px; position: relative; overflow: hidden; margin-bottom: var(--spacing-xl);">
+    <!-- Decorative Elements -->
+    <div style="position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.05); border-radius: 50%;"></div>
+    <div style="position: absolute; bottom: -50px; left: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.03); border-radius: 50%;"></div>
+    <div style="position: absolute; top: 50%; right: 10%; width: 150px; height: 150px; background: rgba(79, 195, 247, 0.1); border-radius: 50%; filter: blur(40px);"></div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr 0.8fr; gap: 40px; align-items: center; position: relative; z-index: 1;">
+        <!-- Left Content -->
+        <div>
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 8px 16px; border-radius: 20px; margin-bottom: 20px;">
+                <i data-lucide="sparkles" style="width: 16px; height: 16px; color: #4FC3F7;"></i>
+                <span style="font-size: 0.8rem; font-weight: 600; color: white; text-transform: uppercase; letter-spacing: 1px;">AR Feature</span>
+            </div>
+            <h2 style="color: white; font-size: 1.8rem; font-weight: 800; margin-bottom: 16px; line-height: 1.2;">
+                Visualize Your<br>
+                <span style="background: linear-gradient(90deg, #4FC3F7, #81D4FA); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Diaphragm in AR</span>
+            </h2>
+            <p style="color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.7; margin-bottom: 24px;">
+                Experience diaphragmatic breathing like never before. Our AR technology visualizes your diaphragm movement in real-time, helping you master proper breathing technique for fluent speech.
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(79, 195, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="eye" style="width: 16px; height: 16px; color: #4FC3F7;"></i>
+                    </div>
+                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Real-time diaphragm visualization</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(79, 195, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="activity" style="width: 16px; height: 16px; color: #4FC3F7;"></i>
+                    </div>
+                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Track breathing patterns</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 32px; height: 32px; background: rgba(79, 195, 247, 0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="target" style="width: 16px; height: 16px; color: #4FC3F7;"></i>
+                    </div>
+                    <span style="color: rgba(255,255,255,0.9); font-size: 0.9rem;">Guided practice sessions</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Center - AR Preview Image -->
+        <div style="display: flex; align-items: center; justify-content: center;">
+            <div style="background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); border-radius: 20px; padding: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);">
+                <img src="{% static 'images/ar.jpeg' %}" alt="Diaphragm Visualization" style="max-height: 280px; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
+            </div>
+        </div>
+        
+        <!-- Right - QR Code Section -->
+        <div style="text-align: center;">
+            <div style="background: white; border-radius: 20px; width: 280px; height: 280px; padding: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                <!-- QR Code -->
+                <img src="{% static 'images/QR_Code-removebg-preview.png' %}" alt="AR QR Code" style="width: 220px; height: 220px; object-fit: contain; display: block;">
+            </div>
+            <div style="margin-top: 20px;">
+                <p style="color: white; font-weight: 700; font-size: 1.1rem; margin-bottom: 8px;">Scan to Experience</p>
+                <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; line-height: 1.5;">
+                    Open your phone camera and<br>scan this QR code to launch<br>the AR breathing guide
+                </p>
+            </div>
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px;">
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px;">
+                    <i data-lucide="smartphone" style="width: 14px; height: 14px; color: rgba(255,255,255,0.8);"></i>
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.75rem;">iOS</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px;">
+                    <i data-lucide="smartphone" style="width: 14px; height: 14px; color: rgba(255,255,255,0.8);"></i>
+                    <span style="color: rgba(255,255,255,0.8); font-size: 0.75rem;">Android</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+</style>
+
+<!-- Video Tutorial Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="play-circle" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Video Tutorial
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Watch this video to see diaphragmatic breathing technique demonstrated by a speech therapist.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000;">
+        <iframe 
+            src="https://www.youtube.com/embed/g2wo2Impnfg?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}" 
+            title="Diaphragmatic Breathing Tutorial"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--radius-md);">
+        </iframe>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+        Video not loading? <a href="https://youtu.be/g2wo2Impnfg" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Watch on YouTube →</a>
+    </p>
+</div>
+
+<!-- Practice Button -->
+<div style="display: flex; justify-content: center; padding: var(--spacing-xl) 0;">
+    <a href="{% url 'practice' %}" class="btn btn-primary" style="padding: 16px 48px; font-size: 1.1rem;">
+        <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+        Start Practice Session
+    </a>
+</div>
+{% endblock %}

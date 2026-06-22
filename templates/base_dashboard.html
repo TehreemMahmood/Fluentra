@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %} | FluEntra</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ai_chat_widget.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    {% csrf_token %}
+    <div class="app-container">
+        {% include 'partials/sidebar.html' %}
+
+        <!-- Main Content -->
+        <main class="main-stage">
+            {% include 'partials/dashboard_header.html' %}
+
+            <div id="app-view-container">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating AI Chat Widget -->
+    <button id="ai-chat-fab" class="ai-chat-fab" aria-label="Open AI Coach chat">
+        <i data-lucide="message-circle-more"></i>
+        <span>AI Coach</span>
+    </button>
+
+    <section id="ai-chat-panel" class="ai-chat-panel" aria-hidden="true">
+        <header class="ai-chat-header">
+            <div class="ai-chat-title-wrap">
+                <div class="ai-chat-avatar"><i data-lucide="sparkles"></i></div>
+                <div>
+                    <h3>FluEntra AI Coach</h3>
+                    <p>Powered by Groq</p>
+                </div>
+            </div>
+            <button id="ai-chat-close" class="ai-chat-close" aria-label="Close chat">
+                <i data-lucide="x"></i>
+            </button>
+        </header>
+
+        <div id="ai-chat-messages" class="ai-chat-messages">
+            <div class="ai-chat-bubble ai">
+                👋 Hey! I’m your FluEntra AI Coach. Ask me about breathing drills, easy onset, pausing strategies, or daily practice plans.
+            </div>
+        </div>
+
+        <form id="ai-chat-form" class="ai-chat-form">
+            <input id="ai-chat-input" type="text" maxlength="1200" placeholder="Ask your coach anything..." required>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </section>
+
+    <script src="{% static 'js/data.js' %}"></script>
+    <script src="{% static 'js/speech_recorder.js' %}"></script>
+    <script src="{% static 'js/analytics.js' %}"></script>
+    <script src="{% static 'js/exercises.js' %}"></script>
+    <script src="{% static 'js/techniques.js' %}"></script>
+    <script src="{% static 'js/router.js' %}"></script>
+    <script src="{% static 'js/ai_chat_widget.js' %}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

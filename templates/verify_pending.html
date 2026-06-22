@@ -1,0 +1,589 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}Verify Your Email - FluEntra{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-page {
+        min-height: 100vh;
+        display: flex;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+    }
+
+    .auth-left {
+        flex: 1;
+        display: none;
+        padding: var(--spacing-2xl);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @media (min-width: 992px) {
+        .auth-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    .auth-left::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+    .auth-left h1 {
+        font-size: 2.8rem;
+        margin-bottom: var(--spacing-lg);
+        color: white;
+        line-height: 1.2;
+    }
+
+    .auth-left p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 420px;
+        line-height: 1.6;
+    }
+
+    .feature-list {
+        margin-top: var(--spacing-2xl);
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.9;
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-icon i {
+        width: 24px;
+        height: 24px;
+    }
+
+    .auth-right {
+        flex: 1;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl);
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 480px;
+        text-align: center;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .auth-logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .auth-logo img {
+        height: 40px;
+    }
+
+    .email-icon-wrapper {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto var(--spacing-xl);
+        background: linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(79, 209, 197, 0.1) 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.4);
+        }
+        50% {
+            box-shadow: 0 0 0 20px rgba(66, 153, 225, 0);
+        }
+    }
+
+    .email-icon-wrapper i {
+        width: 48px;
+        height: 48px;
+        color: #4299E1;
+    }
+
+    .verify-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .verify-subtitle {
+        font-size: 1rem;
+        color: var(--text-light);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .email-highlight {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    .verify-steps {
+        text-align: left;
+        margin: var(--spacing-xl) 0;
+        padding: var(--spacing-lg);
+        background: #f8fafc;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border-color);
+    }
+
+    .verify-step {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .verify-step:last-child {
+        margin-bottom: 0;
+    }
+
+    .step-number {
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .step-text {
+        color: var(--text-color);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        padding-top: 3px;
+    }
+
+    .spam-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: var(--spacing-lg) 0;
+        padding: var(--spacing-md);
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-radius: var(--radius-md);
+        color: #92400e;
+        font-size: 0.9rem;
+    }
+
+    .spam-note i {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    .resend-section {
+        margin-top: var(--spacing-xl);
+        padding-top: var(--spacing-xl);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .resend-text {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .btn-resend {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        border-radius: var(--radius-lg);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-resend:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .btn-resend:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-resend i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .resend-timer {
+        font-size: 0.85rem;
+        color: var(--text-light);
+        margin-top: var(--spacing-sm);
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: var(--spacing-lg);
+        color: var(--text-light);
+        font-size: 0.95rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: var(--primary-color);
+    }
+
+    .back-link i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .message-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: var(--radius-md);
+        font-size: 0.95rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+        transform: translateX(120%);
+        transition: transform 0.3s ease;
+    }
+
+    .message-toast.show {
+        transform: translateX(0);
+    }
+
+    .message-toast.success {
+        background: #dcfce7;
+        border: 1px solid #86efac;
+        color: #166534;
+    }
+
+    .message-toast.error {
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+    }
+
+    .message-toast i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .testimonial {
+        margin-top: var(--spacing-2xl);
+        padding: var(--spacing-lg);
+        background: rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        backdrop-filter: blur(10px);
+    }
+
+    .testimonial p {
+        font-style: italic;
+        margin-bottom: var(--spacing-md);
+        font-size: 1rem;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    .testimonial-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #48bb78, #38a169);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <!-- Left Side - Branding -->
+    <div class="auth-left">
+        
+        <h1>Almost There!</h1>
+        <p>Just one more step to unlock your personalized speech therapy experience. Verify your email to get started.</p>
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <div>
+                    <strong>Secure Account</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Email verification keeps your account safe</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="bell"></i>
+                </div>
+                <div>
+                    <strong>Stay Updated</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Receive progress reports and tips</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="unlock"></i>
+                </div>
+                <div>
+                    <strong>Full Access</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Unlock all features after verification</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial">
+            <p>"The verification process was quick and easy. I was practicing my speech exercises within minutes!"</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">RJ</div>
+                <div>
+                    <strong>Raj J.</strong>
+                    <p style="margin: 0; font-size: 0.85rem; opacity: 0.8;">Pro User • 3 months</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Content -->
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="auth-header">
+                <!-- Logo removed -->
+            </div>
+
+            <div class="email-icon-wrapper">
+                <i data-lucide="mail-check"></i>
+            </div>
+            
+            <h2 class="verify-title">Check Your Email</h2>
+            <p class="verify-subtitle">
+                We've sent a verification link to
+            </p>
+            <p class="verify-subtitle">
+                <span class="email-highlight" id="userEmail">{{ email }}</span>
+            </p>
+            
+            <div class="verify-steps">
+                <div class="verify-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Open your email inbox</div>
+                </div>
+                <div class="verify-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Find the email from FluEntra (check spam folder too)</div>
+                </div>
+                <div class="verify-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Click the verification link to activate your account</div>
+                </div>
+            </div>
+            
+            <div class="spam-note">
+                <i data-lucide="alert-circle"></i>
+                <span>If you don't see the email, check your spam or junk folder</span>
+            </div>
+            
+            <div class="resend-section">
+                <p class="resend-text">Didn't receive the email?</p>
+                <button class="btn-resend" id="resendBtn" onclick="resendEmail()">
+                    <i data-lucide="refresh-cw"></i>
+                    Resend verification email
+                </button>
+                <p class="resend-timer" id="resendTimer" style="display: none;"></p>
+            </div>
+            
+            <a href="/auth/" class="back-link">
+                <i data-lucide="arrow-left"></i>
+                Back to login
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Message -->
+<div class="message-toast" id="messageToast">
+    <i data-lucide="check-circle"></i>
+    <span id="messageText"></span>
+</div>
+
+<script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+    
+    const userEmail = '{{ email }}';
+    let resendCooldown = 0;
+    let cooldownInterval = null;
+    
+    function showMessage(message, type) {
+        const toast = document.getElementById('messageToast');
+        const text = document.getElementById('messageText');
+        const icon = toast.querySelector('i');
+        
+        text.textContent = message;
+        toast.className = 'message-toast ' + type;
+        
+        // Update icon
+        icon.setAttribute('data-lucide', type === 'success' ? 'check-circle' : 'x-circle');
+        lucide.createIcons();
+        
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 4000);
+    }
+    
+    function startCooldown(seconds) {
+        resendCooldown = seconds;
+        const btn = document.getElementById('resendBtn');
+        const timer = document.getElementById('resendTimer');
+        
+        btn.disabled = true;
+        timer.style.display = 'block';
+        
+        updateCooldownDisplay();
+        
+        cooldownInterval = setInterval(() => {
+            resendCooldown--;
+            if (resendCooldown <= 0) {
+                clearInterval(cooldownInterval);
+                btn.disabled = false;
+                timer.style.display = 'none';
+            } else {
+                updateCooldownDisplay();
+            }
+        }, 1000);
+    }
+    
+    function updateCooldownDisplay() {
+        const timer = document.getElementById('resendTimer');
+        timer.textContent = `You can resend in ${resendCooldown} seconds`;
+    }
+    
+    async function resendEmail() {
+        if (resendCooldown > 0 || !userEmail) return;
+        
+        const btn = document.getElementById('resendBtn');
+        const originalContent = btn.innerHTML;
+        
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i> Sending...';
+        lucide.createIcons();
+        
+        try {
+            const response = await fetch('/api/resend-verification/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ email: userEmail })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showMessage(data.message, 'success');
+                startCooldown(60);
+            } else {
+                showMessage(data.error, 'error');
+                // Extract seconds if rate limited
+                const match = data.error.match(/wait (\d+) seconds/);
+                if (match) {
+                    startCooldown(parseInt(match[1]));
+                } else {
+                    btn.disabled = false;
+                }
+            }
+        } catch (error) {
+            showMessage('Failed to resend email. Please try again.', 'error');
+            btn.disabled = false;
+        }
+        
+        btn.innerHTML = originalContent;
+        lucide.createIcons();
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% endblock %}

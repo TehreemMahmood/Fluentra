@@ -1,0 +1,38 @@
+<header class="header-bar">
+    <div style="flex: 1; display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div class="sidebar-toggle">
+            <i data-lucide="menu"></i>
+        </div>
+        <div class="welcome-text">
+            <h1 style="font-size: 1.75rem;">Hello, {{ request.user.first_name|default:request.user.full_name|default:request.user.email }}!</h1>
+            <p class="text-secondary">Ready for your daily practice?</p>
+        </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <!-- Search Bar -->
+        <div style="position: relative; width: 300px;">
+            <i data-lucide="search"
+                style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; color: var(--text-light);"></i>
+            <input type="text" class="form-input" placeholder="Search exercises..."
+                style="padding-left: 40px; height: 40px; font-size: 0.9rem;">
+        </div>
+
+        <!-- Notifications -->
+        <div style="position: relative; cursor: pointer;">
+            <i data-lucide="bell" style="width: 24px; color: var(--text-secondary);"></i>
+            <span
+                style="position: absolute; top: -5px; right: -5px; background: var(--error-color); color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid white;">3</span>
+        </div>
+
+        <div class="user-profile">
+            <div class="stat-group" style="text-align: right; margin-right: var(--spacing-lg);">
+                <span class="badge badge-medium">Level 4</span>
+            </div>
+            <div class="author-avatar"
+                style="width: 44px; height: 44px; background-color: var(--secondary-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; border-radius: 50%;">
+                AD
+            </div>
+        </div>
+    </div>
+</header>

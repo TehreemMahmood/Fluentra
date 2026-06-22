@@ -1,0 +1,602 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Pricing{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketing.css' %}">
+<style>
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+    
+    .pricing-card {
+        position: relative;
+        padding: 2.5rem;
+        border-radius: 16px;
+        background: white;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+    
+    .pricing-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pricing-card.popular {
+        border-color: #4299E1;
+        transform: scale(1.02);
+    }
+    
+    .pricing-card.popular:hover {
+        transform: scale(1.02) translateY(-8px);
+    }
+    
+    .pricing-card.current-plan {
+        border-color: #48bb78;
+        background: linear-gradient(to bottom, #f0fff4, white);
+    }
+    
+    .popular-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #4299E1, #4FD1C5);
+        color: white;
+        padding: 6px 20px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    
+    .current-badge {
+        position: absolute;
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #48bb78, #38a169);
+        color: white;
+        padding: 6px 20px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .current-badge svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .pricing-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .pricing-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #2C5282;
+    }
+    
+    .price {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #1a202c;
+        line-height: 1;
+        margin: 1rem 0 0.5rem;
+    }
+    
+    .price span {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #718096;
+    }
+    
+    .price-note {
+        font-size: 0.85rem;
+        color: #718096;
+    }
+    
+    .pricing-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2rem 0;
+    }
+    
+    .pricing-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 0;
+        font-size: 0.95rem;
+        color: #4a5568;
+    }
+    
+    .pricing-features li i,
+    .pricing-features li svg {
+        width: 20px;
+        height: 20px;
+        flex-shrink: 0;
+        color: #48bb78;
+    }
+    
+    .pricing-features li.unavailable {
+        color: #a0aec0;
+    }
+    
+    .pricing-features li.unavailable i,
+    .pricing-features li.unavailable svg {
+        color: #e53e3e;
+    }
+    
+    .pricing-card .btn {
+        width: 100%;
+        padding: 14px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .btn-current {
+        background: #f0fff4;
+        color: #38a169;
+        border: 2px solid #48bb78;
+        cursor: default;
+    }
+    
+    .btn-current:hover {
+        background: #f0fff4;
+        transform: none;
+    }
+    
+    .btn-upgrade {
+        background: linear-gradient(135deg, #4299E1, #4FD1C5);
+        color: white;
+        border: none;
+    }
+    
+    .btn-upgrade:hover {
+        background: linear-gradient(135deg, #3182ce, #38b2ac);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+    }
+    
+    .btn-downgrade {
+        background: #f7fafc;
+        color: #718096;
+        border: 2px solid #e2e8f0;
+    }
+    
+    .btn-downgrade:hover {
+        background: #edf2f7;
+        border-color: #cbd5e0;
+    }
+    
+    /* FAQ Styles */
+    .faq-grid {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .faq-item {
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 0;
+        cursor: pointer;
+        font-weight: 600;
+        color: #2d3748;
+        transition: color 0.2s;
+    }
+    
+    .faq-question:hover {
+        color: #4299E1;
+    }
+    
+    .faq-question i {
+        transition: transform 0.3s ease;
+    }
+    
+    .faq-answer {
+        display: none;
+        padding-bottom: 1.25rem;
+        color: #718096;
+        line-height: 1.7;
+    }
+    
+    /* Comparison Table */
+    .comparison-section {
+        margin-top: 4rem;
+    }
+    
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+        padding: 1rem;
+        text-align: center;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .comparison-table th {
+        background: #f7fafc;
+        font-weight: 600;
+        color: #2C5282;
+    }
+    
+    .comparison-table th:first-child,
+    .comparison-table td:first-child {
+        text-align: left;
+        padding-left: 1.5rem;
+    }
+    
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .check-icon {
+        color: #48bb78;
+    }
+    
+    .x-icon {
+        color: #e53e3e;
+    }
+    
+    @media (max-width: 768px) {
+        .pricing-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .pricing-card.popular {
+            transform: none;
+        }
+        
+        .price {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Simple, Transparent Pricing</h1>
+        <p>Choose the plan that's right for your journey to fluency.</p>
+        {% if current_plan %}
+        <div style="margin-top: 1rem; display: inline-flex; align-items: center; gap: 8px; background: rgba(72, 187, 120, 0.1); padding: 8px 16px; border-radius: 20px; color: #38a169; font-weight: 500;">
+            <i data-lucide="check-circle" style="width: 18px; height: 18px;"></i>
+            You're currently on the <strong style="margin: 0 4px;">{{ current_plan|title }}</strong> plan
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<section class="container section-padding">
+    <div class="pricing-grid">
+        {% for plan in plans %}
+        <div class="pricing-card {% if plan.name == 'pro' %}popular{% endif %} {% if plan.name == current_plan %}current-plan{% endif %}">
+            {% if plan.name == current_plan %}
+            <div class="current-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                CURRENT PLAN
+            </div>
+            {% elif plan.name == 'pro' and plan.name != current_plan %}
+            <div class="popular-badge">MOST POPULAR</div>
+            {% endif %}
+            
+            <div class="pricing-header">
+                <h3>{{ plan.display_name }}</h3>
+                <div class="price">
+                    {% if plan.price == 0 %}
+                    Free<span></span>
+                    {% else %}
+                    Rs. {{ plan.price|floatformat:0|intcomma }}<span>/mo</span>
+                    {% endif %}
+                </div>
+                <p class="price-note">{{ plan.description }}</p>
+            </div>
+            
+            <ul class="pricing-features">
+                {% if plan.features and plan.features|length > 0 %}
+                    {% for feature in plan.features %}
+                    <li>
+                        <i data-lucide="check-circle"></i>
+                        {{ feature }}
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <!-- Fallback features based on plan name -->
+                    {% if plan.name == 'basic' %}
+                    <li><i data-lucide="check-circle"></i> 3 sessions per month</li>
+                    <li><i data-lucide="check-circle"></i> Basic fluency metrics</li>
+                    <li><i data-lucide="check-circle"></i> 5 tongue twisters</li>
+                    <li><i data-lucide="check-circle"></i> Voice recording & playback</li>
+                    <li class="unavailable"><i data-lucide="x-circle"></i> Export data</li>
+                    <li class="unavailable"><i data-lucide="x-circle"></i> Personalized AI advice</li>
+                    {% elif plan.name == 'pro' %}
+                    <li><i data-lucide="check-circle"></i> Unlimited exercises</li>
+                    <li><i data-lucide="check-circle"></i> Advanced AI feedback</li>
+                    <li><i data-lucide="check-circle"></i> Personalized therapy plans</li>
+                    <li><i data-lucide="check-circle"></i> Voice recording & playback</li>
+                    <li><i data-lucide="check-circle"></i> Detailed analytics</li>
+                    <li><i data-lucide="check-circle"></i> Priority support</li>
+                    {% elif plan.name == 'clinic' %}
+                    <li><i data-lucide="check-circle"></i> Manage up to 50 patients</li>
+                    <li><i data-lucide="check-circle"></i> Clinician dashboard</li>
+                    <li><i data-lucide="check-circle"></i> Shared training assignments</li>
+                    <li><i data-lucide="check-circle"></i> HIPAA compliant storage</li>
+                    <li><i data-lucide="check-circle"></i> All Pro features included</li>
+                    <li><i data-lucide="check-circle"></i> 24/7 Priority support</li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+            
+            {% if user.is_authenticated %}
+                {% if plan.name == current_plan %}
+                <button class="btn btn-current" disabled>
+                    <i data-lucide="check"></i>
+                    Current Plan
+                </button>
+                {% elif plan.price > user_subscription.plan.price %}
+                <a href="{% url 'subscription' %}?upgrade={{ plan.name }}" class="btn btn-upgrade">
+                    <i data-lucide="zap"></i>
+                    Upgrade to {{ plan.display_name }}
+                </a>
+                {% elif plan.price == 0 %}
+                <a href="{% url 'subscription' %}?downgrade={{ plan.name }}" class="btn btn-downgrade">
+                    Switch to Free
+                </a>
+                {% else %}
+                <a href="{% url 'subscription' %}?change={{ plan.name }}" class="btn btn-outline" style="width: 100%;">
+                    Switch Plan
+                </a>
+                {% endif %}
+            {% else %}
+                {% if plan.name == 'clinic' %}
+                <a href="{% url 'contact' %}" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
+                {% elif plan.name == 'pro' %}
+                <a href="{% url 'auth' %}?mode=signup&plan=pro" class="btn btn-upgrade">
+                    <i data-lucide="zap"></i>
+                    Get Pro
+                </a>
+                {% else %}
+                <a href="{% url 'auth' %}?mode=signup" class="btn btn-outline" style="width: 100%;">Start Free</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% empty %}
+        <!-- Fallback static cards if no plans in database -->
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h3>Basic</h3>
+                <div class="price">Free</div>
+                <p class="price-note">For those just starting</p>
+            </div>
+            <ul class="pricing-features">
+                <li><i data-lucide="check-circle"></i> 3 sessions per month</li>
+                <li><i data-lucide="check-circle"></i> Basic fluency metrics</li>
+                <li><i data-lucide="check-circle"></i> 5 tongue twisters</li>
+                <li><i data-lucide="check-circle"></i> Voice recording & playback</li>
+                <li class="unavailable"><i data-lucide="x-circle"></i> Export data</li>
+                <li class="unavailable"><i data-lucide="x-circle"></i> Personalized AI advice</li>
+            </ul>
+            <a href="{% url 'auth' %}?mode=signup" class="btn btn-outline" style="width: 100%;">Start Free</a>
+        </div>
+        
+        <div class="pricing-card popular">
+            <div class="popular-badge">MOST POPULAR</div>
+            <div class="pricing-header">
+                <h3>Pro</h3>
+                <div class="price">Rs. 2,500<span>/mo</span></div>
+                <p class="price-note">Complete therapy companion</p>
+            </div>
+            <ul class="pricing-features">
+                <li><i data-lucide="check-circle"></i> Unlimited exercises</li>
+                <li><i data-lucide="check-circle"></i> Advanced AI feedback</li>
+                <li><i data-lucide="check-circle"></i> Personalized therapy plans</li>
+                <li><i data-lucide="check-circle"></i> Voice recording & playback</li>
+                <li><i data-lucide="check-circle"></i> Detailed analytics</li>
+                <li><i data-lucide="check-circle"></i> Priority support</li>
+            </ul>
+            <a href="{% url 'auth' %}?mode=signup&plan=pro" class="btn btn-upgrade">
+                <i data-lucide="zap"></i>
+                Get Pro
+            </a>
+        </div>
+        
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h3>Clinic</h3>
+                <div class="price">Rs. 10,000<span>/mo</span></div>
+                <p class="price-note">For speech therapists</p>
+            </div>
+            <ul class="pricing-features">
+                <li><i data-lucide="check-circle"></i> Manage up to 50 patients</li>
+                <li><i data-lucide="check-circle"></i> Clinician dashboard</li>
+                <li><i data-lucide="check-circle"></i> Shared training assignments</li>
+                <li><i data-lucide="check-circle"></i> HIPAA compliant storage</li>
+                <li><i data-lucide="check-circle"></i> All Pro features included</li>
+                <li><i data-lucide="check-circle"></i> 24/7 Priority support</li>
+            </ul>
+            <a href="{% url 'contact' %}" class="btn btn-outline" style="width: 100%;">Contact Sales</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Feature Comparison -->
+<section class="container section-padding comparison-section">
+    <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+        <h2>Compare Plans</h2>
+        <p style="color: #718096;">See which plan fits your needs</p>
+    </div>
+    
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Basic</th>
+                <th>Pro</th>
+                <th>Clinic</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sessions per month</td>
+                <td>3</td>
+                <td>Unlimited</td>
+                <td>Unlimited</td>
+            </tr>
+            <tr>
+                <td>Speech analysis</td>
+                <td>Basic</td>
+                <td>Advanced AI</td>
+                <td>Advanced AI</td>
+            </tr>
+            <tr>
+                <td>Exercise library</td>
+                <td>5 exercises</td>
+                <td>50+ exercises</td>
+                <td>50+ exercises</td>
+            </tr>
+            <tr>
+                <td>Progress tracking</td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+            </tr>
+            <tr>
+                <td>Export reports</td>
+                <td><i data-lucide="x" class="x-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+            </tr>
+            <tr>
+                <td>AI personalized feedback</td>
+                <td><i data-lucide="x" class="x-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+                <td><i data-lucide="check" class="check-icon"></i></td>
+            </tr>
+            <tr>
+                <td>Patient management</td>
+                <td><i data-lucide="x" class="x-icon"></i></td>
+                <td><i data-lucide="x" class="x-icon"></i></td>
+                <td>Up to 50 patients</td>
+            </tr>
+            <tr>
+                <td>Priority support</td>
+                <td><i data-lucide="x" class="x-icon"></i></td>
+                <td>Email</td>
+                <td>24/7 Phone & Email</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section class="container section-padding" style="background: white; border-radius: var(--radius-lg); margin-bottom: 3rem;">
+    <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
+        <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-grid">
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Can I cancel my subscription at any time?
+                <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Yes, you can cancel your subscription at any time from your account settings. You will continue
+                to have access to Pro features until the end of your billing cycle.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Do you offer a student discount?
+                <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                We do! Please contact our support team with proof of enrollment to receive a 50% discount on the
+                Pro plan.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Is my voice data kept private?
+                <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Absolutely. We take privacy seriously. Your recordings are encrypted and used only to provide
+                you with analysis. We never sell your data to third parties.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                Can I switch plans later?
+                <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                Yes! You can upgrade or downgrade your plan at any time. When upgrading, you'll be charged the prorated difference. When downgrading, the change takes effect at your next billing cycle.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                What payment methods do you accept?
+                <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                We accept all major credit cards (Visa, MasterCard, American Express), debit cards, and UPI payments. For Clinic plans, we also offer invoice-based payments.
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    lucide.createIcons();
+    
+    function toggleFaq(element) {
+        const answer = element.nextElementSibling;
+        const icon = element.querySelector('i');
+        const isOpen = answer.style.display === 'block';
+
+        // Close all other FAQs
+        document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.faq-question i').forEach(el => el.style.transform = 'rotate(0deg)');
+
+        if (!isOpen) {
+            answer.style.display = 'block';
+            icon.style.transform = 'rotate(180deg)';
+        }
+    }
+</script>
+{% endblock %}

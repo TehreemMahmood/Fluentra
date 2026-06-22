@@ -1,0 +1,17 @@
+# Show the full, real language breakdown for this project on GitHub.
+#
+# Note: "Django" is a Python web framework, not a language Linguist tracks, so
+# it appears under Python. The bar lists languages/markup actually in the repo:
+# HTML, Python, JavaScript and CSS, plus Markdown and JSON below.
+#
+# Nothing is vendored or hidden, so every real language is counted.
+
+# Make sure the primary languages are always counted.
+*.html  linguist-detectable=true
+*.py    linguist-detectable=true
+*.js    linguist-detectable=true
+*.css   linguist-detectable=true
+
+# Also surface the smaller languages so the breakdown is richer.
+*.md    linguist-detectable=true
+*.json  linguist-detectable=true

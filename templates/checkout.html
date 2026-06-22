@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - {{ plan.display_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketing.css' %}">
+<style>
+    .checkout-container {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: var(--spacing-2xl);
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+        .checkout-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .payment-form .form-group {
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .card-input-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .order-summary {
+        background: #f8fafc;
+        padding: var(--spacing-xl);
+        border-radius: var(--radius-lg);
+        height: fit-content;
+        position: sticky;
+        top: 100px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .summary-row.total {
+        border-bottom: none;
+        font-weight: bold;
+        font-size: 1.2rem;
+        padding-top: var(--spacing-md);
+    }
+
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        color: var(--success-color);
+        font-size: 0.85rem;
+        margin-top: var(--spacing-lg);
+    }
+
+    .test-cards {
+        background: #fffbeb;
+        border: 1px solid #fbbf24;
+        border-radius: var(--radius-md);
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        font-size: 0.85rem;
+    }
+
+    .test-cards h4 {
+        margin-bottom: var(--spacing-sm);
+        color: #92400e;
+    }
+
+    .test-cards code {
+        background: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Complete Your Purchase</h1>
+        <p>Subscribe to {{ plan.display_name }} plan</p>
+    </div>
+</div>
+
+<section class="container section-padding">
+    <div class="checkout-container">
+        <div class="payment-form">
+            <div class="card">
+                <h3 style="margin-bottom: var(--spacing-xl);">Payment Details</h3>
+
+                <div class="test-cards">
+                    <h4>🧪 Test Mode</h4>
+                    <p>Use test card: <code>4242 4242 4242 4242</code></p>
+                    <p>Any future expiry & any 3-digit CVC</p>
+                    <p style="margin-top: 8px;">Card starting with <code>4000 0000 0000</code> will be declined</p>
+                </div>
+
+                <form id="payment-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan.name }}">
+
+                    <div id="error-message"
+                        style="color: #e53e3e; margin-bottom: 16px; font-size: 0.9rem; padding: 10px; background: #fff5f5; border-radius: 6px; display: none; border: 1px solid #feb2b2;">
+                    </div>
+
+                    <div id="success-message"
+                        style="color: #22543D; margin-bottom: 16px; font-size: 0.9rem; padding: 10px; background: #C6F6D5; border-radius: 6px; display: none; border: 1px solid #9AE6B4;">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cardholder Name</label>
+                        <input type="text" id="card_name" class="form-input" placeholder="Aliza Khan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" id="card_number" class="form-input" placeholder="4242 4242 4242 4242"
+                            maxlength="19" required>
+                    </div>
+
+                    <div class="card-input-group">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" id="card_expiry" class="form-input" placeholder="MM/YY" maxlength="5"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVC</label>
+                            <input type="text" id="card_cvc" class="form-input" placeholder="123" maxlength="4"
+                                required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-md);"
+                        id="submit-btn">
+                        <span id="btn-text">Pay Rs. {{ plan.price }}</span>
+                        <span id="btn-loading" style="display: none;">Processing...</span>
+                    </button>
+
+                    <div class="secure-badge">
+                        <i data-lucide="lock" style="width: 16px;"></i>
+                        <span>Your payment info is secure and encrypted</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="order-summary">
+            <h3 style="margin-bottom: var(--spacing-lg);">Order Summary</h3>
+
+            <div class="summary-row">
+                <span>Plan</span>
+                <span>{{ plan.display_name }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Billing Period</span>
+                <span>Monthly</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span>Rs. {{ plan.price }}/mo</span>
+            </div>
+
+            <div style="margin-top: var(--spacing-xl); padding-top: var(--spacing-lg); border-top: 1px solid var(--border-color);">
+                <h4 style="margin-bottom: var(--spacing-md); font-size: 0.9rem;">What's included:</h4>
+                <ul style="list-style: none; padding: 0; font-size: 0.85rem; color: var(--text-secondary);">
+                    {% for feature in plan.features %}
+                    <li style="display: flex; gap: 8px; margin-bottom: 8px;">
+                        <i data-lucide="check" style="width: 16px; color: var(--success-color);"></i>
+                        {{ feature }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <p style="margin-top: var(--spacing-lg); font-size: 0.8rem; color: var(--text-light);">
+                By completing this purchase, you agree to our Terms of Service and Privacy Policy.
+                You can cancel anytime from your account settings.
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const form = document.getElementById('payment-form');
+    const cardNumber = document.getElementById('card_number');
+    const cardExpiry = document.getElementById('card_expiry');
+    const cardCvc = document.getElementById('card_cvc');
+    const cardName = document.getElementById('card_name');
+    const errorMsg = document.getElementById('error-message');
+    const successMsg = document.getElementById('success-message');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnLoading = document.getElementById('btn-loading');
+
+    let isSubmitting = false;
+
+    // Format card number with spaces
+    cardNumber.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
+        let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formatted;
+    });
+
+    // Format expiry date
+    cardExpiry.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+    });
+
+    // Only allow numbers in CVC
+    cardCvc.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+    });
+
+    function setLoading(loading) {
+        isSubmitting = loading;
+        submitBtn.disabled = loading;
+        btnText.style.display = loading ? 'none' : 'inline';
+        btnLoading.style.display = loading ? 'inline' : 'none';
+    }
+
+    function showError(message) {
+        errorMsg.textContent = message;
+        errorMsg.style.display = 'block';
+        successMsg.style.display = 'none';
+    }
+
+    function showSuccess(message) {
+        successMsg.textContent = message;
+        successMsg.style.display = 'block';
+        errorMsg.style.display = 'none';
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (isSubmitting) return;
+
+        errorMsg.style.display = 'none';
+        successMsg.style.display = 'none';
+
+        // Basic validation
+        const cardNum = cardNumber.value.replace(/\s/g, '');
+        if (cardNum.length < 13) {
+            showError('Please enter a valid card number');
+            return;
+        }
+
+        if (cardExpiry.value.length < 5) {
+            showError('Please enter a valid expiry date');
+            return;
+        }
+
+        if (cardCvc.value.length < 3) {
+            showError('Please enter a valid CVC');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const response = await fetch('/api/payment/process/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+                body: JSON.stringify({
+                    plan: '{{ plan.name }}',
+                    card_number: cardNum,
+                    card_expiry: cardExpiry.value,
+                    card_cvc: cardCvc.value,
+                    card_name: cardName.value,
+                }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showSuccess(data.message + ' Transaction ID: ' + data.transaction_id);
+                setTimeout(() => {
+                    window.location.href = data.redirect || '/app/';
+                }, 2000);
+            } else {
+                showError(data.error || 'Payment failed. Please try again.');
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error('Payment error:', error);
+            showError('Network error. Please check your connection and try again.');
+            setLoading(false);
+        }
+    });
+
+    lucide.createIcons();
+</script>
+{% endblock %}

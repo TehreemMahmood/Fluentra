@@ -1,0 +1,277 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Techniques{% endblock %}
+
+{% block content %}
+<div class="section-header" style="margin-bottom: var(--spacing-xl);">
+    <h2>Speech Techniques Library</h2>
+    <p class="text-secondary">Master these evidence-based techniques to improve fluency and manage dysfluencies.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-xl);">
+    <!-- Articles -->
+    <div style="display: flex; flex-direction: column; gap: var(--spacing-lg);">
+        <!-- Diaphragmatic Breathing - Clickable Card -->
+        <a href="{% url 'technique_breathing' %}" class="card card-hover" style="display: flex; gap: var(--spacing-lg); text-decoration: none; color: inherit; transition: all 0.3s ease;">
+            <div style="flex: 1;">
+                <span class="badge badge-medium" style="margin-bottom: 10px; background: #FEEBC8; color: #744210;">Breathing</span>
+                <h3 style="margin-bottom: 10px;">Diaphragmatic Breathing</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-md);">Learn how to use your breath to support speech and reduce tension in the vocal folds.</p>
+                <span style="color: var(--primary-color); font-weight: 600;">Learn More →</span>
+            </div>
+            <div style="width: 150px; background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="wind" style="width: 48px; height: 48px; color: white;"></i>
+            </div>
+        </a>
+
+        <!-- Light Articulatory Contacts - Clickable Card -->
+        <a href="{% url 'technique_articulation' %}" class="card card-hover" style="display: flex; gap: var(--spacing-lg); text-decoration: none; color: inherit; transition: all 0.3s ease;">
+            <div style="flex: 1;">
+                <span class="badge badge-easy" style="margin-bottom: 10px; background: #C6F6D5; color: #22543D;">Articulation</span>
+                <h3 style="margin-bottom: 10px;">Light Articulatory Contacts</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-md);">A technique to reduce the physical pressure of consonants like 'P', 'B', and 'K'.</p>
+                <span style="color: var(--primary-color); font-weight: 600;">Learn More →</span>
+            </div>
+            <div style="width: 150px; background: linear-gradient(135deg, #68D391 0%, #38A169 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="smile" style="width: 48px; height: 48px; color: white;"></i>
+            </div>
+        </a>
+
+        <!-- Cancellation Technique - Clickable Card -->
+        <a href="{% url 'technique_cancellation' %}" class="card card-hover" style="display: flex; gap: var(--spacing-lg); text-decoration: none; color: inherit; transition: all 0.3s ease;">
+            <div style="flex: 1;">
+                <span class="badge badge-hard" style="margin-bottom: 10px; background: #FED7D7; color: #742A2A;">Strategy</span>
+                <h3 style="margin-bottom: 10px;">Cancellation Technique</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-md);">A stuttering modification strategy used after a dysfluent word occurred.</p>
+                <span style="color: var(--primary-color); font-weight: 600;">Learn More →</span>
+            </div>
+            <div style="width: 150px; background: linear-gradient(135deg, #FC8181 0%, #E53E3E 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="refresh-cw" style="width: 48px; height: 48px; color: white;"></i>
+            </div>
+        </a>
+
+        <!-- Slow Speech / Prolonged Speech - Clickable Card -->
+        <a href="{% url 'technique_prolonged' %}" class="card card-hover" style="display: flex; gap: var(--spacing-lg); text-decoration: none; color: inherit; transition: all 0.3s ease;">
+            <div style="flex: 1;">
+                <span class="badge badge-easy" style="margin-bottom: 10px; background: #C6F6D5; color: #22543D;">Rate Control</span>
+                <h3 style="margin-bottom: 10px;">Prolonged Speech</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-md);">Slow down your rate of speech by stretching vowels and maintaining continuous airflow.</p>
+                <span style="color: var(--primary-color); font-weight: 600;">Learn More →</span>
+            </div>
+            <div style="width: 150px; background: linear-gradient(135deg, #34D399 0%, #059669 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="clock" style="width: 48px; height: 48px; color: white;"></i>
+            </div>
+        </a>
+
+        <!-- Easy Onset - Clickable Card -->
+        <a href="{% url 'technique_onset' %}" class="card card-hover" style="display: flex; gap: var(--spacing-lg); text-decoration: none; color: inherit; transition: all 0.3s ease;">
+            <div style="flex: 1;">
+                <span class="badge badge-medium" style="margin-bottom: 10px; background: #FEEBC8; color: #744210;">Fluency Shaping</span>
+                <h3 style="margin-bottom: 10px;">Easy Onset</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-md);">Begin words with a gentle, relaxed start to prevent blocks and reduce tension.</p>
+                <span style="color: var(--primary-color); font-weight: 600;">Learn More →</span>
+            </div>
+            <div style="width: 150px; background: linear-gradient(135deg, #FBBF24 0%, #D97706 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="play-circle" style="width: 48px; height: 48px; color: white;"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- Sidebar: Tip of the day & Clinician -->
+    <div>
+        <div class="card" style="background: rgba(79, 209, 197, 0.1); border: 1px solid var(--secondary-color);">
+            <h3 style="display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="lightbulb" style="color: var(--secondary-color);"></i>
+                Tip of the Day
+            </h3>
+            <p class="text-secondary" style="margin-top: var(--spacing-md); font-size: 0.95rem; line-height: 1.6;">
+                "The goal of therapy isn't always zero stuttering, but rather communicating what you want, when you want, with ease."
+            </p>
+        </div>
+
+        <div class="card" style="margin-top: var(--spacing-lg);">
+            <h3>Your Progress</h3>
+            <div style="margin-top: var(--spacing-md);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.9rem;">Breathing Techniques</span>
+                    <span style="font-size: 0.9rem; color: var(--primary-color);">75%</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px;">
+                    <div style="width: 75%; height: 100%; background: var(--secondary-color); border-radius: 4px;"></div>
+                </div>
+            </div>
+            <div style="margin-top: var(--spacing-md);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.9rem;">Fluency Shaping</span>
+                    <span style="font-size: 0.9rem; color: var(--primary-color);">40%</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px;">
+                    <div style="width: 40%; height: 100%; background: var(--primary-light); border-radius: 4px;"></div>
+                </div>
+            </div>
+            <div style="margin-top: var(--spacing-md);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="font-size: 0.9rem;">Stuttering Modification</span>
+                    <span style="font-size: 0.9rem; color: var(--primary-color);">20%</span>
+                </div>
+                <div style="width: 100%; height: 8px; background: #E2E8F0; border-radius: 4px;">
+                    <div style="width: 20%; height: 100%; background: var(--primary-color); border-radius: 4px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: var(--spacing-lg);">
+            <h3>Resources</h3>
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-sm); margin-top: var(--spacing-md);">
+                <a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); padding: 8px; border-radius: var(--radius-sm); transition: background 0.2s;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background='transparent'">
+                    <i data-lucide="file-text" style="width: 18px; color: var(--primary-color);"></i>
+                    <span style="font-size: 0.9rem;">Stuttering Foundation Guide</span>
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); padding: 8px; border-radius: var(--radius-sm); transition: background 0.2s;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background='transparent'">
+                    <i data-lucide="video" style="width: 18px; color: var(--primary-color);"></i>
+                    <span style="font-size: 0.9rem;">Video Tutorials</span>
+                </a>
+                <a href="#" style="display: flex; align-items: center; gap: 10px; color: var(--text-primary); padding: 8px; border-radius: var(--radius-sm); transition: background 0.2s;" onmouseover="this.style.background='#f7fafc'" onmouseout="this.style.background='transparent'">
+                    <i data-lucide="headphones" style="width: 18px; color: var(--primary-color);"></i>
+                    <span style="font-size: 0.9rem;">Audio Exercises</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technique Modal -->
+<div id="technique-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div class="card" style="max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-lg);">
+            <h3 id="technique-modal-title">Technique Details</h3>
+            <button onclick="closeTechniqueModal()" style="background: none; border: none; cursor: pointer;">
+                <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+            </button>
+        </div>
+        <div id="technique-modal-content"></div>
+        <div style="display: flex; gap: var(--spacing-md); justify-content: flex-end; margin-top: var(--spacing-xl);">
+            <button class="btn btn-outline" onclick="closeTechniqueModal()">Close</button>
+            <a href="{% url 'practice' %}" class="btn btn-primary">
+                <i data-lucide="mic" style="width: 16px; height: 16px;"></i>
+                Practice Now
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const techniqueContent = {
+    breathing: {
+        title: 'Diaphragmatic Breathing',
+        content: `
+            <p style="margin-bottom: var(--spacing-md);">Diaphragmatic breathing, also known as belly breathing, is a fundamental technique for speech fluency.</p>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">How to Practice:</h4>
+            <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li>Sit or lie down comfortably</li>
+                <li>Place one hand on your chest and one on your belly</li>
+                <li>Breathe in slowly through your nose - your belly should rise</li>
+                <li>Exhale slowly through your mouth</li>
+                <li>The hand on your chest should stay relatively still</li>
+            </ol>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Benefits:</h4>
+            <ul style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li>Reduces tension in throat and vocal cords</li>
+                <li>Provides better breath support for speech</li>
+                <li>Helps manage anxiety during speaking situations</li>
+            </ul>
+        `
+    },
+    articulation: {
+        title: 'Light Articulatory Contacts',
+        content: `
+            <p style="margin-bottom: var(--spacing-md);">This technique involves using less tension when producing consonant sounds, particularly plosives like P, B, T, D, K, and G.</p>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">How to Practice:</h4>
+            <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li>Practice saying words that start with these sounds</li>
+                <li>Focus on making the contact between your tongue/lips very light</li>
+                <li>Imagine the sound "sliding" out rather than "popping"</li>
+                <li>Start slowly and gradually increase speed</li>
+            </ol>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Practice Words:</h4>
+            <p style="background: #f7fafc; padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                Peter, butter, turtle, kitten, doggy, gentle
+            </p>
+        `
+    },
+    cancellation: {
+        title: 'Cancellation Technique',
+        content: `
+            <p style="margin-bottom: var(--spacing-md);">Cancellation is a stuttering modification technique used after you've stuttered on a word.</p>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Steps:</h4>
+            <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li><strong>Finish the word</strong> - Complete the stuttered word, don't stop midway</li>
+                <li><strong>Pause</strong> - Take a brief, deliberate pause</li>
+                <li><strong>Identify</strong> - Think about what you did during the stutter</li>
+                <li><strong>Retry</strong> - Say the word again using a fluency technique</li>
+            </ol>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Why It Works:</h4>
+            <p>This technique helps you take control of your speech rather than feeling controlled by stuttering. It builds awareness and gives you the power to choose how you speak.</p>
+        `
+    },
+    prolonged: {
+        title: 'Prolonged Speech',
+        content: `
+            <p style="margin-bottom: var(--spacing-md);">Prolonged speech involves stretching sounds and maintaining continuous airflow while speaking.</p>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">How to Practice:</h4>
+            <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li>Start by stretching vowel sounds</li>
+                <li>Maintain continuous voicing through phrases</li>
+                <li>Begin very slowly (2-3 seconds per syllable)</li>
+                <li>Gradually increase to natural-sounding speech</li>
+            </ol>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Example:</h4>
+            <p style="background: #f7fafc; padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                "Heeelllooo, myyyy naaame iiis..." → "Hello, my name is..."
+            </p>
+        `
+    },
+    onset: {
+        title: 'Easy Onset',
+        content: `
+            <p style="margin-bottom: var(--spacing-md);">Easy onset involves beginning words with a gentle, relaxed start rather than a hard attack.</p>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Technique:</h4>
+            <ol style="margin-left: var(--spacing-lg); line-height: 1.8;">
+                <li>Take a relaxed breath before speaking</li>
+                <li>Begin airflow before voicing starts</li>
+                <li>Let the sound "ease" out gradually</li>
+                <li>Especially useful for vowel-initial words</li>
+            </ol>
+            <h4 style="margin: var(--spacing-lg) 0 var(--spacing-sm);">Practice Words:</h4>
+            <p style="background: #f7fafc; padding: var(--spacing-md); border-radius: var(--radius-sm);">
+                Apple, every, under, open, inside, always
+            </p>
+        `
+    }
+};
+
+function openTechniqueModal(technique) {
+    const data = techniqueContent[technique];
+    if (data) {
+        document.getElementById('technique-modal-title').textContent = data.title;
+        document.getElementById('technique-modal-content').innerHTML = data.content;
+        document.getElementById('technique-modal').style.display = 'flex';
+        lucide.createIcons();
+    }
+}
+
+function closeTechniqueModal() {
+    document.getElementById('technique-modal').style.display = 'none';
+}
+
+// Close modal on outside click
+document.getElementById('technique-modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeTechniqueModal();
+    }
+});
+</script>
+{% endblock %}

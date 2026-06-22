@@ -1,0 +1,217 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Prolonged Speech{% endblock %}
+
+{% block content %}
+<!-- Header with Back Button -->
+<div style="margin-bottom: var(--spacing-xl);">
+    <a href="{% url 'techniques' %}" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        Back to Techniques
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.15) 100%); border-radius: var(--radius-lg); padding: 40px; margin-bottom: var(--spacing-xl);">
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #34D399 0%, #059669 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);">
+            <i data-lucide="clock" style="width: 50px; height: 50px; color: white;"></i>
+        </div>
+        <div style="flex: 1;">
+            <span class="badge" style="background: #D1FAE5; color: #065F46; margin-bottom: 12px;">Fluency Shaping</span>
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark);">Prolonged Speech</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">Slow down and stretch your sounds to achieve smoother, more controlled speech and reduce stuttering moments.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <!-- How to Practice -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
+            How to Practice
+        </h3>
+        <ol style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Stretch Your Vowels:</strong> Extend each vowel sound for 1-2 seconds ("Iiiii waaant")</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Slow Transitions:</strong> Move smoothly between sounds without abrupt stops</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Continuous Airflow:</strong> Keep air flowing throughout words and phrases</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Connect Words:</strong> Link the end of one word to the beginning of the next</li>
+            <li><strong style="color: var(--text-dark);">Gradually Speed Up:</strong> Slowly increase your rate as fluency improves</li>
+        </ol>
+    </div>
+    
+    <!-- Benefits for Fluency -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+            Benefits for Fluency
+        </h3>
+        <ul style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduces Time Pressure:</strong> Slowing down eliminates the rush that triggers stuttering</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Improves Coordination:</strong> Gives your brain time to coordinate breathing, voice, and articulation</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Eliminates Blocks:</strong> Continuous phonation prevents hard blocks from forming</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Builds Muscle Memory:</strong> Establishes smooth speech as the new default pattern</li>
+            <li><strong style="color: var(--text-dark);">Increases Confidence:</strong> Predictable fluency reduces speaking anxiety</li>
+        </ul>
+    </div>
+</div>
+
+<!-- How It Reduces Stuttering Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);">
+    <h3 style="margin-bottom: var(--spacing-xl); color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #34D399 0%, #059669 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="brain" style="width: 24px; height: 24px; color: white;"></i>
+        </div>
+        How Prolonged Speech Reduces Stuttering
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #059669; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(5, 150, 105, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="activity" style="width: 24px; height: 24px; color: #059669;"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: #059669;">Reduces Muscle Tension</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Slower speech allows your speech muscles to stay relaxed. High tension in the jaw, lips, and tongue is a primary cause of stuttering.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--secondary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="waves" style="width: 24px; height: 24px; color: var(--secondary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--secondary-color);">Maintains Continuous Phonation</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">By keeping your voice running continuously, you prevent the vocal cord closures that cause blocks and repetitions.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="timer" style="width: 24px; height: 24px; color: var(--primary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--primary-color);">Allows Processing Time</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Slowed speech gives your brain extra time to plan upcoming sounds, reducing the timing errors that contribute to stuttering.</p>
+        </div>
+    </div>
+    
+    <!-- Clinical Evidence -->
+    <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: linear-gradient(135deg, rgba(5, 150, 105, 0.08) 0%, rgba(5, 150, 105, 0.03) 100%); border-radius: var(--radius-md); border: 1px solid rgba(5, 150, 105, 0.1);">
+        <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+            <div style="width: 40px; height: 40px; background: #059669; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i data-lucide="file-text" style="width: 20px; height: 20px; color: white;"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-dark);">Clinical Evidence</h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+                    Prolonged speech is one of the most researched fluency shaping techniques. The Camperdown Program and other evidence-based treatments show 70-90% reduction in stuttering frequency using this approach. Long-term studies indicate that skills gained through prolonged speech practice are maintained years after treatment.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Practice Exercise Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="mic" style="width: 22px; height: 22px; color: #059669;"></i>
+        Practice Sentences
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Practice these sentences using prolonged speech. Start very slow, then gradually increase speed while maintaining smoothness.</p>
+    
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md);">
+        <div style="background: #F0FDF4; padding: var(--spacing-md); border-radius: var(--radius-sm); border-left: 3px solid #059669;">
+            <p style="margin: 0; color: var(--text-dark); font-weight: 500;">"Hello, my name is..."</p>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #059669;">Stretch: Heee-lloo, myy naaame iis...</p>
+        </div>
+        <div style="background: #F0FDF4; padding: var(--spacing-md); border-radius: var(--radius-sm); border-left: 3px solid #059669;">
+            <p style="margin: 0; color: var(--text-dark); font-weight: 500;">"I would like to order..."</p>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #059669;">Stretch: Iii woould liiike tooo orrder...</p>
+        </div>
+        <div style="background: #F0FDF4; padding: var(--spacing-md); border-radius: var(--radius-sm); border-left: 3px solid #059669;">
+            <p style="margin: 0; color: var(--text-dark); font-weight: 500;">"Can you help me with..."</p>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #059669;">Stretch: Caaan yoou heelp meee wiith...</p>
+        </div>
+        <div style="background: #F0FDF4; padding: var(--spacing-md); border-radius: var(--radius-sm); border-left: 3px solid #059669;">
+            <p style="margin: 0; color: var(--text-dark); font-weight: 500;">"I have a question about..."</p>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; color: #059669;">Stretch: Iii haave aa queestion aabout...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tips Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="lightbulb" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Tips for Effective Practice
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg);">
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(5, 150, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #059669;">1</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Start Slower Than You Think</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Begin at 30-50% of your normal speed. It should feel uncomfortably slow at first.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(5, 150, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #059669;">2</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Focus on Vowels</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Vowels are the "glue" of speech. Stretching them creates the continuous flow.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(5, 150, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #059669;">3</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Practice Daily</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">15-20 minutes of daily practice is more effective than occasional longer sessions.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(5, 150, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #059669;">4</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Transfer Gradually</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Move from reading → monologue → conversation → phone calls → presentations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Tutorial Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="play-circle" style="width: 22px; height: 22px; color: #059669;"></i>
+        Video Tutorial
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Watch this video to learn how to use prolonged speech for improved fluency.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000;">
+        <iframe 
+            src="https://www.youtube.com/embed/Zr3uIjvsp-M?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}" 
+            title="Prolonged Speech Tutorial"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--radius-md);">
+        </iframe>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+        Video not loading? <a href="https://youtu.be/Zr3uIjvsp-M" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Watch on YouTube →</a>
+    </p>
+</div>
+
+<!-- Practice Button -->
+<div style="display: flex; justify-content: center; padding: var(--spacing-xl) 0;">
+    <a href="{% url 'practice' %}" class="btn btn-primary" style="padding: 16px 48px; font-size: 1.1rem;">
+        <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+        Start Practice Session
+    </a>
+</div>
+{% endblock %}

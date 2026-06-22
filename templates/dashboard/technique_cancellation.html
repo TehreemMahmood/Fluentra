@@ -1,0 +1,207 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Cancellation Technique{% endblock %}
+
+{% block content %}
+<!-- Header with Back Button -->
+<div style="margin-bottom: var(--spacing-xl);">
+    <a href="{% url 'techniques' %}" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        Back to Techniques
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.15) 100%); border-radius: var(--radius-lg); padding: 40px; margin-bottom: var(--spacing-xl);">
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #FC8181 0%, #E53E3E 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);">
+            <i data-lucide="refresh-cw" style="width: 50px; height: 50px; color: white;"></i>
+        </div>
+        <div style="flex: 1;">
+            <span class="badge" style="background: #FED7D7; color: #742A2A; margin-bottom: 12px;">Stuttering Modification</span>
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark);">Cancellation Technique</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">A powerful post-stuttering strategy that helps you take control after a moment of dysfluency occurs.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <!-- How to Practice -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
+            The Four Steps
+        </h3>
+        <ol style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Complete the Word:</strong> Finish saying the stuttered word completely - don't stop midway</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Pause Deliberately:</strong> Stop and take a brief, intentional pause (2-3 seconds)</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Analyze the Moment:</strong> Think about what happened - where was the tension? What did you feel?</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Retry with Control:</strong> Say the word again using a fluency technique (light contact, easy onset)</li>
+            <li><strong style="color: var(--text-dark);">Continue Speaking:</strong> Move forward with your message confidently</li>
+        </ol>
+    </div>
+    
+    <!-- Benefits for Fluency -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+            Benefits for Fluency
+        </h3>
+        <ul style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Takes Back Control:</strong> You choose to address the stutter rather than rushing past it</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Builds Awareness:</strong> Develops understanding of your personal stuttering patterns</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduces Fear:</strong> Confronting stuttering directly lessens anxiety about it</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Improves Confidence:</strong> Shows yourself you can handle stuttering moments</li>
+            <li><strong style="color: var(--text-dark);">Teaches New Patterns:</strong> Reinforces fluent speech motor patterns</li>
+        </ul>
+    </div>
+</div>
+
+<!-- How It Reduces Stuttering Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);">
+    <h3 style="margin-bottom: var(--spacing-xl); color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #FC8181 0%, #E53E3E 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="brain" style="width: 24px; height: 24px; color: white;"></i>
+        </div>
+        How Cancellation Reduces Stuttering
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #E53E3E; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(229, 62, 62, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="target" style="width: 24px; height: 24px; color: #E53E3E;"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: #E53E3E;">Breaks Avoidance Patterns</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Instead of rushing through or avoiding difficult words, cancellation teaches you to face them directly, breaking the cycle of fear and avoidance.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--secondary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="search" style="width: 24px; height: 24px; color: var(--secondary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--secondary-color);">Develops Self-Monitoring</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">The pause and analysis step trains you to become aware of what happens during stuttering, which is essential for making changes.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="repeat" style="width: 24px; height: 24px; color: var(--primary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--primary-color);">Reinforces Fluent Patterns</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">By saying the word again with a fluency technique, you create a new, successful motor memory for that word and situation.</p>
+        </div>
+    </div>
+    
+    <!-- Clinical Evidence -->
+    <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: linear-gradient(135deg, rgba(229, 62, 62, 0.08) 0%, rgba(229, 62, 62, 0.03) 100%); border-radius: var(--radius-md); border: 1px solid rgba(229, 62, 62, 0.1);">
+        <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+            <div style="width: 40px; height: 40px; background: #E53E3E; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i data-lucide="file-text" style="width: 20px; height: 20px; color: white;"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-dark);">Clinical Evidence</h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+                    Developed by Dr. Charles Van Riper, cancellation is a cornerstone of stuttering modification therapy. Research shows it effectively reduces both the frequency and severity of stuttering by building awareness and voluntary control. Studies indicate that consistent use of cancellation can lead to a 30-50% reduction in stuttering severity over time.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Example Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="message-square" style="width: 22px; height: 22px; color: #E53E3E;"></i>
+        Example in Practice
+    </h3>
+    <div style="background: #F7FAFC; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #E53E3E;">
+        <p style="font-size: 1rem; color: var(--text-secondary); line-height: 2; margin: 0;">
+            <strong style="color: var(--text-dark);">Situation:</strong> You're trying to say "I want to go to the b-b-b-beach"<br><br>
+            <strong style="color: #E53E3E;">Step 1:</strong> Finish the word: "...beach" (even if stuttered)<br>
+            <strong style="color: #E53E3E;">Step 2:</strong> Pause for 2-3 seconds<br>
+            <strong style="color: #E53E3E;">Step 3:</strong> Think: "I felt tension in my lips, I was pressing too hard"<br>
+            <strong style="color: #E53E3E;">Step 4:</strong> Say again with light contact: "beach" (smoothly)<br>
+            <strong style="color: #E53E3E;">Step 5:</strong> Continue: "...this weekend"
+        </p>
+    </div>
+</div>
+
+<!-- Tips Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="lightbulb" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Tips for Effective Practice
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg);">
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(229, 62, 62, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #E53E3E;">1</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Don't Rush</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">The pause is essential. Take your time to truly analyze the moment.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(229, 62, 62, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #E53E3E;">2</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Be Honest with Yourself</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Really feel what happened - where was the tension? What triggered it?</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(229, 62, 62, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #E53E3E;">3</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Practice in Safe Settings First</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Start with family or friends before using in high-pressure situations.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(229, 62, 62, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #E53E3E;">4</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Celebrate the Attempt</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Every cancellation is a success, regardless of how the retry goes.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Tutorial Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="play-circle" style="width: 22px; height: 22px; color: #E53E3E;"></i>
+        Video Tutorial
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Watch this video to see the cancellation technique demonstrated step by step.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000;">
+        <iframe 
+            src="https://www.youtube.com/embed/SSp0boMgghk?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}" 
+            title="Cancellation Technique Tutorial"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--radius-md);">
+        </iframe>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+        Video not loading? <a href="https://youtu.be/SSp0boMgghk" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Watch on YouTube →</a>
+    </p>
+</div>
+
+<!-- Practice Button -->
+<div style="display: flex; justify-content: center; padding: var(--spacing-xl) 0;">
+    <a href="{% url 'practice' %}" class="btn btn-primary" style="padding: 16px 48px; font-size: 1.1rem;">
+        <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+        Start Practice Session
+    </a>
+</div>
+{% endblock %}

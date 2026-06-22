@@ -1,0 +1,9 @@
+django>=4.2,<5.0
+django-allauth
+requests
+PyJWT
+cryptography
+google-cloud-speech
+google-generativeai
+openai
+python-dotenv

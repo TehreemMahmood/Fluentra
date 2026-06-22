@@ -1,0 +1,1620 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Start Practice{% endblock %}
+
+{% block extra_css %}
+<!-- Tailwind CSS for Practice Page -->
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    /* Override some base styles for Tailwind compatibility */
+    .results-container { font-family: 'Inter', sans-serif; }
+    .results-container * { box-sizing: border-box; }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; }
+    
+    /* Score circle animation */
+    #score-circle {
+        transition: stroke-dashoffset 1.5s ease-out;
+    }
+    
+    /* Progress bar animation */
+    .progress-bar-animated {
+        transition: width 1s ease-out;
+    }
+    
+    /* Card hover effects */
+    .analysis-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .analysis-card {
+        transition: all 0.3s ease;
+    }
+
+    /* Premium result section styling */
+    #results-card {
+        border: 1px solid #dbe5ff;
+        background: radial-gradient(circle at top right, rgba(99,102,241,.08), transparent 40%), #ffffff;
+        box-shadow: 0 24px 60px rgba(67, 56, 202, 0.10);
+    }
+
+    .results-header-wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+        padding: 6px 2px;
+    }
+
+    .results-header-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: .72rem;
+        font-weight: 700;
+        color: #4f46e5;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        background: #eef2ff;
+        border: 1px solid #c7d2fe;
+        padding: 4px 10px;
+        border-radius: 999px;
+        margin-bottom: 8px;
+    }
+
+    .results-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin: 6px 0 20px;
+    }
+
+    .results-meta-chip {
+        border: 1px solid #e5e7eb;
+        background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+        border-radius: 12px;
+        padding: 10px 12px;
+    }
+
+    .results-meta-chip .label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        color: #6b7280;
+        font-weight: 700;
+    }
+
+    .results-meta-chip .value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-top: 4px;
+    }
+
+    .pdf-btn-premium {
+        border: 1px solid #c7d2fe !important;
+        background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #818cf8 100%) !important;
+        color: #fff !important;
+        box-shadow: 0 10px 24px rgba(79, 70, 229, .28);
+    }
+    .pdf-btn-premium:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 28px rgba(79, 70, 229, .32);
+    }
+    
+    /* NEW: Improved Input Area Styles */
+    .input-tabs {
+        display: flex;
+        border-bottom: 2px solid #e5e7eb;
+        margin-bottom: 0;
+    }
+    .input-tab {
+        flex: 1;
+        padding: 16px 24px;
+        background: transparent;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+    }
+    .input-tab:hover {
+        color: var(--primary-color);
+        background: rgba(44, 82, 130, 0.05);
+    }
+    .input-tab.active {
+        color: var(--primary-color);
+    }
+    .input-tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: var(--primary-color);
+        border-radius: 2px 2px 0 0;
+    }
+    .input-panel {
+        display: none;
+        padding: 32px;
+        min-height: 280px;
+    }
+    .input-panel.active {
+        display: block;
+        animation: fadeInUp 0.3s ease-out;
+    }
+    
+    /* Recording visualizer styles */
+    .recording-visualizer {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-radius: 16px;
+        padding: 24px;
+        text-align: center;
+        border: 1px solid #e2e8f0;
+    }
+    .recording-visualizer.recording {
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        border-color: #fca5a5;
+    }
+    .mic-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color) 0%, #1e3a5f 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        box-shadow: 0 8px 32px rgba(44, 82, 130, 0.3);
+        transition: all 0.3s ease;
+    }
+    .mic-icon-wrapper.recording {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        box-shadow: 0 8px 32px rgba(239, 68, 68, 0.4);
+        animation: pulse-recording 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-recording {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
+    .mic-icon-wrapper svg {
+        color: white;
+        width: 36px;
+        height: 36px;
+    }
+    
+    /* Upload area improved */
+    .upload-zone {
+        border: 2px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 48px 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    .upload-zone:hover {
+        border-color: var(--primary-color);
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    }
+    .upload-zone.dragover {
+        border-color: var(--primary-color);
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        transform: scale(1.02);
+    }
+    .upload-icon-wrapper {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+    }
+    .upload-icon-wrapper svg {
+        color: var(--primary-color);
+        width: 32px;
+        height: 32px;
+    }
+    .file-selected {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        padding: 20px;
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        border-radius: 12px;
+        border: 1px solid #6ee7b7;
+    }
+    .file-selected-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #10b981;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .file-selected-icon svg {
+        color: white;
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* Analyze button styles */
+    .analyze-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        border-top: 1px solid #e5e7eb;
+        padding: 24px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .analyze-btn-large {
+        padding: 16px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.3s ease;
+    }
+    .analyze-btn-large:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    .analyze-btn-large:not(:disabled):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(44, 82, 130, 0.3);
+    }
+    
+    /* Loading overlay */
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.95);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(4px);
+    }
+    .loading-overlay.active {
+        display: flex;
+    }
+    .loading-content {
+        text-align: center;
+        padding: 48px;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        max-width: 400px;
+    }
+    .loading-spinner-large {
+        width: 80px;
+        height: 80px;
+        border: 4px solid #e5e7eb;
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 24px;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    .loading-steps {
+        margin-top: 24px;
+        text-align: left;
+    }
+    .loading-step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 0;
+        color: #6b7280;
+        font-size: 0.95rem;
+    }
+    .loading-step.active {
+        color: var(--primary-color);
+        font-weight: 500;
+    }
+    .loading-step.done {
+        color: #10b981;
+    }
+    .loading-step-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f6;
+    }
+    .loading-step.active .loading-step-icon {
+        background: var(--primary-color);
+    }
+    .loading-step.done .loading-step-icon {
+        background: #10b981;
+    }
+    .loading-step-icon svg {
+        width: 14px;
+        height: 14px;
+        color: white;
+    }
+    
+    /* Audio status indicator */
+    .audio-status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    .audio-status.ready {
+        background: #ecfdf5;
+        color: #059669;
+    }
+    .audio-status.empty {
+        background: #fef3c7;
+        color: #d97706;
+    }
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    /* Transcript sync highlight */
+    .transcript-word {
+        display: inline-block;
+        padding: 2px 4px;
+        margin: 1px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+    .transcript-word.active {
+        background: #dbeafe;
+        color: #1e3a8a;
+        font-weight: 700;
+    }
+    .transcript-word.stutter {
+        background: #fee2e2;
+        color: #991b1b;
+        border-bottom: 2px solid #dc2626;
+    }
+
+    .timestamp-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 9px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 10px;
+        background: #fff;
+        transition: all 0.2s ease;
+    }
+    .timestamp-item:hover {
+        border-color: #93c5fd;
+        background: #f8fbff;
+    }
+    .timestamp-jump {
+        font-size: 0.72rem;
+        color: #4f46e5;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+    }
+    .timestamp-value {
+        font-variant-numeric: tabular-nums;
+        color: #111827;
+    }
+    .timestamp-detail {
+        color: #4b5563;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Loading Overlay - Now visible during analysis -->
+<div id="loading-overlay" class="loading-overlay">
+    <div class="loading-content">
+        <div class="loading-spinner-large"></div>
+        <h2 style="font-size: 1.5rem; font-weight: 700; color: #1f2937; margin-bottom: 8px;">Analyzing Your Speech</h2>
+        <p style="color: #6b7280; margin-bottom: 0;">This usually takes 10-20 seconds</p>
+        <div class="loading-steps">
+            <div class="loading-step active" id="step-upload">
+                <span class="loading-step-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </span>
+                <span>Uploading audio...</span>
+            </div>
+            <div class="loading-step" id="step-transcribe">
+                <span class="loading-step-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </span>
+                <span>Transcribing speech...</span>
+            </div>
+            <div class="loading-step" id="step-analyze">
+                <span class="loading-step-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </span>
+                <span>AI analyzing patterns...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="header" style="margin-bottom: var(--spacing-xl);">
+    <h1>Start Practice</h1>
+    <p class="text-secondary">Record your voice or upload audio to receive AI-powered fluency analysis.</p>
+</div>
+
+<!-- Combined Input Card with Tabs -->
+<div class="card" style="padding: 0; overflow: hidden;">
+    <!-- Tab Headers -->
+    <div class="input-tabs">
+        <button class="input-tab active" onclick="switchTab('record')" id="tab-record">
+            <i data-lucide="mic"></i>
+            Record Audio
+        </button>
+        <button class="input-tab" onclick="switchTab('upload')" id="tab-upload">
+            <i data-lucide="upload-cloud"></i>
+            Upload File
+        </button>
+    </div>
+    
+    <!-- Record Panel -->
+    <div class="input-panel active" id="panel-record">
+        <div class="recording-visualizer" id="recording-visualizer">
+            <div class="mic-icon-wrapper" id="mic-icon-wrapper">
+                <i data-lucide="mic" id="mic-icon"></i>
+            </div>
+            <div id="visualizer-text" style="font-size: 1.1rem; color: #374151; font-weight: 500; margin-bottom: 8px;">
+                Click the button below to start recording
+            </div>
+            <div id="timer" style="font-family: 'SF Mono', Monaco, monospace; font-size: 2rem; font-weight: 700; color: var(--primary-color); margin-bottom: 20px;">00:00</div>
+            <canvas id="audio-visualizer" style="display: none; width: 100%; height: 60px; border-radius: 8px; margin-bottom: 16px;"></canvas>
+            <div style="display: flex; justify-content: center; gap: 16px;">
+                <button id="recordButton" class="btn btn-primary" onclick="toggleRecording()" style="padding: 14px 28px; font-size: 1rem;">
+                    <i data-lucide="mic"></i> Start Recording
+                </button>
+                <button id="stopButton" class="btn btn-outline" onclick="stopRecording()" disabled style="padding: 14px 28px; font-size: 1rem;">
+                    <i data-lucide="square"></i> Stop
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Panel -->
+    <div class="input-panel" id="panel-upload">
+        <input type="file" id="audio-upload" accept="audio/*" style="display: none;" onchange="handleFileSelect(this)">
+        
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('audio-upload').click()">
+            <div class="upload-icon-wrapper">
+                <i data-lucide="upload-cloud"></i>
+            </div>
+            <h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 8px;">
+                Drop your audio file here
+            </h3>
+            <p style="color: #6b7280; margin-bottom: 4px;">or click to browse</p>
+            <p style="font-size: 0.85rem; color: #9ca3af;">Supports MP3, WAV, M4A • Max 10MB</p>
+        </div>
+        
+        <div id="file-info" style="display: none; margin-top: 20px;">
+            <div class="file-selected">
+                <div class="file-selected-icon">
+                    <i data-lucide="music"></i>
+                </div>
+                <div style="flex: 1; text-align: left;">
+                    <p id="filename" style="font-weight: 600; color: #1f2937; margin-bottom: 2px;">filename.mp3</p>
+                    <p id="filesize" style="font-size: 0.85rem; color: #6b7280;">File ready for analysis</p>
+                </div>
+                <button onclick="clearFile()" style="padding: 8px; border-radius: 8px; background: #fee2e2; color: #dc2626; border: none; cursor: pointer;">
+                    <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Analyze Section -->
+    <div class="analyze-section">
+        <div id="audio-status" class="audio-status empty">
+            <span class="status-dot"></span>
+            <span id="status-text">No audio selected</span>
+        </div>
+        <button id="analyze-btn" class="btn btn-primary analyze-btn-large" onclick="submitForAnalysis()" disabled>
+            <i data-lucide="sparkles"></i> Analyze Speech
+        </button>
+    </div>
+</div>
+
+<!-- Results Section -->
+<div class="card" id="results-card" style="margin-top: var(--spacing-xl);">
+    <div class="results-header-wrap">
+        <div>
+            <div class="results-header-kicker"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> AI Fluency Insights</div>
+            <h3><i data-lucide="bar-chart-2" style="vertical-align: middle; margin-right: 8px; color: var(--primary-color);"></i> Analysis Results</h3>
+        </div>
+        <button id="download-report-btn" class="btn pdf-btn-premium" style="display: none;" onclick="downloadPdfReport()">
+            <i data-lucide="file-down"></i> Download PDF Report
+        </button>
+    </div>
+    
+    <div id="loading-state" style="display: none; text-align: center; padding: var(--spacing-2xl);">
+        <div class="loading-spinner" style="margin: 0 auto 20px;"></div>
+        <i data-lucide="loader-2" class="spin" style="width: 32px; height: 32px; color: var(--primary-color); animation: spin 1s linear infinite;"></i>
+        <p style="margin-top: 10px;">Transcribing and analyzing your speech...</p>
+    </div>
+    
+    <div id="results-content" style="display: none;" class="results-container mt-8 animate-fade-in">
+        <div id="results-meta-grid" class="results-meta-grid"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            
+            <!-- Column 1: Transcript -->
+            <div class="lg:col-span-1 space-y-4">
+                <div class="analysis-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Transcript
+                        </h3>
+                        <span class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full font-medium">Auto-Generated</span>
+                    </div>
+                    <div class="px-5 py-4 overflow-y-auto max-h-[460px] bg-gray-50/50">
+                        <p id="transcript-text" class="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap font-mono"></p>
+                    </div>
+                </div>
+
+                <div class="analysis-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="play-circle" class="w-5 h-5 text-indigo-600"></i>
+                            Session Replay
+                        </h3>
+                    </div>
+                    <div class="px-5 py-4 space-y-3">
+                        <audio id="result-audio-player" controls style="width: 100%;"></audio>
+                        <p class="text-xs text-gray-500">Play audio and follow synced transcript highlighting.</p>
+                    </div>
+                </div>
+
+                <div class="analysis-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="bg-gradient-to-r from-red-50 to-rose-50 px-6 py-4 border-b border-red-100">
+                        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="clock-3" class="w-5 h-5 text-rose-600"></i>
+                            Stutter Timestamps
+                        </h3>
+                    </div>
+                    <div class="px-5 py-4">
+                        <div id="stutter-timestamps" class="space-y-2 text-sm text-gray-700">
+                            <p class="text-gray-400">No stutter timestamps detected yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Column 2 & 3: Analysis Dashboard -->
+            <div class="lg:col-span-2 space-y-5">
+                
+                <!-- Score & Rating Card -->
+                <div class="analysis-card bg-gradient-to-br from-white to-indigo-50 rounded-xl shadow-lg border border-indigo-100 p-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 opacity-5">
+                        <svg class="w-full h-full text-indigo-900" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+                    </div>
+                    
+                    <div class="flex flex-col md:flex-row items-center gap-8 relative z-10">
+                        <!-- Circular Progress -->
+                        <div class="relative w-36 h-36 flex-shrink-0">
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
+                                <circle cx="64" cy="64" r="56" stroke="#e5e7eb" stroke-width="10" fill="transparent"/>
+                                <circle id="score-circle" cx="64" cy="64" r="56" stroke="url(#scoreGradient)" stroke-width="10" fill="transparent" stroke-linecap="round" stroke-dasharray="351.86" stroke-dashoffset="351.86"/>
+                                <defs>
+                                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#6366f1"/>
+                                        <stop offset="100%" stop-color="#8b5cf6"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent" id="overall-score">0</span>
+                                <span class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Score</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex-1 text-center md:text-left">
+                            <div class="text-sm font-semibold text-indigo-600 mb-1 uppercase tracking-wide">Fluency Rating</div>
+                            <h2 class="text-4xl font-extrabold text-gray-900 mb-3" id="fluency-rating">Analyzing...</h2>
+                            <p class="text-gray-500 text-sm max-w-lg leading-relaxed" id="score-description">Your speech analysis score reflects your overall fluency, pacing, and clarity based on the provided audio sample.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stuttering Types Breakdown -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Repetitions -->
+                    <div class="analysis-card bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-5 border border-blue-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                </div>
+                                <span class="text-sm font-bold text-blue-900">Repetition</span>
+                            </div>
+                            <span class="text-3xl font-black text-blue-700" id="type-repetition-count">0</span>
+                        </div>
+                        <div class="w-full bg-blue-200 rounded-full h-2 mb-3 overflow-hidden">
+                            <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full progress-bar-animated" id="type-repetition-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-blue-700 font-medium">Repeating sounds, syllables, or words.</p>
+                    </div>
+                    
+                    <!-- Prolongations -->
+                    <div class="analysis-card bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-5 border border-purple-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                </div>
+                                <span class="text-sm font-bold text-purple-900">Prolongation</span>
+                            </div>
+                            <span class="text-3xl font-black text-purple-700" id="type-prolongation-count">0</span>
+                        </div>
+                        <div class="w-full bg-purple-200 rounded-full h-2 mb-3 overflow-hidden">
+                            <div class="bg-gradient-to-r from-purple-500 to-purple-600 h-2 rounded-full progress-bar-animated" id="type-prolongation-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-purple-700 font-medium">Stretching out a sound for a long time.</p>
+                    </div>
+
+                    <!-- Blocks -->
+                    <div class="analysis-card bg-gradient-to-br from-rose-50 to-rose-100 rounded-xl p-5 border border-rose-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                                </div>
+                                <span class="text-sm font-bold text-rose-900">Blocking</span>
+                            </div>
+                            <span class="text-3xl font-black text-rose-700" id="type-blocking-count">0</span>
+                        </div>
+                        <div class="w-full bg-rose-200 rounded-full h-2 mb-3 overflow-hidden">
+                            <div class="bg-gradient-to-r from-rose-500 to-rose-600 h-2 rounded-full progress-bar-animated" id="type-blocking-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-xs text-rose-700 font-medium">Difficulty getting a word out.</p>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis & Recommendations -->
+                <div class="analysis-card bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-6 py-4 border-b border-gray-200">
+                        <h3 class="font-bold text-gray-900 text-lg flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            Detailed Clinical Feedback
+                        </h3>
+                    </div>
+                    <div class="px-5 py-4">
+                        <div class="bg-gray-50 rounded-lg p-4 mb-4 border-l-4 border-indigo-500">
+                            <p class="text-gray-700 leading-relaxed" id="analysis-text">
+                                <!-- Filled via JS -->
+                            </p>
+                        </div>
+
+                        <div class="border-t border-gray-100 pt-4">
+                            <h4 class="font-bold text-gray-900 mb-4 flex items-center gap-2 text-lg">
+                                <span class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                </span>
+                                Recommendations
+                            </h4>
+                            <ul class="space-y-3" id="recommendations-list">
+                                <!-- List Items via JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Debug Helper (Hidden) -->
+        <div id="full-json" style="display: none;"></div>
+        <pre id="json-output" style="display: none;"></pre>
+    </div>
+</div>
+
+{% if latest_practice_session %}
+{{ latest_practice_session|json_script:"latest-practice-session" }}
+{% endif %}
+
+<style>
+    @keyframes spin { 
+        100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } 
+    }
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+    .upload-area:hover {
+        border-color: var(--primary-color) !important;
+        background: rgba(44, 82, 130, 0.02);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+let mediaRecorder;
+let audioChunks = [];
+let audioBlob;
+let isRecording = false;
+let startTime;
+let timerInterval;
+let currentAudioUrl = null;
+let currentAudioDuration = null;
+let currentTranscriptWords = [];
+let currentStutterEvents = [];
+let currentAnalysisSummary = {};
+
+function setCurrentAudioUrl(url) {
+    if (currentAudioUrl && currentAudioUrl !== url) {
+        try { URL.revokeObjectURL(currentAudioUrl); } catch(e) {}
+    }
+    currentAudioUrl = url;
+}
+
+function formatTimestamp(seconds) {
+    if (seconds == null || isNaN(seconds)) return '--:--';
+    const s = Math.max(0, Math.floor(seconds));
+    const m = Math.floor(s / 60);
+    const rem = (s % 60).toString().padStart(2, '0');
+    return `${m}:${rem}`;
+}
+
+async function loadCurrentAudioDuration() {
+    return new Promise((resolve) => {
+        if (!currentAudioUrl) {
+            currentAudioDuration = null;
+            return resolve(null);
+        }
+        const audio = new Audio();
+        audio.preload = 'metadata';
+        audio.src = currentAudioUrl;
+        audio.onloadedmetadata = () => {
+            currentAudioDuration = Number.isFinite(audio.duration) ? audio.duration : null;
+            resolve(currentAudioDuration);
+        };
+        audio.onerror = () => {
+            currentAudioDuration = null;
+            resolve(null);
+        };
+    });
+}
+
+function tokenizeTranscript(text) {
+    if (!text) return [];
+    return text.split(/\s+/).filter(Boolean);
+}
+
+function detectStutterEvents(words, durationSeconds) {
+    const events = [];
+    const fillers = new Set(['um', 'uh', 'er', 'ah', 'like']);
+
+    for (let i = 0; i < words.length; i++) {
+        const raw = words[i] || '';
+        const clean = raw.toLowerCase().replace(/[^a-z']/g, '');
+        const prev = i > 0 ? (words[i - 1] || '').toLowerCase().replace(/[^a-z']/g, '') : '';
+
+        let reason = null;
+        if (fillers.has(clean)) {
+            reason = 'Filler';
+        } else if (prev && clean && clean === prev) {
+            reason = 'Repetition';
+        } else if (/([a-z])\1\1/i.test(clean)) {
+            reason = 'Prolongation';
+        }
+
+        if (reason) {
+            const ts = durationSeconds && words.length ? (i / words.length) * durationSeconds : null;
+            events.push({ index: i, word: raw, reason: reason, time: ts });
+        }
+    }
+
+    // de-duplicate nearby duplicates
+    const dedup = [];
+    const seen = new Set();
+    events.forEach(e => {
+        const key = `${e.index}-${e.reason}`;
+        if (!seen.has(key)) {
+            seen.add(key);
+            dedup.push(e);
+        }
+    });
+    return dedup;
+}
+
+function buildAiStutterEvents(aiFlags, words, durationSeconds) {
+    if (!Array.isArray(aiFlags) || !aiFlags.length || !Array.isArray(words) || !words.length) {
+        return [];
+    }
+
+    const safe = [];
+    const seen = new Set();
+    aiFlags.forEach((item) => {
+        if (!item || typeof item !== 'object') return;
+        const idx = parseInt(item.index, 10);
+        if (isNaN(idx) || idx < 0 || idx >= words.length) return;
+        if (seen.has(idx)) return;
+        seen.add(idx);
+
+        const ts = durationSeconds && words.length ? (idx / words.length) * durationSeconds : null;
+        safe.push({
+            index: idx,
+            word: words[idx],
+            reason: item.reason || 'AI Detected Event',
+            time: ts
+        });
+    });
+
+    return safe;
+}
+
+function renderSyncedTranscript(words, stutterEvents) {
+    const stutterSet = new Set(stutterEvents.map(e => e.index));
+    return words.map((w, idx) => {
+        const classes = ['transcript-word'];
+        if (stutterSet.has(idx)) classes.push('stutter');
+        return `<span class="${classes.join(' ')}" data-word-index="${idx}">${w}</span>`;
+    }).join(' ');
+}
+
+function setupReplaySync(words) {
+    const audio = document.getElementById('result-audio-player');
+    const transcriptEl = document.getElementById('transcript-text');
+    if (!audio || !transcriptEl || !words.length) return;
+
+    const wordEls = transcriptEl.querySelectorAll('.transcript-word');
+    if (!wordEls.length) return;
+
+    function highlightWordAtTime() {
+        if (!audio.duration || !Number.isFinite(audio.duration)) return;
+        const idx = Math.max(0, Math.min(words.length - 1, Math.floor((audio.currentTime / audio.duration) * words.length)));
+        wordEls.forEach((el, i) => {
+            if (i === idx) el.classList.add('active');
+            else el.classList.remove('active');
+        });
+    }
+
+    audio.removeEventListener('timeupdate', highlightWordAtTime);
+    audio.addEventListener('timeupdate', highlightWordAtTime);
+
+    wordEls.forEach((el) => {
+        el.addEventListener('click', () => {
+            if (!audio.duration || !Number.isFinite(audio.duration)) return;
+            const idx = parseInt(el.getAttribute('data-word-index'), 10);
+            if (isNaN(idx)) return;
+            audio.currentTime = (idx / Math.max(words.length, 1)) * audio.duration;
+            audio.play();
+        });
+    });
+}
+
+function renderStutterTimestamps(events) {
+    const box = document.getElementById('stutter-timestamps');
+    const audio = document.getElementById('result-audio-player');
+    if (!box) return;
+
+    if (!events.length) {
+        box.innerHTML = '<p class="text-gray-400">No clear stutter timestamps detected in this session.</p>';
+        return;
+    }
+
+    box.innerHTML = events.map((e, idx) => `
+        <button type="button" class="timestamp-item w-full text-left" data-ts-index="${idx}">
+            <span class="timestamp-detail"><strong class="timestamp-value">${formatTimestamp(e.time)}</strong> • ${e.reason} on "${e.word}"</span>
+            <span class="timestamp-jump">Jump</span>
+        </button>
+    `).join('');
+
+    box.querySelectorAll('[data-ts-index]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-ts-index'), 10);
+            if (isNaN(idx) || !events[idx] || !audio) return;
+            if (events[idx].time != null) {
+                audio.currentTime = events[idx].time;
+                audio.play();
+            }
+        });
+    });
+}
+
+function collectReportData(transcriptText, analysisObj) {
+    currentAnalysisSummary = {
+        score: analysisObj?.overall_score ?? 0,
+        rating: analysisObj?.fluency_rating ?? 'Unknown',
+        recommendations: Array.isArray(analysisObj?.recommendations) ? analysisObj.recommendations : [],
+        detailed: analysisObj?.detailed_analysis || '',
+    };
+    currentTranscriptWords = tokenizeTranscript(transcriptText);
+}
+
+function renderResultMetaChips() {
+    const grid = document.getElementById('results-meta-grid');
+    if (!grid) return;
+
+    const words = currentTranscriptWords.length;
+    const duration = currentAudioDuration && Number.isFinite(currentAudioDuration) ? currentAudioDuration : null;
+    const mins = duration ? (duration / 60) : null;
+    const wpm = mins && mins > 0 ? Math.round(words / mins) : null;
+
+    const chips = [
+        { label: 'Fluency Score', value: `${currentAnalysisSummary.score ?? 0}%` },
+        { label: 'Fluency Rating', value: currentAnalysisSummary.rating || 'Unknown' },
+        { label: 'Stutter Events', value: currentStutterEvents.length },
+        { label: 'Transcript Words', value: words },
+        { label: 'Speaking Pace', value: wpm ? `${wpm} WPM` : '—' },
+        { label: 'Session Duration', value: duration ? formatTimestamp(duration) : '—' },
+    ];
+
+    grid.innerHTML = chips.map(c => `
+        <div class="results-meta-chip">
+            <div class="label">${c.label}</div>
+            <div class="value">${c.value}</div>
+        </div>
+    `).join('');
+}
+
+function normalizeAnalysisData(rawAnalysis) {
+    if (!rawAnalysis) return {};
+    if (typeof rawAnalysis === 'object') return rawAnalysis;
+
+    let cleaned = String(rawAnalysis).trim();
+    if (cleaned.startsWith('```json')) {
+        cleaned = cleaned.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    } else if (cleaned.startsWith('```')) {
+        cleaned = cleaned.replace(/^```\s*/, '').replace(/\s*```$/, '');
+    }
+
+    try {
+        const parsed = JSON.parse(cleaned);
+        return parsed && typeof parsed === 'object' ? parsed : { raw_text: cleaned };
+    } catch (e) {
+        return { raw_text: cleaned };
+    }
+}
+
+function applyPracticeAnalysisResult(payload) {
+    const transcriptText = (payload && payload.transcriptText) || '';
+    const analysisObj = normalizeAnalysisData(payload && payload.analysisObj);
+    const flaggedWords = Array.isArray(payload && payload.flaggedWords) ? payload.flaggedWords : [];
+    const audioUrl = (payload && payload.audioUrl) || currentAudioUrl || '';
+    const durationValue = payload && payload.durationSeconds != null ? Number(payload.durationSeconds) : currentAudioDuration;
+    const rawData = (payload && payload.rawData) || null;
+
+    if (audioUrl) {
+        setCurrentAudioUrl(audioUrl);
+    }
+    currentAudioDuration = Number.isFinite(durationValue) ? durationValue : currentAudioDuration;
+
+    const transcriptWords = tokenizeTranscript(transcriptText);
+    const aiEvents = buildAiStutterEvents(flaggedWords, transcriptWords, currentAudioDuration);
+    currentStutterEvents = aiEvents.length ? aiEvents : detectStutterEvents(transcriptWords, currentAudioDuration);
+
+    const transcriptEl = document.getElementById('transcript-text');
+    if (transcriptEl) {
+        transcriptEl.innerHTML = renderSyncedTranscript(transcriptWords, currentStutterEvents);
+    }
+    renderStutterTimestamps(currentStutterEvents);
+
+    const replayAudio = document.getElementById('result-audio-player');
+    if (replayAudio) {
+        replayAudio.src = currentAudioUrl || audioUrl || '';
+    }
+    setupReplaySync(transcriptWords);
+
+    const score = Number(analysisObj.overall_score || 0);
+    const rating = analysisObj.fluency_rating || 'Unknown';
+    const scoreEl = document.getElementById('overall-score');
+    if (scoreEl) {
+        animateValue('overall-score', 0, score, 1500);
+        const circle = document.getElementById('score-circle');
+        if (circle) {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            const offset = circumference - (score / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+            circle.classList.remove('text-green-500', 'text-yellow-500', 'text-red-500');
+            if (score >= 80) circle.classList.add('text-green-500');
+            else if (score >= 50) circle.classList.add('text-yellow-500');
+            else circle.classList.add('text-red-500');
+        }
+    }
+
+    const ratingEl = document.getElementById('fluency-rating');
+    if (ratingEl) {
+        ratingEl.textContent = rating;
+        ratingEl.className = 'text-4xl font-extrabold mb-3';
+        if (rating === 'Natural') {
+            ratingEl.classList.add('text-green-600');
+        } else if (rating === 'Mild') {
+            ratingEl.classList.add('text-yellow-600');
+        } else if (rating === 'Moderate') {
+            ratingEl.classList.add('text-orange-600');
+        } else if (rating === 'Severe') {
+            ratingEl.classList.add('text-red-600');
+        } else {
+            ratingEl.classList.add('text-gray-900');
+        }
+    }
+
+    if (analysisObj.stuttering_types) {
+        analysisObj.stuttering_types.forEach(type => {
+            const name = String(type.name || '').toLowerCase();
+            let containerId = '';
+
+            if (name.includes('repetition')) containerId = 'repetition';
+            else if (name.includes('prolongation')) containerId = 'prolongation';
+            else if (name.includes('block')) containerId = 'blocking';
+
+            if (containerId) {
+                const countDisplay = type.count !== undefined ? type.count : (type.percentage + '%');
+                const countEl = document.getElementById(`type-${containerId}-count`);
+                if (countEl) countEl.textContent = countDisplay;
+
+                const barEl = document.getElementById(`type-${containerId}-bar`);
+                if (barEl) {
+                    const severity = type.severity || type.percentage || 0;
+                    barEl.style.width = `${severity}%`;
+                }
+            }
+        });
+    }
+
+    const analysisTextEl = document.getElementById('analysis-text');
+    if (analysisTextEl) {
+        if (analysisObj.raw_text && !analysisObj.overall_score && !analysisObj.fluency_rating) {
+            analysisTextEl.innerText = analysisObj.raw_text;
+        } else {
+            analysisTextEl.innerText = analysisObj.detailed_analysis || 'No detailed analysis provided.';
+        }
+    }
+
+    const recList = document.getElementById('recommendations-list');
+    if (recList) {
+        recList.innerHTML = '';
+        if (analysisObj.recommendations && Array.isArray(analysisObj.recommendations)) {
+            analysisObj.recommendations.forEach((rec, index) => {
+                const li = document.createElement('li');
+                li.className = 'flex gap-3 p-3 bg-gradient-to-r from-gray-50 to-white rounded-lg border border-gray-100 hover:border-indigo-200 hover:shadow-sm transition-all';
+                li.innerHTML = `
+                    <span class="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-xs font-bold">${index + 1}</span>
+                    <span class="text-gray-700 text-sm leading-relaxed">${rec}</span>
+                `;
+                recList.appendChild(li);
+            });
+        }
+    }
+
+    collectReportData(transcriptText, analysisObj);
+    renderResultMetaChips();
+
+    if (rawData) {
+        const jsonOutput = document.getElementById('json-output');
+        if (jsonOutput) {
+            jsonOutput.textContent = JSON.stringify(rawData, null, 2);
+        }
+    }
+
+    const resultsContent = document.getElementById('results-content');
+    if (resultsContent) {
+        resultsContent.style.display = 'block';
+    }
+    const downloadBtn = document.getElementById('download-report-btn');
+    if (downloadBtn) {
+        downloadBtn.style.display = 'inline-flex';
+    }
+}
+
+function downloadPdfReport() {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+        alert('PDF library not loaded. Please refresh and try again.');
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    let y = 12;
+    const left = 12;
+    const contentW = 186;
+
+    function pageBreakIfNeeded(extraHeight = 12) {
+        if (y + extraHeight > 285) {
+            doc.addPage();
+            y = 12;
+        }
+    }
+
+    function drawHeader() {
+        doc.setFillColor(49, 46, 129);
+        doc.roundedRect(left, y, contentW, 26, 3, 3, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.text('FluEntra Speech Practice Report', left + 6, y + 10);
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.text('Powered by ElevenLabs + Groq AI', left + 6, y + 17);
+        doc.text('Generated: ' + new Date().toLocaleString(), left + 6, y + 22);
+        y += 32;
+        doc.setTextColor(31, 41, 55);
+    }
+
+    function metricCard(x, title, value, color) {
+        doc.setFillColor(color[0], color[1], color[2]);
+        doc.roundedRect(x, y, 58, 22, 2.5, 2.5, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.text(title, x + 4, y + 7);
+        doc.setFontSize(14);
+        doc.text(String(value), x + 4, y + 16);
+        doc.setTextColor(31, 41, 55);
+    }
+
+    function sectionTitle(title) {
+        pageBreakIfNeeded(10);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.text(title, left, y);
+        y += 6;
+    }
+
+    function blockText(text, fontSize = 10) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(fontSize);
+        const lines = doc.splitTextToSize(String(text || ''), contentW);
+        pageBreakIfNeeded((lines.length * 4.8) + 4);
+        doc.text(lines, left, y);
+        y += (lines.length * 4.8) + 3;
+    }
+
+    drawHeader();
+
+    const score = Number(currentAnalysisSummary.score || 0);
+    const rating = currentAnalysisSummary.rating || 'Unknown';
+    const stutterCount = currentStutterEvents.length;
+
+    metricCard(left, 'Fluency Score', score + '%', [79, 70, 229]);
+    metricCard(left + 64, 'Fluency Rating', rating, [5, 150, 105]);
+    metricCard(left + 128, 'Stutter Events', stutterCount, [220, 38, 38]);
+    y += 28;
+
+    sectionTitle('Stutter Timestamp Timeline');
+    if (currentStutterEvents.length) {
+        currentStutterEvents.slice(0, 120).forEach((ev, idx) => {
+            pageBreakIfNeeded(8);
+            doc.setFillColor(idx % 2 ? 249 : 243, 244, 246);
+            doc.roundedRect(left, y - 4, contentW, 7, 1.5, 1.5, 'F');
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(9.5);
+            doc.text(formatTimestamp(ev.time), left + 3, y + 0.5);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.text((ev.reason || 'Event') + ' on "' + String(ev.word || '') + '"', left + 28, y + 0.5);
+            y += 8;
+        });
+    } else {
+        blockText('No clear stutter timestamps were detected in this session.');
+    }
+
+    sectionTitle('Detailed Clinical Feedback');
+    blockText(currentAnalysisSummary.detailed || 'No detailed analysis available.');
+
+    sectionTitle('Recommendations');
+    if (currentAnalysisSummary.recommendations.length) {
+        currentAnalysisSummary.recommendations.forEach((rec, idx) => {
+            blockText((idx + 1) + '. ' + rec);
+        });
+    } else {
+        blockText('No recommendations available.');
+    }
+
+    sectionTitle('Transcript Excerpt');
+    const transcript = (currentTranscriptWords || []).join(' ');
+    blockText(transcript || 'No transcript available.', 9.5);
+
+    doc.save('fluentra-practice-report.pdf');
+}
+
+// -- Tab Switching Logic --
+function switchTab(tab) {
+    // Update tab buttons
+    document.getElementById('tab-record').classList.remove('active');
+    document.getElementById('tab-upload').classList.remove('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    
+    // Update panels
+    document.getElementById('panel-record').classList.remove('active');
+    document.getElementById('panel-upload').classList.remove('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+    
+    lucide.createIcons();
+}
+
+// -- Update Audio Status --
+function updateAudioStatus(hasAudio, message) {
+    const statusEl = document.getElementById('audio-status');
+    const statusText = document.getElementById('status-text');
+    
+    if (hasAudio) {
+        statusEl.classList.remove('empty');
+        statusEl.classList.add('ready');
+        statusText.textContent = message || 'Audio ready for analysis';
+        document.getElementById('analyze-btn').disabled = false;
+    } else {
+        statusEl.classList.remove('ready');
+        statusEl.classList.add('empty');
+        statusText.textContent = message || 'No audio selected';
+        document.getElementById('analyze-btn').disabled = true;
+    }
+}
+
+// -- Loading Steps Animation --
+function updateLoadingStep(step, status) {
+    const stepEl = document.getElementById('step-' + step);
+    if (!stepEl) return;
+    
+    stepEl.classList.remove('active', 'done');
+    if (status === 'active') {
+        stepEl.classList.add('active');
+    } else if (status === 'done') {
+        stepEl.classList.add('done');
+    }
+}
+
+function showLoadingOverlay() {
+    document.getElementById('loading-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Reset steps
+    updateLoadingStep('upload', 'active');
+    updateLoadingStep('transcribe', '');
+    updateLoadingStep('analyze', '');
+}
+
+function hideLoadingOverlay() {
+    document.getElementById('loading-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// -- Recording Logic --
+async function toggleRecording() {
+    if (!isRecording) {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            startRecording(stream);
+        } catch (err) {
+            alert('Could not access microphone: ' + err);
+        }
+    }
+}
+
+function startRecording(stream) {
+    // Determine the best supported MIME type
+    let mimeType = 'audio/webm';
+    if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+        mimeType = 'audio/webm;codecs=opus';
+    } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+        mimeType = 'audio/webm';
+    } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+        mimeType = 'audio/ogg;codecs=opus';
+    } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+        mimeType = 'audio/mp4';
+    }
+    
+    mediaRecorder = new MediaRecorder(stream, { mimeType: mimeType });
+    audioChunks = [];
+    
+    mediaRecorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+            audioChunks.push(e.data);
+        }
+    };
+    
+    mediaRecorder.onstop = () => {
+        audioBlob = new Blob(audioChunks, { type: mimeType });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setCurrentAudioUrl(audioUrl);
+        
+        // Store the MIME type for later use when sending
+        audioBlob.mimeType = mimeType;
+        
+        // Prepare for sending
+        updateAudioStatus(true, 'Recording saved • Ready to analyze');
+        document.getElementById('visualizer-text').textContent = "Recording saved! Click Analyze to process.";
+        
+        // Update mic icon wrapper to show success
+        document.getElementById('mic-icon-wrapper').classList.remove('recording');
+        document.getElementById('recording-visualizer').classList.remove('recording');
+        
+        // Stop all tracks
+        stream.getTracks().forEach(track => track.stop());
+    };
+    
+    mediaRecorder.start();
+    isRecording = true;
+    
+    // UI Updates - show recording state
+    document.getElementById('recordButton').disabled = true;
+    document.getElementById('stopButton').disabled = false;
+    document.getElementById('visualizer-text').textContent = "Recording in progress...";
+    document.getElementById('mic-icon-wrapper').classList.add('recording');
+    document.getElementById('recording-visualizer').classList.add('recording');
+    document.getElementById('audio-visualizer').style.display = 'block';
+    
+    // Timer
+    startTime = Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function stopRecording() {
+    if (mediaRecorder && isRecording) {
+        mediaRecorder.stop();
+        isRecording = false;
+        clearInterval(timerInterval);
+        
+        // UI Updates
+        document.getElementById('recordButton').disabled = false;
+        document.getElementById('recordButton').innerHTML = '<i data-lucide="rotate-ccw"></i> Re-record';
+        document.getElementById('stopButton').disabled = true;
+        lucide.createIcons();
+    }
+}
+
+function updateTimer() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const min = Math.floor(elapsed / 60).toString().padStart(2, '0');
+    const sec = (elapsed % 60).toString().padStart(2, '0');
+    document.getElementById('timer').textContent = `${min}:${sec}`;
+}
+
+// -- Upload Logic with Drag & Drop --
+const uploadZone = document.getElementById('upload-zone');
+
+if (uploadZone) {
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+    
+    uploadZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            document.getElementById('audio-upload').files = files;
+            handleFileSelect(document.getElementById('audio-upload'));
+        }
+    });
+}
+
+function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 10 * 1024 * 1024) {
+            alert("File is too large. Max 10MB.");
+            return;
+        }
+        
+        // UI Updates
+        document.getElementById('upload-zone').style.display = 'none';
+        document.getElementById('file-info').style.display = 'block';
+        document.getElementById('filename').textContent = file.name;
+        
+        // Format file size
+        const fileSize = file.size < 1024*1024 
+            ? (file.size / 1024).toFixed(1) + ' KB' 
+            : (file.size / (1024*1024)).toFixed(1) + ' MB';
+        document.getElementById('filesize').textContent = fileSize + ' • Ready for analysis';
+        
+        updateAudioStatus(true, file.name + ' selected');
+    setCurrentAudioUrl(URL.createObjectURL(file));
+        
+        // Clear recording if exists
+        audioBlob = null;
+        document.getElementById('timer').textContent = "00:00";
+        document.getElementById('recordButton').innerHTML = '<i data-lucide="mic"></i> Start Recording';
+        document.getElementById('visualizer-text').textContent = "Click the button below to start recording";
+        document.getElementById('mic-icon-wrapper').classList.remove('recording');
+        document.getElementById('recording-visualizer').classList.remove('recording');
+        lucide.createIcons();
+    }
+}
+
+function clearFile() {
+    document.getElementById('audio-upload').value = '';
+    document.getElementById('file-info').style.display = 'none';
+    document.getElementById('upload-zone').style.display = 'block';
+    updateAudioStatus(false);
+    lucide.createIcons();
+}
+
+// -- Submission Logic --
+async function submitForAnalysis() {
+    const fileInput = document.getElementById('audio-upload');
+    let formData = new FormData();
+    
+    if (fileInput.files.length > 0) {
+        formData.append('audio_file', fileInput.files[0]);
+    } else if (audioBlob) {
+        // Determine correct file extension based on MIME type
+        let extension = 'webm';
+        const mimeType = audioBlob.type || audioBlob.mimeType || 'audio/webm';
+        if (mimeType.includes('webm')) extension = 'webm';
+        else if (mimeType.includes('ogg')) extension = 'ogg';
+        else if (mimeType.includes('mp4')) extension = 'm4a';
+        else if (mimeType.includes('mp3') || mimeType.includes('mpeg')) extension = 'mp3';
+        
+        formData.append('audio_file', audioBlob, `recording.${extension}`);
+    } else {
+        alert("Please record or upload audio first.");
+        return;
+    }
+
+    await loadCurrentAudioDuration();
+    if (currentAudioDuration != null && !isNaN(currentAudioDuration)) {
+        formData.append('duration_seconds', String(Math.round(currentAudioDuration)));
+    }
+    
+    // Show loading overlay immediately
+    showLoadingOverlay();
+    document.getElementById('analyze-btn').disabled = true;
+    document.getElementById('results-content').style.display = 'none';
+    
+    // Simulate step progress
+    setTimeout(() => {
+        updateLoadingStep('upload', 'done');
+        updateLoadingStep('transcribe', 'active');
+    }, 1000);
+    
+    try {
+        const response = await fetch('/api/transcribe/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: formData
+        });
+        
+        // Update to analysis step
+        updateLoadingStep('transcribe', 'done');
+        updateLoadingStep('analyze', 'active');
+        
+        const data = await response.json();
+        
+        // Brief delay before hiding overlay
+        await new Promise(resolve => setTimeout(resolve, 500));
+        updateLoadingStep('analyze', 'done');
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Hide loading overlay
+        hideLoadingOverlay();
+        
+        if (data.success) {
+            let transcriptText = data.transcript || 'No transcript generated.';
+
+            if (!data.transcript && data.result && data.result.resultJson) {
+                try {
+                    const resultObj = JSON.parse(data.result.resultJson);
+                    if (typeof resultObj === 'string') {
+                        transcriptText = resultObj;
+                    } else if (resultObj.resultObject && resultObj.resultObject.text) {
+                        transcriptText = resultObj.resultObject.text;
+                    } else if (resultObj.text) {
+                        transcriptText = resultObj.text;
+                    } else if (resultObj.transcript) {
+                        transcriptText = resultObj.transcript;
+                    } else {
+                        transcriptText = JSON.stringify(resultObj, null, 2);
+                    }
+                } catch (e) {
+                    transcriptText = JSON.stringify(data.result, null, 2);
+                }
+            }
+
+            applyPracticeAnalysisResult({
+                transcriptText: transcriptText,
+                analysisObj: normalizeAnalysisData(data.analysis),
+                flaggedWords: data.flagged_words_ai || [],
+                audioUrl: currentAudioUrl || '',
+                durationSeconds: currentAudioDuration,
+                rawData: data
+            });
+
+            if (data.practice_session) {
+                window.__latestPracticeSession = data.practice_session;
+            }
+
+            document.getElementById('results-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        } else {
+            alert('Analysis failed: ' + (data.error || 'Unknown error'));
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Network error occurred. Please try again.');
+    } finally {
+        hideLoadingOverlay();
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('analyze-btn').disabled = false;
+    }
+}
+
+// Helper for number animation
+function animateValue(id, start, end, duration) {
+    if (start === end) return;
+    var range = end - start;
+    var current = start;
+    var increment = end > start? 1 : -1;
+    var stepTime = Math.abs(Math.floor(duration / range));
+    var obj = document.getElementById(id);
+    var timer = setInterval(function() {
+        current += increment;
+        obj.innerHTML = current;
+        if (current == end) {
+            clearInterval(timer);
+        }
+    }, stepTime);
+}
+
+// Initialize icons on page load
+document.addEventListener('DOMContentLoaded', function() {
+    lucide.createIcons();
+
+    const latestSessionEl = document.getElementById('latest-practice-session');
+    if (latestSessionEl) {
+        try {
+            const latestSession = JSON.parse(latestSessionEl.textContent || '{}');
+            if (latestSession && (latestSession.transcript || latestSession.analysis_data)) {
+                applyPracticeAnalysisResult({
+                    transcriptText: latestSession.transcript || '',
+                    analysisObj: latestSession.analysis_data || {},
+                    flaggedWords: latestSession.flagged_words || [],
+                    audioUrl: latestSession.audio_url || '',
+                    durationSeconds: latestSession.duration_seconds,
+                    rawData: latestSession
+                });
+            }
+        } catch (e) {
+            console.error('Failed to restore latest practice session:', e);
+        }
+    }
+});
+</script>
+{% endblock %}

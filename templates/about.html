@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketing.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Bridging the Gap in Speech Therapy</h1>
+        <p>We're on a mission to make speech therapy accessible, affordable, and effective for everyone.</p>
+    </div>
+</div>
+
+<section class="container section-padding">
+    <div class="split-section">
+        <div>
+            <h2>Our Story</h2>
+            <p style="margin-bottom: var(--spacing-md);">FluEntra was founded in 2023 by a team of speech
+                pathologists and AI researchers who saw a massive gap in accessible care. Millions of people
+                struggle with stuttering, but therapist availability and cost are major barriers.</p>
+            <p>We built FluEntra to provide a bridge—high-quality, data-driven feedback that people can use
+                anytime, anywhere, to maintain their progress between professional sessions.</p>
+        </div>
+        <div
+            style="background: #ebf8ff; height: 300px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--primary-color);">
+            <i data-lucide="heart" style="width: 100px; height: 100px; opacity: 0.2;"></i>
+        </div>
+    </div>
+
+    <div class="stats-container">
+        <div class="about-stat">
+            <span class="number counter" data-target="10000">0</span><span class="number">+</span>
+            <span>Active Users</span>
+        </div>
+        <div class="about-stat">
+            <span class="number counter" data-target="1000000">0</span><span class="number">+</span>
+            <span>Analyses Run</span>
+        </div>
+        <div class="about-stat">
+            <span class="number counter" data-target="94">0</span><span class="number">%</span>
+            <span>Improvement Rate</span>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: var(--spacing-2xl);">
+        <h2>Our Vision</h2>
+        <p style="max-width: 800px; margin: var(--spacing-lg) auto;">We envision a world where every individual
+            with a speech disorder has access to the tools they need to communicate with confidence. We're
+            constantly refining our AI models to detect more subtle dysfluencies and provide even more targeted
+            advice.</p>
+    </div>
+
+    <!-- Extended Content: Our Values -->
+    <div style="margin-top: var(--spacing-2xl);">
+        <div class="section-header">
+            <h2>Our Core Values</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="users"></i></div>
+                <h3>Accessibility First</h3>
+                <p>We believe quality speech therapy should be available to everyone, regardless of location or
+                    income.</p>
+            </div>
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="shield"></i></div>
+                <h3>Privacy & Trust</h3>
+                <p>Your voice is your identity. We protect your data with enterprise-grade security and never
+                    sell it.</p>
+            </div>
+            <div class="card feature-card card-hover">
+                <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                <h3>Continuous Innovation</h3>
+                <p>We never stop improving our AI to provide the most accurate and helpful feedback possible.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

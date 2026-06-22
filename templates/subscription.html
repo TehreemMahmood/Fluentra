@@ -1,0 +1,227 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Manage Subscription{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/marketing.css' %}">
+<style>
+    .subscription-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .current-plan {
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+        color: white;
+        padding: var(--spacing-xl);
+        border-radius: var(--radius-lg);
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .current-plan h2 {
+        color: white;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .plan-details {
+        display: flex;
+        gap: var(--spacing-2xl);
+        margin-top: var(--spacing-lg);
+    }
+
+    .plan-detail-item {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .plan-detail-item .label {
+        font-size: 0.85rem;
+        opacity: 0.8;
+    }
+
+    .plan-detail-item .value {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .available-plans {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--spacing-xl);
+    }
+
+    .plan-card {
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-xl);
+        transition: all 0.3s;
+    }
+
+    .plan-card:hover {
+        border-color: var(--primary-light);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .plan-card.current {
+        border-color: var(--primary-color);
+        background: #f0f9ff;
+    }
+
+    .plan-card .price {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--primary-color);
+    }
+
+    .plan-card .price span {
+        font-size: 1rem;
+        font-weight: normal;
+        color: var(--text-light);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Manage Subscription</h1>
+        <p>View and manage your subscription plan</p>
+    </div>
+</div>
+
+<section class="container section-padding">
+    {% if current_subscription %}
+    <div class="current-plan">
+        <div class="subscription-header">
+            <div>
+                <h2>{{ current_subscription.plan.display_name }} Plan</h2>
+                <p>Your current subscription</p>
+            </div>
+            <span class="badge" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px;">
+                {{ current_subscription.status|title }}
+            </span>
+        </div>
+        <div class="plan-details">
+            <div class="plan-detail-item">
+                <span class="label">Price</span>
+                <span class="value">Rs. {{ current_subscription.plan.price }}/mo</span>
+            </div>
+            <div class="plan-detail-item">
+                <span class="label">Started</span>
+                <span class="value">{{ current_subscription.start_date|date:"M d, Y" }}</span>
+            </div>
+            {% if current_subscription.end_date %}
+            <div class="plan-detail-item">
+                <span class="label">Renews</span>
+                <span class="value">{{ current_subscription.end_date|date:"M d, Y" }}</span>
+            </div>
+            {% endif %}
+            <div class="plan-detail-item">
+                <span class="label">Auto-Renew</span>
+                <span class="value">{{ current_subscription.auto_renew|yesno:"Enabled,Disabled" }}</span>
+            </div>
+        </div>
+    </div>
+
+    {% if current_subscription.plan.name != 'basic' %}
+    <div class="card" style="margin-bottom: var(--spacing-2xl); border-left: 4px solid var(--warning-color);">
+        <h3>Cancel Subscription</h3>
+        <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">
+            If you cancel, you'll continue to have access until {{ current_subscription.end_date|date:"M d, Y" }}.
+            After that, you'll be downgraded to the Basic plan.
+        </p>
+        <button id="cancel-btn" class="btn btn-outline" style="border-color: var(--error-color); color: var(--error-color);">
+            Cancel Subscription
+        </button>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <h2 style="margin-bottom: var(--spacing-xl);">Available Plans</h2>
+
+    <div class="available-plans">
+        {% for plan in plans %}
+        <div class="plan-card {% if current_subscription and current_subscription.plan.name == plan.name %}current{% endif %}">
+            <h3>{{ plan.display_name }}</h3>
+            <div class="price">Rs. {{ plan.price }}<span>/mo</span></div>
+            <p style="color: var(--text-secondary); margin: var(--spacing-md) 0;">{{ plan.description }}</p>
+
+            <ul style="list-style: none; padding: 0; margin: var(--spacing-lg) 0;">
+                {% for feature in plan.features %}
+                <li style="display: flex; gap: 8px; margin-bottom: 8px; font-size: 0.9rem;">
+                    <i data-lucide="check-circle" style="width: 18px; color: var(--success-color);"></i>
+                    {{ feature }}
+                </li>
+                {% endfor %}
+            </ul>
+
+            {% if current_subscription and current_subscription.plan.name == plan.name %}
+            <button class="btn btn-outline" style="width: 100%;" disabled>Current Plan</button>
+            {% elif plan.name == 'basic' %}
+            <button class="btn btn-outline" style="width: 100%;" disabled>Free Plan</button>
+            {% else %}
+            <a href="{% url 'checkout' plan.name %}" class="btn btn-primary" style="width: 100%; display: block; text-align: center;">
+                {% if current_subscription and current_subscription.plan.price < plan.price %}
+                Upgrade
+                {% else %}
+                Subscribe
+                {% endif %}
+            </a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    const cancelBtn = document.getElementById('cancel-btn');
+    
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', async () => {
+            if (!confirm('Are you sure you want to cancel your subscription?')) {
+                return;
+            }
+
+            cancelBtn.disabled = true;
+            cancelBtn.textContent = 'Cancelling...';
+
+            try {
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]')?.value || 
+                    document.cookie.split('; ').find(row => row.startsWith('csrftoken='))?.split('=')[1];
+
+                const response = await fetch('/api/subscription/cancel/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                    },
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.error || 'Failed to cancel subscription');
+                    cancelBtn.disabled = false;
+                    cancelBtn.textContent = 'Cancel Subscription';
+                }
+            } catch (error) {
+                console.error('Cancel error:', error);
+                alert('Network error. Please try again.');
+                cancelBtn.disabled = false;
+                cancelBtn.textContent = 'Cancel Subscription';
+            }
+        });
+    }
+
+    lucide.createIcons();
+</script>
+{% endblock %}

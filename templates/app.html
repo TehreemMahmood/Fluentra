@@ -1,0 +1,220 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- Dashboard View (Initial) -->
+<!-- Mini Stats Bar -->
+<div
+    style="display: flex; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); background: white; padding: var(--spacing-md); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow-x: auto;">
+    <div
+        style="display: flex; align-items: center; gap: 10px; padding-right: var(--spacing-lg); border-right: 1px solid var(--border-color); white-space: nowrap;">
+        <i data-lucide="clock" style="color: var(--secondary-color); width: 18px;"></i>
+        <span style="font-size: 0.85rem; color: var(--text-secondary);">Practice Time: <strong
+                style="color: var(--primary-color);">42m</strong></span>
+    </div>
+    <div
+        style="display: flex; align-items: center; gap: 10px; padding-right: var(--spacing-lg); border-right: 1px solid var(--border-color); white-space: nowrap;">
+        <i data-lucide="type" style="color: var(--secondary-color); width: 18px;"></i>
+        <span style="font-size: 0.85rem; color: var(--text-secondary);">Words Analyzed: <strong
+                style="color: var(--primary-color);">1,280</strong></span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px; white-space: nowrap;">
+        <i data-lucide="trending-up" style="color: var(--secondary-color); width: 18px;"></i>
+        <span style="font-size: 0.85rem; color: var(--text-secondary);">Fluency Goal: <strong
+                style="color: var(--primary-color);">85%</strong></span>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="card stat-card" style="border-left: 4px solid var(--secondary-color);">
+        <div class="stat-label">Latest Fluency Score</div>
+        <div class="stat-value">82%</div>
+        <div style="color: var(--success-color); font-size: 0.8rem;">+3% from last week</div>
+    </div>
+    <div class="card stat-card" style="border-left: 4px solid var(--primary-light);">
+        <div class="stat-label">Current Streak</div>
+        <div class="stat-value">5 Days</div>
+        <div style="color: var(--text-light); font-size: 0.8rem;">Personal best: 12 days</div>
+    </div>
+    <div class="card stat-card" style="border-left: 4px solid var(--primary-color);">
+        <div class="stat-label">Exercises Completed</div>
+        <div class="stat-value">124</div>
+        <div style="color: var(--text-light); font-size: 0.8rem;">Goal: 150 this month</div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-xl); align-items: flex-start;">
+        <!-- Left Column: Activity & Recommendations -->
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-xl);">
+            <div class="card">
+                <h3 style="margin-bottom: var(--spacing-lg);">Recent Activity</h3>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr
+                            style="text-align: left; border-bottom: 2px solid var(--border-color); color: var(--text-light); font-size: 0.9rem;">
+                            <th style="padding: 12px 0;">Date</th>
+                            <th>Session Type</th>
+                            <th>Score</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 16px 0;">Oct 24, 2025</td>
+                            <td>Speech Analysis</td>
+                            <td><span class="badge"
+                                    style="background: #C6F6D5; color: #22543D;">82%</span></td>
+                            <td><a href="#" style="color: var(--primary-color);">View Report</a></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 16px 0;">Oct 23, 2025</td>
+                            <td>Tongue Twister</td>
+                            <td><span class="badge"
+                                    style="background: #C6F6D5; color: #22543D;">88%</span></td>
+                            <td><a href="#" style="color: var(--primary-color);">View Report</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card" style="background: linear-gradient(to right, #ffffff, #f0f9ff);">
+                <h3 style="margin-bottom: var(--spacing-lg);">Recommended for You</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg);">
+                    <div class="card-hover"
+                        style="padding: var(--spacing-md); border: 1px solid var(--border-color); border-radius: var(--radius-md); background: white; cursor: pointer;">
+                        <div
+                            style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: 10px;">
+                            <div
+                                style="background: #E6FFFA; padding: 10px; border-radius: var(--radius-sm); color: var(--secondary-color);">
+                                <i data-lucide="wind"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem;">Gentle Onsets</h4>
+                        </div>
+                        <p
+                            style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+                            Difficulty: Easy • 15 Exercises</p>
+                        <div style="width: 100%; height: 4px; background: #E2E8F0; border-radius: 2px;">
+                            <div
+                                style="width: 60%; height: 100%; background: var(--secondary-color); border-radius: 2px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover"
+                        style="padding: var(--spacing-md); border: 1px solid var(--border-color); border-radius: var(--radius-md); background: white; cursor: pointer;">
+                        <div
+                            style="display: flex; gap: var(--spacing-md); align-items: center; margin-bottom: 10px;">
+                            <div
+                                style="background: #EBF8FF; padding: 10px; border-radius: var(--radius-sm); color: var(--primary-light);">
+                                <i data-lucide="music"></i>
+                            </div>
+                            <h4 style="font-size: 0.95rem;">Rhythmic Speech</h4>
+                        </div>
+                        <p
+                            style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+                            Difficulty: Medium • 8 Exercises</p>
+                        <div style="width: 100%; height: 4px; background: #E2E8F0; border-radius: 2px;">
+                            <div
+                                style="width: 30%; height: 100%; background: var(--primary-light); border-radius: 2px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Daily Mission & AI Coach -->
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-xl);">
+            <div class="card" style="background: var(--primary-color); color: white;">
+                <h3 style="color: white; margin-bottom: var(--spacing-lg);">Daily Mission</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span style="font-size: 0.95rem;">10 Min Practice</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <input type="checkbox" style="width: 20px; height: 20px;">
+                        <span style="font-size: 0.95rem;">2 Tongue Twisters</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: var(--spacing-md);">
+                        <input type="checkbox" style="width: 20px; height: 20px;">
+                        <span style="font-size: 0.95rem;">Review Analysis</span>
+                    </div>
+                </div>
+                <div
+                    style="margin-top: var(--spacing-lg); padding-top: var(--spacing-md); border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem;">
+                    Progress: 33% Complete
+                </div>
+            </div>
+
+            <div class="card">
+                <div
+                    style="display: flex; align-items: center; gap: var(--spacing-md); margin-bottom: var(--spacing-lg);">
+                    <div
+                        style="width: 40px; height: 40px; background: var(--secondary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color);">
+                        <i data-lucide="message-circle" style="width: 20px;"></i>
+                    </div>
+                    <h3>AI Coach Tips</h3>
+                </div>
+                <div
+                    style="background: var(--background-color); padding: var(--spacing-md); border-radius: var(--radius-md); font-size: 0.9rem; border-left: 4px solid var(--secondary-color);">
+                    "I noticed you're doing great with repetitions! Today, focus on
+                    <strong>pausing</strong> before difficult words. It gives your brain time to plan
+                    the motor movement."
+                </div>
+                <button id="ask-coach-open-chat" class="btn btn-outline btn-sm"
+                    style="width: 100%; margin-top: var(--spacing-md);">Ask Coach a Question</button>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: var(--spacing-lg);">Community Leaderboard</h3>
+                <div style="display: flex; flex-direction: column; gap: var(--spacing-md);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div
+                                style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%; font-size: 0.8rem; display: flex; align-items: center; justify-content: center;">
+                                👤</div>
+                            <span style="font-size: 0.9rem;">Sarah Jenkins</span>
+                        </div>
+                        <span class="badge badge-easy">2.4k XP</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div
+                                style="width: 32px; height: 32px; background: #e2e8f0; border-radius: 50%; font-size: 0.8rem; display: flex; align-items: center; justify-content: center;">
+                                👤</div>
+                            <span style="font-size: 0.9rem;">Tom Wright</span>
+                        </div>
+                        <span class="badge badge-easy">2.1k XP</span>
+                    </div>
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; opacity: 0.6;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div
+                                style="width: 32px; height: 32px; background: var(--secondary-color); border-radius: 50%; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; color: white;">
+                                AD</div>
+                            <span style="font-size: 0.9rem; font-weight: 600;">You (12th)</span>
+                        </div>
+                        <span class="badge badge-medium">1.2k XP</span>
+                    </div>
+                </div>
+                <a href="#"
+                    style="display: block; text-align: center; margin-top: var(--spacing-md); font-size: 0.85rem; color: var(--primary-color);">View
+                    All Rankings</a>
+            </div>
+            <div class="card"
+                style="text-align: center; border: 2px dashed var(--secondary-color); background: rgba(79, 209, 197, 0.02);">
+                <i data-lucide="mic"
+                    style="width: 48px; height: 48px; color: var(--secondary-color); margin-bottom: var(--spacing-md); margin: 0 auto;"></i>
+                <h3>Quick Start</h3>
+                <p class="text-secondary" style="margin-bottom: var(--spacing-lg); font-size: 0.9rem;">
+                    Start a new analysis session now.</p>
+                <button class="btn btn-primary" style="width: 100%;"
+                    onclick="document.querySelector('[data-view=\'speech-analysis\']').click()">Start
+                    Recording</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,337 @@
+/* Fluentra Admin Custom Theme */
+/* Primary Theme Color: #2C5282 (Dark Blue) */
+
+:root {
+    --fluentra-primary: #2C5282;
+    --fluentra-primary-light: #3D6A9E;
+    --fluentra-primary-dark: #1E3A5F;
+    --fluentra-dark: #1A202C;
+    --fluentra-bg: #F7FAFC;
+}
+
+/* Sidebar */
+.main-sidebar,
+.sidebar-dark-primary,
+.sidebar-dark-navy,
+.sidebar-dark-purple,
+[class*="sidebar-dark"] {
+    background: linear-gradient(180deg, #1E3A5F 0%, #2C5282 100%) !important;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+}
+
+.sidebar .nav-link.active {
+    border-left: 3px solid #fff !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.nav-sidebar .nav-link p,
+.nav-sidebar .nav-link i {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.nav-sidebar .nav-link.active p,
+.nav-sidebar .nav-link.active i {
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+/* Brand/Logo area */
+.brand-link {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.brand-link .brand-text {
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+
+/* Navbar */
+.main-header.navbar {
+    background: #fff !important;
+    border-bottom: 3px solid #2C5282 !important;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-outline-primary:hover {
+    background-color: #2C5282 !important;
+    border-color: #2C5282 !important;
+    color: #fff !important;
+}
+
+.btn-outline-primary {
+    color: #2C5282 !important;
+    border-color: #2C5282 !important;
+}
+
+.btn-info {
+    background-color: #3D6A9E !important;
+    border-color: #3D6A9E !important;
+    color: #fff !important;
+}
+
+.btn-secondary {
+    background-color: #4A5568 !important;
+    border-color: #4A5568 !important;
+}
+
+/* Links */
+a {
+    color: #2C5282;
+}
+
+a:hover {
+    color: #1E3A5F;
+}
+
+/* Cards */
+.card-primary:not(.card-outline) > .card-header {
+    background-color: #2C5282 !important;
+}
+
+.card-primary.card-outline {
+    border-top: 3px solid #2C5282 !important;
+}
+
+/* Small boxes / Stats */
+.small-box.bg-info,
+.small-box.bg-primary {
+    background: linear-gradient(135deg, #3D6A9E 0%, #2C5282 100%) !important;
+}
+
+.small-box.bg-success {
+    background: linear-gradient(135deg, #48BB78 0%, #38A169 100%) !important;
+}
+
+.small-box.bg-warning {
+    background: linear-gradient(135deg, #ECC94B 0%, #D69E2E 100%) !important;
+}
+
+.small-box.bg-danger {
+    background: linear-gradient(135deg, #FC8181 0%, #E53E3E 100%) !important;
+}
+
+/* Tables */
+.table thead th {
+    background-color: #2C5282 !important;
+    color: #fff !important;
+    border-color: #2C5282 !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(44, 82, 130, 0.05) !important;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(44, 82, 130, 0.1) !important;
+}
+
+/* Pagination */
+.page-item.active .page-link {
+    background-color: #2C5282 !important;
+    border-color: #2C5282 !important;
+}
+
+.page-link {
+    color: #2C5282 !important;
+}
+
+.page-link:hover {
+    background-color: rgba(44, 82, 130, 0.1) !important;
+}
+
+/* Form inputs focus */
+.form-control:focus,
+.custom-select:focus {
+    border-color: #2C5282 !important;
+    box-shadow: 0 0 0 0.2rem rgba(44, 82, 130, 0.25) !important;
+}
+
+/* Checkboxes */
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #2C5282 !important;
+    border-color: #2C5282 !important;
+}
+
+/* Accent elements */
+.accent-primary .btn-link,
+[class*="accent-"] .btn-link {
+    color: #2C5282 !important;
+}
+
+[class*="bg-primary"],
+[class*="bg-info"],
+[class*="bg-navy"] {
+    background-color: #2C5282 !important;
+}
+
+/* Badge colors */
+.badge-primary,
+.badge-info {
+    background-color: #2C5282 !important;
+    color: #fff !important;
+}
+
+/* Dropdown */
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: #2C5282 !important;
+}
+
+/* Progress bars */
+.progress-bar {
+    background-color: #2C5282 !important;
+}
+
+/* Calendar/Date picker */
+.datepicker .datepicker-switch:hover,
+.datepicker .next:hover,
+.datepicker .prev:hover,
+.datepicker tfoot tr th:hover,
+.datepicker table tr td.active:active,
+.datepicker table tr td.active:active:hover,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover,
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td span.active:active,
+.datepicker table tr td span.active:hover:active,
+.datepicker table tr td span.active.disabled,
+.datepicker table tr td span.active.disabled:hover,
+.datepicker table tr td span.active,
+.datepicker table tr td span.active:hover {
+    background-color: #2C5282 !important;
+}
+
+/* Login page */
+.login-page,
+.register-page {
+    background: linear-gradient(135deg, #1A202C 0%, #2C5282 100%) !important;
+}
+
+.login-box .card,
+.register-box .card {
+    border-top: 4px solid #2C5282 !important;
+}
+
+.login-card-body .input-group-text,
+.register-card-body .input-group-text {
+    color: #2C5282 !important;
+}
+
+.login-box .btn-primary,
+.register-box .btn-primary {
+    background-color: #2C5282 !important;
+    border-color: #2C5282 !important;
+}
+
+/* Breadcrumb */
+.breadcrumb-item.active {
+    color: #2C5282 !important;
+}
+
+/* Selection */
+::selection {
+    background: rgba(44, 82, 130, 0.3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F7FAFC;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2C5282;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1E3A5F;
+}
+
+/* Content header */
+.content-header h1 {
+    color: #2C5282 !important;
+}
+
+/* Nav tabs */
+.nav-tabs .nav-link.active {
+    border-color: #2C5282 #2C5282 #fff !important;
+    color: #2C5282 !important;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: rgba(44, 82, 130, 0.3) rgba(44, 82, 130, 0.3) #dee2e6 !important;
+}
+
+/* User panel in sidebar */
+.user-panel .info a {
+    color: #fff !important;
+}
+
+/* Footer */
+.main-footer {
+    background: #fff !important;
+    border-top: 3px solid #2C5282 !important;
+    color: #4A5568 !important;
+}
+
+/* Alerts */
+.alert-info {
+    background-color: rgba(44, 82, 130, 0.15) !important;
+    border-color: #2C5282 !important;
+    color: #2C5282 !important;
+}
+
+/* Select2 */
+.select2-container--default .select2-selection--single:focus,
+.select2-container--default .select2-selection--multiple:focus {
+    border-color: #2C5282 !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #2C5282 !important;
+}
+
+/* Sidebar menu headers */
+.nav-header {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Switch/Toggle */
+.custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #2C5282 !important;
+    border-color: #2C5282 !important;
+}
+
+/* Loading/Spinner */
+.spinner-border {
+    color: #2C5282 !important;
+}
+
+/* Toasts */
+.toast-header {
+    background-color: #2C5282 !important;
+    color: #fff !important;
+}
+
+/* Modal */
+.modal-header {
+    background-color: #2C5282 !important;
+    color: #fff !important;
+}
+
+.modal-header .close {
+    color: #fff !important;
+}

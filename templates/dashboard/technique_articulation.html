@@ -1,0 +1,211 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Light Articulatory Contacts{% endblock %}
+
+{% block content %}
+<!-- Header with Back Button -->
+<div style="margin-bottom: var(--spacing-xl);">
+    <a href="{% url 'techniques' %}" style="display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--primary-color)'" onmouseout="this.style.color='var(--text-secondary)'">
+        <i data-lucide="arrow-left" style="width: 20px; height: 20px;"></i>
+        Back to Techniques
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div style="background: linear-gradient(135deg, rgba(72, 187, 120, 0.1) 0%, rgba(56, 161, 105, 0.15) 100%); border-radius: var(--radius-lg); padding: 40px; margin-bottom: var(--spacing-xl);">
+    <div style="display: flex; align-items: center; gap: var(--spacing-xl);">
+        <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #68D391 0%, #38A169 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(56, 161, 105, 0.3);">
+            <i data-lucide="smile" style="width: 50px; height: 50px; color: white;"></i>
+        </div>
+        <div style="flex: 1;">
+            <span class="badge" style="background: #C6F6D5; color: #22543D; margin-bottom: 12px;">Articulation Technique</span>
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; color: var(--text-dark);">Light Articulatory Contacts</h1>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">Reduce physical tension in speech by using gentle, relaxed movements when producing consonant sounds.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content Grid -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <!-- How to Practice -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--primary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="book-open" style="width: 22px; height: 22px;"></i>
+            How to Practice
+        </h3>
+        <ol style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Identify Target Sounds:</strong> Focus on plosive consonants like P, B, T, D, K, and G</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduce Pressure:</strong> Touch your articulators (lips, tongue) together very lightly</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Gentle Release:</strong> Release the sound with minimal force, letting it "slide" out</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Practice Words:</strong> Start with single words, then progress to phrases</li>
+            <li><strong style="color: var(--text-dark);">Monitor Tension:</strong> Keep checking that your jaw, lips, and tongue remain relaxed</li>
+        </ol>
+    </div>
+    
+    <!-- Benefits for Fluency -->
+    <div class="card" style="padding: var(--spacing-xl);">
+        <h3 style="margin-bottom: var(--spacing-lg); color: var(--secondary-color); display: flex; align-items: center; gap: 10px;">
+            <i data-lucide="heart" style="width: 22px; height: 22px;"></i>
+            Benefits for Fluency
+        </h3>
+        <ul style="margin-left: var(--spacing-lg); line-height: 2.2; color: var(--text-secondary);">
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Prevents Blocks:</strong> Light contacts reduce the chance of getting "stuck" on sounds</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Reduces Physical Effort:</strong> Speaking becomes less tiring and more natural</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Smoother Transitions:</strong> Easier movement between sounds in connected speech</li>
+            <li style="margin-bottom: 12px;"><strong style="color: var(--text-dark);">Less Struggle:</strong> Minimizes the physical struggle behavior during stuttering</li>
+            <li><strong style="color: var(--text-dark);">Increased Confidence:</strong> Speaking feels easier, building communication confidence</li>
+        </ul>
+    </div>
+</div>
+
+<!-- How It Reduces Stuttering Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl); background: linear-gradient(135deg, rgba(72, 187, 120, 0.05) 0%, rgba(56, 161, 105, 0.05) 100%);">
+    <h3 style="margin-bottom: var(--spacing-xl); color: var(--text-dark); display: flex; align-items: center; gap: 12px;">
+        <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #68D391 0%, #38A169 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+            <i data-lucide="brain" style="width: 24px; height: 24px; color: white;"></i>
+        </div>
+        How Light Articulatory Contacts Reduce Stuttering
+    </h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid #38A169; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(56, 161, 105, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="minimize-2" style="width: 24px; height: 24px; color: #38A169;"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: #38A169;">Reduced Muscular Tension</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Excessive pressure at articulatory contact points is a major trigger for blocks. Light contacts prevent the "locking" sensation that leads to stuttering moments.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--secondary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(79, 209, 197, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="waves" style="width: 24px; height: 24px; color: var(--secondary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--secondary-color);">Maintained Airflow</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">When articulators touch lightly, air can still flow through more easily, preventing the complete airflow stoppage that characterizes blocking.</p>
+        </div>
+        
+        <div style="background: white; padding: var(--spacing-lg); border-radius: var(--radius-md); border-left: 4px solid var(--primary-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div style="width: 48px; height: 48px; background: rgba(99, 102, 241, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: var(--spacing-md);">
+                <i data-lucide="zap" style="width: 24px; height: 24px; color: var(--primary-color);"></i>
+            </div>
+            <h4 style="margin-bottom: 10px; font-size: 1.05rem; color: var(--primary-color);">Easier Sound Initiation</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7;">Light contacts make it easier to initiate and release sounds, reducing the effort needed to start speaking and transition between syllables.</p>
+        </div>
+    </div>
+    
+    <!-- Clinical Evidence -->
+    <div style="margin-top: var(--spacing-xl); padding: var(--spacing-lg); background: linear-gradient(135deg, rgba(56, 161, 105, 0.08) 0%, rgba(56, 161, 105, 0.03) 100%); border-radius: var(--radius-md); border: 1px solid rgba(56, 161, 105, 0.1);">
+        <div style="display: flex; align-items: flex-start; gap: var(--spacing-md);">
+            <div style="width: 40px; height: 40px; background: #38A169; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i data-lucide="file-text" style="width: 20px; height: 20px; color: white;"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-dark);">Clinical Evidence</h4>
+                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.8; margin: 0;">
+                    Research in fluency shaping therapy shows that light articulatory contacts are one of the most effective techniques for reducing blocks on plosive sounds. Studies indicate that people who stutter often use 2-3 times more pressure than fluent speakers when producing consonants. Training in light contacts normalizes this pressure and significantly reduces stuttering frequency.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Practice Words Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="list" style="width: 22px; height: 22px; color: #38A169;"></i>
+        Practice Words by Sound
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-lg);">
+        <div style="background: #F7FAFC; padding: var(--spacing-md); border-radius: var(--radius-md);">
+            <h5 style="margin-bottom: 10px; color: #38A169;">P & B Sounds</h5>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">Peter, paper, butter, baby, bubble, purple</p>
+        </div>
+        <div style="background: #F7FAFC; padding: var(--spacing-md); border-radius: var(--radius-md);">
+            <h5 style="margin-bottom: 10px; color: var(--secondary-color);">T & D Sounds</h5>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">Turtle, water, dinner, daddy, today, ladder</p>
+        </div>
+        <div style="background: #F7FAFC; padding: var(--spacing-md); border-radius: var(--radius-md);">
+            <h5 style="margin-bottom: 10px; color: var(--primary-color);">K & G Sounds</h5>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">Kitten, cookie, gentle, giggle, coming, garden</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tips Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="lightbulb" style="width: 22px; height: 22px; color: #F59E0B;"></i>
+        Tips for Effective Practice
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-lg);">
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(56, 161, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #38A169;">1</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Use a Mirror</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Watch your lips and jaw to ensure you're making gentle, relaxed movements.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(56, 161, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #38A169;">2</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Exaggerate at First</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Start with extremely light contacts, then gradually find a natural balance.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(56, 161, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #38A169;">3</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Combine with Breathing</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Take a relaxed breath before practicing to reduce overall tension.</p>
+            </div>
+        </div>
+        <div style="display: flex; gap: var(--spacing-md);">
+            <div style="width: 32px; height: 32px; background: rgba(56, 161, 105, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 4px;">
+                <span style="font-weight: 700; color: #38A169;">4</span>
+            </div>
+            <div>
+                <h5 style="margin-bottom: 4px; color: var(--text-dark);">Transfer to Conversation</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6;">Once comfortable, practice light contacts during real conversations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Tutorial Section -->
+<div class="card" style="padding: var(--spacing-xl); margin-bottom: var(--spacing-xl);">
+    <h3 style="margin-bottom: var(--spacing-lg); color: var(--text-dark); display: flex; align-items: center; gap: 10px;">
+        <i data-lucide="play-circle" style="width: 22px; height: 22px; color: #38A169;"></i>
+        Video Tutorial
+    </h3>
+    <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">Watch this video to learn how to practice light articulatory contacts effectively.</p>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--radius-md); background: #000;">
+        <iframe 
+            src="https://www.youtube.com/embed/D7v_dgFhLLk?enablejsapi=1&origin={{ request.scheme }}://{{ request.get_host }}" 
+            title="Light Articulatory Contacts Tutorial"
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: var(--radius-md);">
+        </iframe>
+    </div>
+    <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 10px; text-align: center;">
+        Video not loading? <a href="https://youtu.be/D7v_dgFhLLk" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Watch on YouTube →</a>
+    </p>
+</div>
+
+<!-- Practice Button -->
+<div style="display: flex; justify-content: center; padding: var(--spacing-xl) 0;">
+    <a href="{% url 'practice' %}" class="btn btn-primary" style="padding: 16px 48px; font-size: 1.1rem;">
+        <i data-lucide="mic" style="width: 20px; height: 20px;"></i>
+        Start Practice Session
+    </a>
+</div>
+{% endblock %}

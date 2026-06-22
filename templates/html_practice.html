@@ -1,0 +1,231 @@
+<!-- Practice HTML File for Learning and Experimentation -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Practice</title>
+
+    <!-- INLINE CSS -->
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        header, footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 15px;
+        }
+
+        main {
+            padding: 30px;
+        }
+
+        /* FLEX WRAPPER */
+        .flex-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            width: 280px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Welcome to Your HTML Practice Page!</h1>
+</header>
+
+<main>
+
+    <!-- FLEX SECTION -->
+    <div class="flex-wrapper">
+
+        <!-- TEXT CARD -->
+        <section class="card">
+            <h2>Text Section</h2>
+            <p>This is a paragraph for practicing HTML structure.</p>
+            <ul>
+                <li>List Item 1</li>
+                <li>List Item 2</li>
+                <li>List Item 3</li>
+            </ul>
+
+            <button onclick="alert('Text Button Clicked!')">
+                Click Me
+            </button>
+        </section>
+
+        <!-- IMAGE CARD -->
+        <section class="card">
+            <h2>Image Section</h2>
+
+            <img src="https://via.placeholder.com/250" alt="Practice Image">
+
+            <button onclick="changeImage()">
+                Change Image
+            </button>
+        </section>
+
+        <!-- FORM CARD -->
+        <section class="card">
+            <h2>Form Example</h2>
+
+            <form onsubmit="showName(event)">
+                <label>Name:</label>
+                <input type="text" id="name">
+
+                <button type="submit">
+                    Submit
+                </button>
+            </form>
+
+            <p id="result"></p>
+        </section>
+
+    </div>
+
+    <!-- SIMPLE TEXT -->
+    <div style="color: rgb(16, 107, 187); text-align:center; margin-top:30px;">
+        aliza
+    </div>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 HTML Practice</p>
+</footer>
+
+
+<!-- BOX SECTION -->
+<section style="
+    background:#e5e7eb;
+    padding:30px;
+    border-radius:12px;
+    margin-top:30px;
+">
+
+    <h2 style="text-align:center; color:#1e293b;">
+        Box Section with Two Flex Boxes
+    </h2>
+
+    <!-- FLEX WRAPPER -->
+    <div style="
+        display:flex;
+        gap:20px;
+        justify-content:center;
+        flex-wrap:wrap;
+        margin-top:20px;
+    ">
+
+        <!-- FLEX BOX 1 -->
+        <div style="
+            background:#93c5fd;
+            width:260px;
+            padding:20px;
+            border-radius:10px;
+            text-align:center;
+        ">
+            <h3>Flex Box 1</h3>
+            <p>This is the first flex box.</p>
+
+            <button style="
+                background:#1d4ed8;
+                color:white;
+                border:none;
+                padding:8px 12px;
+                border-radius:6px;
+                cursor:pointer;
+            ">
+                Button 1
+            </button>
+        </div>
+
+        <!-- FLEX BOX 2 -->
+        <div style="
+            background:#86efac;
+            width:260px;
+            padding:20px;
+            border-radius:10px;
+            text-align:center;
+        ">
+            <h3>Flex Box 2</h3>
+            <p>This is the second flex box.</p>
+
+            <button style="
+                background:#15803d;
+                color:white;
+                border:none;
+                padding:8px 12px;
+                border-radius:6px;
+                cursor:pointer;
+            ">
+                Button 2
+            </button>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- INLINE JS -->
+<script>
+    function changeImage() {
+        alert("Image button clicked!");
+    }
+
+    function showName(event) {
+        event.preventDefault();
+        let name = document.getElementById("name").value;
+        document.getElementById("result").innerText =
+            "Hello, " + name + "!";
+    }
+</script>
+
+</body>
+</html>

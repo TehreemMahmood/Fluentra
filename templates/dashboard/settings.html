@@ -1,0 +1,22 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="header" style="margin-bottom: var(--spacing-xl);">
+    <h1>Settings</h1>
+    <p class="text-secondary">Manage your account preferences and subscription.</p>
+</div>
+
+<div class="card">
+    <div style="text-align: center; padding: var(--spacing-2xl);">
+        <i data-lucide="settings" style="width: 48px; height: 48px; color: var(--text-light); margin-bottom: var(--spacing-md);"></i>
+        <h3>Account Settings</h3>
+        <p class="text-secondary" style="max-width: 400px; margin: 0 auto;">
+            Update your profile, change password, manage notifications, and view subscription details.
+        </p>
+        <button class="btn btn-primary" style="margin-top: var(--spacing-lg);">Manage Account</button>
+    </div>
+</div>
+{% endblock %}

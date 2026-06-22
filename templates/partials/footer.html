@@ -1,0 +1,13 @@
+{% load static %}
+<footer style="padding: var(--spacing-xl) 0; border-top: 1px solid var(--border-color);">
+    <div class="container"
+        style="display: flex; justify-content: space-between; align-items: center; color: var(--text-light); font-size: 0.9rem;">
+        <p>&copy; 2025 FluEntra AI. All rights reserved.</p>
+        <div style="display: flex; gap: var(--spacing-lg);">
+            <a href="{% url 'about' %}">About</a>
+            <a href="{% url 'pricing' %}">Pricing</a>
+            <a href="{% url 'contact' %}">Contact</a>
+            <a href="#">Privacy</a>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,36 @@
+{% load static %}
+<!-- Sidebar -->
+<aside class="sidebar">
+    <a href="{% url 'index' %}" class="sidebar-logo">
+        <i data-lucide="waves"></i>
+        <span>FluEntra</span>
+    </a>
+    <nav class="sidebar-nav">
+        <a href="{% url 'app' %}" class="nav-item {% if active_tab == 'dashboard' %}active{% endif %}">
+            <i data-lucide="layout-dashboard"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="{% url 'practice' %}" class="nav-item {% if active_tab == 'practice' %}active{% endif %}">
+            <i data-lucide="mic"></i>
+            <span>Start Practice</span>
+        </a>
+        <a href="{% url 'analytics' %}" class="nav-item {% if active_tab == 'analytics' %}active{% endif %}">
+            <i data-lucide="line-chart"></i>
+            <span>Analytics</span>
+        </a>
+        <a href="{% url 'exercises' %}" class="nav-item {% if active_tab == 'exercises' %}active{% endif %}">
+            <i data-lucide="gamepad-2"></i>
+            <span>Exercises</span>
+        </a>
+        <a href="{% url 'techniques' %}" class="nav-item {% if active_tab == 'techniques' %}active{% endif %}">
+            <i data-lucide="book-open"></i>
+            <span>Techniques</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <a href="{% url 'logout' %}" class="nav-item" style="color: #FEB2B2;">
+            <i data-lucide="log-out"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>

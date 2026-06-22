@@ -1,0 +1,14 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}Sign Up - FluEntra{% endblock %}
+
+{% block content %}
+<script>
+    // Redirect to our custom auth page
+    window.location.href = '/auth/?signup=true';
+</script>
+<noscript>
+    <meta http-equiv="refresh" content="0;url=/auth/?signup=true">
+</noscript>
+{% endblock %}

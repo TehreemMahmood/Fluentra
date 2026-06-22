@@ -1,0 +1,92 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}Authentication Error - FluEntra{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+        padding: 20px;
+    }
+    
+    .error-card {
+        background: white;
+        border-radius: 16px;
+        padding: 48px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    
+    .error-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #fed7d7, #feb2b2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+    }
+    
+    .error-icon i {
+        width: 40px;
+        height: 40px;
+        color: #e53e3e;
+    }
+    
+    .error-card h2 {
+        margin-bottom: 16px;
+        color: #e53e3e;
+    }
+    
+    .error-card p {
+        color: #718096;
+        margin-bottom: 32px;
+        line-height: 1.6;
+    }
+    
+    .btn-primary {
+        display: inline-block;
+        padding: 14px 32px;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(66, 153, 225, 0.3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-card">
+        <div class="error-icon">
+            <i data-lucide="x-circle"></i>
+        </div>
+        <h2>Authentication Error</h2>
+        <p>An error occurred while trying to authenticate with your social account. Please try again or use a different sign-in method.</p>
+        
+        <a href="{% url 'auth' %}" class="btn-primary">Try Again</a>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+{% endblock %}

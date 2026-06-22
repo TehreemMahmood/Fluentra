@@ -1,0 +1,548 @@
+{% extends 'base_auth.html' %}
+{% load static %}
+
+{% block title %}Email Verification - FluEntra{% endblock %}
+
+{% block extra_css %}
+<style>
+    .auth-page {
+        min-height: 100vh;
+        display: flex;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+    }
+
+    .auth-left {
+        flex: 1;
+        display: none;
+        padding: var(--spacing-2xl);
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    @media (min-width: 992px) {
+        .auth-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+
+    .auth-left::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    }
+
+    .auth-left h1 {
+        font-size: 2.8rem;
+        margin-bottom: var(--spacing-lg);
+        color: white;
+        line-height: 1.2;
+    }
+
+    .auth-left p {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        max-width: 420px;
+        line-height: 1.6;
+    }
+
+    .feature-list {
+        margin-top: var(--spacing-2xl);
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+        opacity: 0.9;
+    }
+
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .feature-icon i {
+        width: 24px;
+        height: 24px;
+    }
+
+    .auth-right {
+        flex: 1;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--spacing-xl);
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 480px;
+        text-align: center;
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .auth-logo {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+    }
+
+    .auth-logo img {
+        height: 40px;
+    }
+
+    .result-icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto var(--spacing-xl);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .result-icon.success {
+        background: linear-gradient(135deg, rgba(72, 187, 120, 0.1) 0%, rgba(56, 161, 105, 0.2) 100%);
+        animation: successPulse 2s infinite;
+    }
+
+    @keyframes successPulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.4); }
+        50% { box-shadow: 0 0 0 15px rgba(72, 187, 120, 0); }
+    }
+
+    .result-icon.error {
+        background: linear-gradient(135deg, rgba(229, 62, 62, 0.1) 0%, rgba(229, 62, 62, 0.2) 100%);
+    }
+
+    .result-icon i {
+        width: 48px;
+        height: 48px;
+    }
+
+    .result-icon.success i {
+        color: #38a169;
+    }
+
+    .result-icon.error i {
+        color: #e53e3e;
+    }
+
+    .verify-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .verify-title.success {
+        color: #38a169;
+    }
+
+    .verify-title.error {
+        color: #e53e3e;
+    }
+
+    .verify-text {
+        font-size: 1rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .btn-continue {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 16px 32px;
+        background: linear-gradient(135deg, #2C5282 0%, #4299E1 50%, #4FD1C5 100%);
+        color: white;
+        border: none;
+        border-radius: var(--radius-lg);
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-continue:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 40px rgba(66, 153, 225, 0.3);
+    }
+
+    .btn-continue i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        padding: 14px 28px;
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: var(--text-light);
+        border-radius: var(--radius-lg);
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background: #f8fafc;
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .btn-secondary i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .info-notice {
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-md);
+        background: linear-gradient(135deg, rgba(44, 82, 130, 0.1) 0%, rgba(79, 209, 197, 0.1) 100%);
+        border: 1px solid rgba(66, 153, 225, 0.2);
+        border-radius: var(--radius-md);
+        font-size: 0.9rem;
+        color: #4299E1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .info-notice i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .resend-section {
+        margin-top: var(--spacing-xl);
+        padding-top: var(--spacing-xl);
+        border-top: 1px solid var(--border-color);
+    }
+
+    .resend-text {
+        font-size: 0.95rem;
+        color: var(--text-light);
+        margin-bottom: var(--spacing-md);
+    }
+
+    .btn-resend {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: transparent;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        border-radius: var(--radius-lg);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-resend:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    .btn-resend:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .btn-resend i {
+        width: 18px;
+        height: 18px;
+    }
+
+    .message-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: var(--radius-md);
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        z-index: 1000;
+        transform: translateX(120%);
+        transition: transform 0.3s ease;
+    }
+
+    .message-toast.show {
+        transform: translateX(0);
+    }
+
+    .message-toast.success {
+        background: #dcfce7;
+        border: 1px solid #86efac;
+        color: #166534;
+    }
+
+    .message-toast.error {
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+    }
+
+    .testimonial {
+        margin-top: var(--spacing-2xl);
+        padding: var(--spacing-lg);
+        background: rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg);
+        backdrop-filter: blur(10px);
+    }
+
+    .testimonial p {
+        font-style: italic;
+        margin-bottom: var(--spacing-md);
+        font-size: 1rem;
+    }
+
+    .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+    }
+
+    .testimonial-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #48bb78, #38a169);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <!-- Left Side - Branding -->
+    <div class="auth-left">
+        <a href="{% url 'index' %}" class="auth-logo" style="color: white; margin-bottom: var(--spacing-2xl); justify-content: flex-start;">
+            <img src="" alt="FluEntra" style="height: 44px; filter: brightness(0) invert(1);">
+            FluEntra
+        </a>
+        
+        {% if success %}
+        <h1>Welcome to FluEntra!</h1>
+        <p>Your email has been verified. You're now ready to start your personalized speech therapy journey.</p>
+        {% else %}
+        <h1>Verification Issue</h1>
+        <p>Don't worry! We can help you get verified and start your speech therapy journey.</p>
+        {% endif %}
+        
+        <div class="feature-list">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="mic"></i>
+                </div>
+                <div>
+                    <strong>Real-time Speech Analysis</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">AI-powered feedback as you practice</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="gamepad-2"></i>
+                </div>
+                <div>
+                    <strong>Gamified Learning</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Earn XP, badges, and track streaks</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i data-lucide="line-chart"></i>
+                </div>
+                <div>
+                    <strong>Progress Tracking</strong>
+                    <p style="margin: 0; font-size: 0.9rem;">Visualize your improvement over time</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial">
+            <p>"FluEntra has completely changed how I approach public speaking. The daily exercises and progress tracking keep me motivated!"</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar">AK</div>
+                <div>
+                    <strong>Aliza K.</strong>
+                    <p style="margin: 0; font-size: 0.85rem; opacity: 0.8;">Pro User • 6 months</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Content -->
+    <div class="auth-right">
+        <div class="auth-card">
+            <div class="auth-header">
+                <a href="{% url 'index' %}" class="auth-logo">
+                    <img src="" alt="FluEntra">
+                    FluEntra
+                </a>
+            </div>
+
+            {% if success %}
+            <div class="result-icon success">
+                <i data-lucide="check-circle"></i>
+            </div>
+            <h2 class="verify-title success">Email Verified!</h2>
+            <p class="verify-text">{{ message }}</p>
+            
+            <a href="{% if redirect_to == 'complete_profile' %}{% url 'complete_profile' %}{% else %}{% url 'app' %}{% endif %}" class="btn-continue">
+                {% if redirect_to == 'complete_profile' %}
+                Complete Your Profile
+                {% else %}
+                Go to Dashboard
+                {% endif %}
+                <i data-lucide="arrow-right"></i>
+            </a>
+            
+            <div class="info-notice">
+                <i data-lucide="info"></i>
+                <span>You're now logged in and ready to continue!</span>
+            </div>
+            
+            {% else %}
+            <div class="result-icon error">
+                <i data-lucide="x-circle"></i>
+            </div>
+            <h2 class="verify-title error">Verification Failed</h2>
+            <p class="verify-text">{{ error }}</p>
+            
+            {% if can_resend and email %}
+            <div class="resend-section" style="border: none; padding-top: 0; margin-top: 0;">
+                <p class="resend-text">Need a new verification link?</p>
+                <button class="btn-resend" id="resendBtn" onclick="resendEmail()">
+                    <i data-lucide="refresh-cw"></i>
+                    Resend verification email
+                </button>
+            </div>
+            {% endif %}
+            
+            <a href="{% url 'auth' %}" class="btn-secondary" style="margin-top: var(--spacing-lg);">
+                <i data-lucide="arrow-left"></i>
+                Back to Login
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Toast Message -->
+<div class="message-toast" id="messageToast">
+    <i data-lucide="check-circle"></i>
+    <span id="messageText"></span>
+</div>
+
+{% if can_resend and email %}
+<script>
+    lucide.createIcons();
+    
+    const userEmail = '{{ email }}';
+    
+    function showMessage(message, type) {
+        const toast = document.getElementById('messageToast');
+        const text = document.getElementById('messageText');
+        text.textContent = message;
+        toast.className = 'message-toast ' + type + ' show';
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+    
+    async function resendEmail() {
+        const btn = document.getElementById('resendBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i data-lucide="loader-2"></i> Sending...';
+        lucide.createIcons();
+        
+        try {
+            const response = await fetch('/api/resend-verification/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ email: userEmail })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showMessage(data.message, 'success');
+            } else {
+                showMessage(data.error, 'error');
+            }
+        } catch (error) {
+            showMessage('Failed to send email', 'error');
+        }
+        
+        btn.innerHTML = '<i data-lucide="refresh-cw"></i> Resend verification email';
+        btn.disabled = false;
+        lucide.createIcons();
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+{% else %}
+<script>
+    lucide.createIcons();
+</script>
+{% endif %}
+{% endblock %}
