@@ -20,14 +20,11 @@ classical → YAMNet → wav2vec2 feature progression, honest evaluation (balanc
 accuracy, ROC-AUC, confusion matrices), and a bridge that plugs the model into
 the Django app. See [model_training/README.md](model_training/README.md).
 
-> The live demo runs speech analysis through a speech-to-text + LLM API for
-> reliability; the trained model is a drop-in alternative that produces the same
-> analysis output. Both are part of the project.
 
 ## Tech stack
 
 - **Backend:** Django, custom email-based user model, django-allauth (Google OAuth)
-- **Speech / AI:** speech-to-text + LLM analysis API; custom-trained audio model
+- **Speech / AI:** speech-to-text + custom-trained audio model
 - **ML:** librosa, scikit-learn, TensorFlow/Keras, YAMNet, wav2vec2 (transformers)
 - **Frontend:** Django templates, vanilla JS, custom CSS
 
